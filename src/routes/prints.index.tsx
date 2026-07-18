@@ -38,10 +38,10 @@ function Prints() {
 
       {/* ===== Gallery Entrance — Featured Artwork ===== */}
       <section className="pb-24 md:pb-32">
-        <div className="container-editorial">
+        <div className="mx-auto w-full max-w-[112rem] px-6 md:px-12 xl:px-[4.5rem] 2xl:px-20">
           <Reveal>
-            <div className="grid items-start gap-12 md:gap-16 lg:grid-cols-12 lg:gap-24">
-              <div className="lg:col-span-8">
+            <div className="grid items-start gap-12 md:gap-16 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)] lg:gap-16 xl:grid-cols-[minmax(0,3fr)_minmax(19rem,1fr)] 2xl:gap-24">
+              <div>
                 <Placeholder
                   subject={featured.subject}
                   location={featured.location ?? undefined}
@@ -53,7 +53,7 @@ function Prints() {
                 </p>
               </div>
 
-              <div className="lg:col-span-4 lg:pt-10">
+              <div className="max-w-md lg:pt-8 xl:max-w-[22rem] xl:pt-12">
                 <div className="eyebrow text-bronze">Featured Artwork</div>
 
                 <h2 className="mt-6 font-serif text-[clamp(2.25rem,4.5vw,3.75rem)] italic leading-[1.05] text-ivory">
@@ -133,7 +133,7 @@ function Prints() {
 
       {/* ===== The Collection ===== */}
       <section className="border-t border-border py-24 md:py-32">
-        <div className="container-editorial">
+        <div className="mx-auto w-full max-w-[112rem] px-6 md:px-12 xl:px-[4.5rem] 2xl:px-20">
           <div className="mb-20 max-w-3xl">
             <div className="eyebrow text-bronze">The Collection</div>
 
@@ -147,9 +147,9 @@ function Prints() {
             </p>
           </div>
 
-          <div className="grid gap-x-10 gap-y-24 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-x-10 gap-y-24 md:grid-cols-2 xl:gap-x-20 xl:gap-y-32 2xl:gap-x-24">
             {rest.map((print, index) => (
-              <Reveal key={print.slug} delay={(index % 3) * 120}>
+              <Reveal key={print.slug} delay={(index % 2) * 120}>
                 <article className="group">
                   <Placeholder
                     subject={print.subject}
@@ -159,7 +159,7 @@ function Prints() {
                     className="block h-auto w-full"
                   />
 
-                  <div className="mt-6">
+                  <div className="mt-6 max-w-2xl">
                     <div className="text-[11px] uppercase tracking-[0.25em] text-bronze/80">
                       Fine Art Print
                     </div>
@@ -198,7 +198,7 @@ function Prints() {
           </div>
 
           <div className="mt-32 grid gap-12 border-t border-border pt-20 text-base text-ivory-muted md:grid-cols-3">
-            <div>
+            <div className="max-w-md">
               <div className="eyebrow mb-5">Materials</div>
               <p className="leading-[1.7]">
                 Every Martography print will be produced on archival fine art paper with pigment
@@ -207,7 +207,7 @@ function Prints() {
               </p>
             </div>
 
-            <div>
+            <div className="max-w-md">
               <div className="eyebrow mb-5">Signed &amp; Numbered</div>
               <p className="leading-[1.7]">
                 Each print will be hand-signed and numbered by Paul Marto. Certificate of
@@ -215,7 +215,7 @@ function Prints() {
               </p>
             </div>
 
-            <div>
+            <div className="max-w-md">
               <div className="eyebrow mb-5">Commissions</div>
               <p className="leading-[1.7]">
                 Custom sizes, framing, and private commission inquiries are welcome.{" "}
