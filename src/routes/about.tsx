@@ -34,9 +34,8 @@ function About() {
                 subject="Paul Marto · Portrait"
                 location="Studio · black & white"
                 filename="about-portrait.jpg"
-                ratio="aspect-[4/5]"
+                mode="natural"
                 className="max-w-md"
-                tone="deep"
               />
               <div
                 className="space-y-10 text-ivory-muted leading-[1.75] font-light"

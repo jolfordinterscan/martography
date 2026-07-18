@@ -46,7 +46,7 @@ function Prints() {
                   subject={featured.subject}
                   location={featured.location ?? undefined}
                   filename={featured.filename}
-                  natural
+                  mode="natural"
                 />
                 <p className="mt-5 text-xs uppercase tracking-[0.3em] text-ivory/50">
                   Featured Fine Art Print
@@ -155,7 +155,7 @@ function Prints() {
                     subject={print.subject}
                     location={print.location ?? undefined}
                     filename={print.filename}
-                    natural
+                    mode="natural"
                     className="block h-auto w-full"
                   />
 

@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react";
+
+type ImageMode = "editorial" | "natural" | "mobile-natural";
+
 interface PlaceholderProps {
   subject: string;
   location?: string;
@@ -10,32 +13,16 @@ interface PlaceholderProps {
   filename?: string;
   ratio?: string; // e.g. "aspect-[4/5]"
   className?: string;
-  tone?: "charcoal" | "forest" | "deep";
   style?: CSSProperties;
   /** Focal point for object-fit cover cropping. */
   focus?: "center" | "right" | "left" | "top" | "bottom";
-  /** Optional mobile-only override for object-position (applied below 768px). */
-  mobileObjectPosition?: string;
-  /** Image fit strategy. "cover" crops to fill; "contain" shows the entire image with letterboxing. */
-  fit?: "cover" | "contain";
   /**
-   * When true, render the image at its natural aspect ratio (no forced frame).
-   * The container sizes to the image; a charcoal background fills any surrounding space.
-   * Use for fine art print artwork where the complete photograph must always be visible.
+   * `natural`: always preserve every source edge.
+   * `editorial`: crop to the requested ratio using the focal point.
+   * `mobile-natural`: preserve every source edge below 1024px, then use the
+   * requested editorial crop on larger screens.
    */
-  natural?: boolean;
-  /**
-   * When true, on mobile (<768px) the image renders at its natural aspect ratio
-   * inside a charcoal panel (no forced crop). On desktop the normal ratio/cover
-   * behavior is preserved. Use for gallery/collection photographs on small screens.
-   */
-  mobileNatural?: boolean;
-  /**
-   * Fine Art mobile card rendering: a normal image with no crop frame.
-   * Mobile wrapper and image classes are intentionally fixed to preserve
-   * every source edge; desktop uses the existing framed presentation.
-   */
-  mobileArtwork?: boolean;
+  mode?: ImageMode;
 }
 
 /**
@@ -69,8 +56,9 @@ const IMAGE_MAP: Record<string, string> = {
   "conservation-hummingbird-nest.jpg": "/images/conservation-hummingbird-nest.jpg",
 
   // Signature Story
-  "story-roadrunner.jpg": "/images/story-dinner-is-served.jpg",
-  "story-dinner-is-served.jpg": "/images/story-dinner-is-served.jpg",
+  "story-roadrunner.jpg": "/images/behavior-roadrunner.jpg",
+  "story-dinner-is-served.jpg": "/images/behavior-roadrunner.jpg",
+  "story-07.jpg": "/images/behavior-roadrunner.jpg",
 
   // About
   "about-portrait.jpg": "/images/about-paul-portrait.png",
@@ -84,11 +72,7 @@ export function Placeholder({
   className = "",
   style,
   focus = "center",
-  mobileObjectPosition,
-  fit = "cover",
-  natural = false,
-  mobileNatural = false,
-  mobileArtwork = false,
+  mode = "editorial",
 }: PlaceholderProps) {
   const src = filename ? IMAGE_MAP[filename] : undefined;
   const objectPosition =
@@ -128,10 +112,7 @@ export function Placeholder({
       </div>
     );
   }
-  if (natural) {
-    // Fine Art Print artwork: preserve the complete uploaded file edge-to-edge.
-    // No fixed height, no aspect ratio, no overflow-hidden, no object-cover,
-    // no absolute positioning. The image element itself defines the layout.
+  if (mode === "natural") {
     return (
       <img
         src={src}
@@ -142,7 +123,6 @@ export function Placeholder({
         style={{
           width: "100%",
           height: "auto",
-          objectFit: "contain",
           display: "block",
           ...style,
         }}
@@ -150,50 +130,24 @@ export function Placeholder({
     );
   }
 
-  // Use a CSS variable so we can override object-position at the mobile breakpoint via a scoped <style> block.
   const imgStyle: CSSProperties = {
-    objectPosition: `var(--mtg-obj-pos, ${objectPosition})`,
-  };
-  const wrapperStyle: CSSProperties = {
-    ...style,
-    ["--mtg-obj-pos" as string]: objectPosition,
+    objectPosition,
   };
 
-  if (mobileArtwork) {
+  if (mode === "mobile-natural") {
     return (
       <>
-        <div className="w-full bg-black md:hidden">
+        <div className={`bg-charcoal-deep lg:hidden ${className}`} style={style}>
           <img
             src={src}
             alt={subject}
             loading="lazy"
             decoding="async"
-            className="block w-full h-auto object-contain"
+            className="block h-auto w-full"
           />
         </div>
         <div
-          className={`hidden md:block relative overflow-hidden bg-charcoal-deep ${ratio} ${className}`}
-          style={wrapperStyle}
-        >
-          <img
-            src={src}
-            alt={subject}
-            loading="lazy"
-            decoding="async"
-            className={`absolute inset-0 w-full h-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
-            style={imgStyle}
-          />
-        </div>
-      </>
-    );
-  }
-
-  if (mobileNatural) {
-    return (
-      <>
-        {/* Mobile: natural aspect ratio, complete image preserved on charcoal */}
-        <div
-          className={`md:hidden bg-charcoal-deep flex items-center justify-center ${className}`}
+          className={`relative hidden overflow-hidden bg-charcoal-deep lg:block ${ratio} ${className}`}
           style={style}
         >
           <img
@@ -201,20 +155,7 @@ export function Placeholder({
             alt={subject}
             loading="lazy"
             decoding="async"
-            className="block w-full h-auto"
-          />
-        </div>
-        {/* Desktop: unchanged forced-ratio behavior */}
-        <div
-          className={`hidden md:block relative overflow-hidden bg-charcoal-deep ${ratio} ${className}`}
-          style={wrapperStyle}
-        >
-          <img
-            src={src}
-            alt={subject}
-            loading="lazy"
-            decoding="async"
-            className={`absolute inset-0 w-full h-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
+            className="absolute inset-0 h-full w-full object-cover"
             style={imgStyle}
           />
         </div>
@@ -225,18 +166,14 @@ export function Placeholder({
   return (
     <div
       className={`relative overflow-hidden bg-charcoal-deep ${ratio} ${className}`}
-      style={wrapperStyle}
-      data-mobile-pos={mobileObjectPosition || undefined}
+      style={style}
     >
-      {mobileObjectPosition && (
-        <style>{`@media (max-width: 767px){[data-mobile-pos="${mobileObjectPosition}"]{--mtg-obj-pos:${mobileObjectPosition} !important;}}`}</style>
-      )}
       <img
         src={src}
         alt={subject}
         loading="lazy"
         decoding="async"
-        className={`absolute inset-0 w-full h-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
+        className="absolute inset-0 h-full w-full object-cover"
         style={imgStyle}
       />
     </div>

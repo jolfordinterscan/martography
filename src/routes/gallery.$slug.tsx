@@ -70,8 +70,7 @@ function PhotoDetail() {
                 subject={photo.title}
                 location={photo.location}
                 filename={photo.filename}
-                focus={photo.focus}
-                ratio={photo.ratio ?? "aspect-[4/5]"}
+                mode="natural"
               />
             </div>
           </Reveal>
@@ -163,13 +162,7 @@ function PhotoDetail() {
             {others.map((o, i) => (
               <Reveal key={o.slug} delay={i * 120}>
                 <Link to="/gallery/$slug" params={{ slug: o.slug }} className="group block">
-                  <Placeholder
-                    subject={o.title}
-                    filename={o.filename}
-                    ratio="aspect-[4/5]"
-                    focus={o.focus}
-                    className="transition-transform duration-[1600ms] group-hover:scale-[1.02]"
-                  />
+                  <Placeholder subject={o.title} filename={o.filename} mode="natural" />
                   <div className="mt-5">
                     <div className="eyebrow text-bronze">{o.location}</div>
                     <div className="mt-2 font-serif text-2xl text-ivory group-hover:text-bronze transition-colors">

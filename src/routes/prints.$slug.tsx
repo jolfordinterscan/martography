@@ -65,7 +65,7 @@ function PrintDetail() {
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-20 items-start">
             <div className="lg:col-span-7">
               <Reveal>
-                <Placeholder subject={print.subject} filename={print.filename} natural />
+                <Placeholder subject={print.subject} filename={print.filename} mode="natural" />
                 <p className="mt-5 text-xs tracking-[0.3em] uppercase text-ivory/50">
                   {print.species}
                 </p>

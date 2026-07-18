@@ -41,8 +41,7 @@ function Stories() {
                   subject={featured.title}
                   location={featured.place}
                   filename={featured.coverFilename}
-                  ratio={featured.coverRatio ?? "aspect-[4/3]"}
-                  className="transition-transform duration-[1600ms] group-hover:scale-[1.02]"
+                  mode="natural"
                 />
               </Link>
               <div>
@@ -92,7 +91,8 @@ function Stories() {
                       subject={s.title}
                       filename={s.coverFilename}
                       ratio="aspect-[4/3]"
-                      className="transition-transform duration-[1400ms] group-hover:scale-[1.03]"
+                      mode="mobile-natural"
+                      className="lg:transition-transform lg:duration-[1400ms] lg:group-hover:scale-[1.03]"
                     />
                   </div>
                   <div>

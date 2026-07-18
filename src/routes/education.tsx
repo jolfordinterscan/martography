@@ -154,7 +154,7 @@ function Education() {
               location="Students, a preserve, and a photograph waiting to be made"
               filename="education-hero.jpg"
               ratio="aspect-[21/9]"
-              tone="deep"
+              mode="mobile-natural"
             />
             <p className="mt-5 text-xs tracking-[0.3em] uppercase text-ivory/50">
               The Field Classroom

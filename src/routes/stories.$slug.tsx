@@ -88,7 +88,7 @@ function StoryDetail() {
               subject={story.title}
               location={story.place}
               filename={story.coverFilename}
-              ratio="aspect-[16/9]"
+              mode="natural"
             />
           </Reveal>
         </div>
@@ -135,8 +135,7 @@ function StoryDetail() {
                     <Placeholder
                       subject={linkedPhoto.title}
                       filename={linkedPhoto.filename}
-                      ratio="aspect-[4/3]"
-                      className="transition-transform duration-[1600ms] group-hover:scale-[1.02]"
+                      mode="natural"
                     />
                     <div>
                       <h3 className="font-serif text-3xl md:text-4xl text-ivory group-hover:text-bronze transition-colors">
@@ -168,7 +167,8 @@ function StoryDetail() {
                     subject={o.title}
                     filename={o.coverFilename}
                     ratio="aspect-[4/3]"
-                    className="transition-transform duration-[1400ms] group-hover:scale-[1.02]"
+                    mode="mobile-natural"
+                    className="lg:transition-transform lg:duration-[1400ms] lg:group-hover:scale-[1.02]"
                   />
                   <div className="mt-5">
                     <div className="eyebrow text-bronze">{o.place}</div>

@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
 
 // Each collection is a room in the museum.
 // Every `filename` below is a stable slot mapped in `src/components/site/Placeholder.tsx`.
-// To swap in Paul's final photograph, drop the file into `src/assets/` and
+// To swap in Paul's final photograph, add the file to `public/images/` and
 // update the matching key in IMAGE_MAP — nothing here needs to change.
 const exhibits = [
   {
@@ -39,7 +39,6 @@ const exhibits = [
     location: "Location — to be confirmed",
     filename: "birds-painted-bunting-salvia.jpg",
     focus: "left" as const,
-    mobileObjectPosition: "35% 50%",
   },
   {
     n: "II",
@@ -51,7 +50,6 @@ const exhibits = [
     location: "Northern Woodlands",
     filename: "mammals-fox.jpg",
     focus: "center" as const,
-    mobileObjectPosition: "50% 50%",
   },
   {
     n: "III",
@@ -63,7 +61,6 @@ const exhibits = [
     location: "Desert Southwest",
     filename: "behavior-roadrunner-feeding-chick.jpg",
     focus: "right" as const,
-    mobileObjectPosition: "65% 45%",
   },
   {
     n: "IV",
@@ -75,7 +72,6 @@ const exhibits = [
     location: "Backyard Oak",
     filename: "conservation-hummingbird-nest.jpg",
     focus: "left" as const,
-    mobileObjectPosition: "35% 50%",
   },
 ];
 
@@ -85,14 +81,13 @@ function Home() {
       {/* ══════════════════════════════════════════════════════════════
           I. HERO — silence, one line, one image.
          ══════════════════════════════════════════════════════════════ */}
-      {/* ── DESKTOP / TABLET HERO (md+): full-bleed cinematic frame ── */}
-      <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden hidden md:block">
+      {/* ── DESKTOP HERO (lg+): full-bleed cinematic frame ── */}
+      <section className="relative hidden h-[100svh] min-h-[640px] w-full overflow-hidden lg:block">
         <Placeholder
           subject="Bobcat at the Edge of the Grass"
           filename="hero.jpg"
           ratio=""
           className="absolute inset-0 w-full h-full !aspect-auto animate-fade-in"
-          tone="deep"
           focus="right"
         />
 
@@ -144,8 +139,8 @@ function Home() {
         </div>
       </section>
 
-      {/* ── MOBILE HERO (< md): stacked editorial block, complete photograph preserved ── */}
-      <section className="md:hidden bg-charcoal-deep">
+      {/* ── MOBILE / TABLET HERO (< lg): stacked block, complete photograph preserved ── */}
+      <section className="bg-charcoal-deep lg:hidden">
         <div className="container-editorial pt-28 pb-10">
           <div className="eyebrow text-ivory-muted">
             <span className="rule-bronze mr-3" />
@@ -160,9 +155,8 @@ function Home() {
         <Placeholder
           subject="Bobcat at the Edge of the Grass"
           filename="hero.jpg"
-          mobileNatural
+          mode="natural"
           className="w-full"
-          tone="deep"
         />
         <div className="container-editorial pt-6 pb-16">
           <div className="text-[0.6rem] tracking-[0.35em] uppercase text-ivory-muted/70">
@@ -233,8 +227,8 @@ function Home() {
           </Reveal>
         </div>
 
-        {/* ── MOBILE (< md): stacked editorial cards, image over charcoal panel ── */}
-        <div className="md:hidden space-y-8 px-6">
+        {/* ── MOBILE / TABLET (< lg): stacked cards with uncropped photographs ── */}
+        <div className="space-y-8 px-6 lg:hidden">
           {exhibits.map((ex) => (
             <Reveal key={`m-${ex.title}`} y={24}>
               <Link
@@ -246,9 +240,8 @@ function Home() {
                   subject={ex.subject}
                   location={ex.location}
                   filename={ex.filename}
-                  mobileNatural
+                  mode="natural"
                   className="w-full"
-                  tone="deep"
                   focus={ex.focus}
                 />
 
@@ -276,8 +269,8 @@ function Home() {
           ))}
         </div>
 
-        {/* ── DESKTOP / TABLET (md+): full-bleed exhibit rooms (unchanged) ── */}
-        <div className="hidden md:block">
+        {/* ── DESKTOP (lg+): full-bleed exhibit rooms ── */}
+        <div className="hidden lg:block">
           {exhibits.map((ex) => (
             <Reveal key={ex.title} y={40}>
               <Link
@@ -292,7 +285,6 @@ function Home() {
                     filename={ex.filename}
                     ratio=""
                     className="absolute inset-0 w-full h-full !aspect-auto"
-                    tone="deep"
                     focus={ex.focus}
                   />
 
@@ -390,10 +382,7 @@ function Home() {
                 subject="Roadrunner returning with prey to its chicks"
                 location="Sonoran Desert · 06:14"
                 filename="story-dinner-is-served.jpg"
-                ratio="aspect-[16/10]"
-                focus="center"
-                mobileObjectPosition="50% 50%"
-                tone="deep"
+                mode="natural"
               />
               <figcaption className="mt-8 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-baseline gap-6 md:gap-10 border-t border-border pt-6">
                 <span className="eyebrow text-ivory-muted">Greater Roadrunner with lizard</span>
@@ -496,9 +485,7 @@ function Home() {
                     subject="Red Fox"
                     location="Fine art print — coming soon"
                     filename="mammals-fox.jpg"
-                    ratio="aspect-[4/5]"
-                    tone="deep"
-                    className="transition-transform duration-[1800ms] ease-out group-hover:scale-[1.04]"
+                    mode="natural"
                   />
                 </div>
                 <div className="mt-8 flex items-baseline justify-between gap-6">
@@ -525,11 +512,7 @@ function Home() {
                     subject="Roadrunner with lizard"
                     location="Fine art print — coming soon"
                     filename="story-dinner-is-served.jpg"
-                    ratio="aspect-[5/4]"
-                    focus="center"
-                    mobileObjectPosition="50% 50%"
-                    tone="deep"
-                    className="transition-transform duration-[1800ms] ease-out group-hover:scale-[1.04]"
+                    mode="natural"
                   />
                 </div>
                 <div className="mt-6 flex items-baseline justify-between gap-6">
@@ -555,9 +538,7 @@ function Home() {
                     subject="Hummingbird at the nest"
                     location="Fine art print — coming soon"
                     filename="conservation-hummingbird-nest.jpg"
-                    ratio="aspect-[3/4]"
-                    tone="deep"
-                    className="transition-transform duration-[1800ms] ease-out group-hover:scale-[1.04]"
+                    mode="natural"
                   />
                 </div>
                 <div className="mt-6">
@@ -626,10 +607,7 @@ function Home() {
                 subject="Roadrunner returning with prey"
                 location="Field observation"
                 filename="story-dinner-is-served.jpg"
-                ratio="aspect-[21/9]"
-                focus="center"
-                mobileObjectPosition="50% 50%"
-                tone="deep"
+                mode="natural"
                 className="w-full"
               />
             </div>
@@ -698,7 +676,7 @@ function Home() {
                 location="Students & the archive"
                 filename="education.jpg"
                 ratio="aspect-[5/6]"
-                tone="deep"
+                mode="mobile-natural"
               />
             </Reveal>
             <Reveal>
@@ -791,8 +769,7 @@ function Home() {
                   subject="Paul Marto · Portrait"
                   location="Studio · black & white"
                   filename="about-portrait.jpg"
-                  ratio="aspect-[4/5]"
-                  tone="deep"
+                  mode="natural"
                 />
                 <p className="mt-6 text-[0.72rem] uppercase tracking-[0.28em] text-ivory-muted/70">
                   Paul Marto · Photographer & Conservation Advocate

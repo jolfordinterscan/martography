@@ -79,9 +79,7 @@ function Gallery() {
                       subject={img.title}
                       location={img.location}
                       filename={img.filename}
-                      ratio={img.ratio ?? "aspect-[4/5]"}
-                      focus={img.focus}
-                      className="transition-transform duration-[1600ms] ease-out group-hover:scale-[1.02]"
+                      mode="natural"
                     />
                     <figcaption className="mt-5 flex items-start justify-between gap-6">
                       <div>
