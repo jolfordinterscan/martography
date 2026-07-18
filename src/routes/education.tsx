@@ -27,12 +27,12 @@ export const Route = createFileRoute("/education")({
    Audiences — who these programs are built for
    ============================================================ */
 const audiences = [
-  { label: "Elementary Schools",       note: "Grades K–5" },
-  { label: "Middle Schools",           note: "Grades 6–8" },
-  { label: "High Schools",             note: "Grades 9–12" },
-  { label: "Nature Centers",           note: "All ages" },
-  { label: "Libraries",                note: "Community programming" },
-  { label: "Community Organizations",  note: "Clubs, scouts, camps" },
+  { label: "Elementary Schools", note: "Grades K–5" },
+  { label: "Middle Schools", note: "Grades 6–8" },
+  { label: "High Schools", note: "Grades 9–12" },
+  { label: "Nature Centers", note: "All ages" },
+  { label: "Libraries", note: "Community programming" },
+  { label: "Community Organizations", note: "Clubs, scouts, camps" },
 ];
 
 /* ============================================================
@@ -57,8 +57,7 @@ const programs: Program[] = [
     ages: "K–12",
     format: "Assembly · Classroom · Auditorium",
     duration: "45–60 minutes",
-    body:
-      "A cinematic, story-first presentation that carries students into the lives of the animals in Paul's photographs — how they live, what they need, and why paying attention matters. Every image is a doorway into a bigger question about the natural world.",
+    body: "A cinematic, story-first presentation that carries students into the lives of the animals in Paul's photographs — how they live, what they need, and why paying attention matters. Every image is a doorway into a bigger question about the natural world.",
     highlights: [
       "Full-screen wildlife photography, projected large",
       "Age-appropriate storytelling, adapted per grade band",
@@ -72,8 +71,7 @@ const programs: Program[] = [
     ages: "Ages 8+ with an adult · Teens · Adults",
     format: "Small-group field outing",
     duration: "2–3 hours",
-    body:
-      "A slow walk through a local park, preserve, or schoolyard, learning to see the wildlife that has always been there. Students learn to read light, movement, and behavior — the same skills Paul uses in the field — and leave with a handful of their own photographs.",
+    body: "A slow walk through a local park, preserve, or schoolyard, learning to see the wildlife that has always been there. Students learn to read light, movement, and behavior — the same skills Paul uses in the field — and leave with a handful of their own photographs.",
     highlights: [
       "Any camera or smartphone welcome",
       "Held at a partner nature center, preserve, or school grounds",
@@ -87,8 +85,7 @@ const programs: Program[] = [
     ages: "Grades 5–12",
     format: "Single session or multi-week series",
     duration: "90 minutes to a full semester unit",
-    body:
-      "A workshop for young photographers who want to go deeper — composition, patience, light, and the quiet discipline of waiting for a wild animal to allow itself to be seen. Students critique their own work and build a small portfolio by the end of the series.",
+    body: "A workshop for young photographers who want to go deeper — composition, patience, light, and the quiet discipline of waiting for a wild animal to allow itself to be seen. Students critique their own work and build a small portfolio by the end of the series.",
     highlights: [
       "Foundational technique — no jargon, no gatekeeping",
       "Group critiques modeled on how working photographers edit",
@@ -102,8 +99,7 @@ const programs: Program[] = [
     ages: "High School · Adults · Community",
     format: "Keynote · Fireside · Panel",
     duration: "45–75 minutes",
-    body:
-      "A longer-form talk for high school assemblies, library series, and community groups on what a life spent watching wildlife has to teach us — about attention, about habitat, and about the small, local choices that decide whether a species stays.",
+    body: "A longer-form talk for high school assemblies, library series, and community groups on what a life spent watching wildlife has to teach us — about attention, about habitat, and about the small, local choices that decide whether a species stays.",
     highlights: [
       "Grounded in first-person field stories",
       "Framed around stewardship, not alarm",
@@ -117,8 +113,7 @@ const programs: Program[] = [
     ages: "For classroom teachers & librarians",
     format: "Printable guide · Discussion prompts",
     duration: "Sent ahead of each visit",
-    body:
-      "Every school and library visit comes with a companion packet built for teachers: pre-visit discussion prompts, a short vocabulary sheet, curriculum-aligned follow-up activities, and a small selection of photographs cleared for classroom display and student writing prompts.",
+    body: "Every school and library visit comes with a companion packet built for teachers: pre-visit discussion prompts, a short vocabulary sheet, curriculum-aligned follow-up activities, and a small selection of photographs cleared for classroom display and student writing prompts.",
     highlights: [
       "Aligned to grade-band science and language arts standards",
       "Photograph packet cleared for in-classroom educational use",
@@ -132,8 +127,7 @@ const programs: Program[] = [
     ages: "All partner organizations",
     format: "Direct inquiry · Custom program",
     duration: "Typically booked 6–10 weeks ahead",
-    body:
-      "Every visit is shaped around the audience — a first-grade classroom is not a library evening series is not a high school assembly. Reach out with your school, dates, grade band, and what you'd like students to walk away with, and Paul will design the visit with you.",
+    body: "Every visit is shaped around the audience — a first-grade classroom is not a library evening series is not a high school assembly. Reach out with your school, dates, grade band, and what you'd like students to walk away with, and Paul will design the visit with you.",
     highlights: [
       "Public schools · Title I schools · non-profit rates available",
       "Travel throughout the region; virtual visits offered nationally",
@@ -176,9 +170,8 @@ function Education() {
             <div className="lg:col-span-4">
               <div className="eyebrow text-bronze">Trusted By</div>
               <p className="mt-6 text-sm text-ivory/55 leading-[1.7] max-w-xs">
-                A partial record of publications, conservancies, and community
-                institutions that have featured, exhibited, or welcomed
-                Martography's work.
+                A partial record of publications, conservancies, and community institutions that
+                have featured, exhibited, or welcomed Martography's work.
               </p>
             </div>
             <div className="lg:col-span-8">
@@ -219,11 +212,12 @@ function Education() {
                 className="font-serif italic text-ivory/90 leading-[1.35]"
                 style={{ fontSize: "clamp(1.6rem, 2.6vw, 2.4rem)" }}
               >
-                "The first bird a student really <em>sees</em> is the one they'll spend the rest of their life protecting. My job in a classroom is not to teach photography. It's to help young people slow down long enough to fall in love with what's already outside the window."
+                "The first bird a student really <em>sees</em> is the one they'll spend the rest of
+                their life protecting. My job in a classroom is not to teach photography. It's to
+                help young people slow down long enough to fall in love with what's already outside
+                the window."
               </p>
-              <p className="mt-8 text-sm tracking-[0.25em] uppercase text-ivory/50">
-                — Paul Marto
-              </p>
+              <p className="mt-8 text-sm tracking-[0.25em] uppercase text-ivory/50">— Paul Marto</p>
             </div>
           </div>
         </div>
@@ -246,9 +240,7 @@ function Education() {
               <Reveal key={a.label} delay={(i % 3) * 100}>
                 <div className="border-t border-border pt-6">
                   <div className="eyebrow text-bronze/80">{a.note}</div>
-                  <div className="mt-3 font-serif text-ivory text-2xl leading-tight">
-                    {a.label}
-                  </div>
+                  <div className="mt-3 font-serif text-ivory text-2xl leading-tight">{a.label}</div>
                 </div>
               </Reveal>
             ))}
@@ -268,7 +260,8 @@ function Education() {
               Six ways to bring wildlife into the room.
             </h2>
             <p className="mt-6 text-lg text-ivory-muted leading-[1.7]">
-              Each program is shaped around the audience in front of it. All are grounded in the same belief: attention is the beginning of stewardship.
+              Each program is shaped around the audience in front of it. All are grounded in the
+              same belief: attention is the beginning of stewardship.
             </p>
           </div>
 
@@ -290,16 +283,14 @@ function Education() {
                     >
                       {p.title}
                     </h3>
-                    <p className="mt-6 text-lg text-ivory-muted leading-[1.75]">
-                      {p.body}
-                    </p>
+                    <p className="mt-6 text-lg text-ivory-muted leading-[1.75]">{p.body}</p>
                     <ul className="mt-8 space-y-3">
                       {p.highlights.map((h) => (
-                        <li
-                          key={h}
-                          className="flex gap-4 text-ivory/85 leading-[1.6]"
-                        >
-                          <span className="text-bronze mt-2 h-px w-6 shrink-0 bg-bronze/60" aria-hidden />
+                        <li key={h} className="flex gap-4 text-ivory/85 leading-[1.6]">
+                          <span
+                            className="text-bronze mt-2 h-px w-6 shrink-0 bg-bronze/60"
+                            aria-hidden
+                          />
                           <span>{h}</span>
                         </li>
                       ))}
@@ -340,26 +331,25 @@ function Education() {
                 Aligned with what you're already teaching.
               </h2>
               <p className="mt-8 text-lg text-ivory-muted leading-[1.75]">
-                Martography programs are built to reinforce, not replace, the
-                classroom. Every visit ties directly into curriculum threads
-                teachers are already carrying — supporting educational
-                outcomes across science, humanities, and the arts.
+                Martography programs are built to reinforce, not replace, the classroom. Every visit
+                ties directly into curriculum threads teachers are already carrying — supporting
+                educational outcomes across science, humanities, and the arts.
               </p>
             </div>
             <div className="lg:col-span-7">
               <ul className="divide-y divide-border border-t border-border">
                 {[
                   { subject: "Environmental Science", note: "Habitat, ecosystems, climate" },
-                  { subject: "Biology",               note: "Species, adaptation, life cycles" },
-                  { subject: "Ecology",               note: "Interdependence & food webs" },
-                  { subject: "Conservation",          note: "Stewardship & local action" },
-                  { subject: "Observation Skills",    note: "Field notes & attention" },
-                  { subject: "Creative Writing",      note: "Nature journaling & narrative" },
-                  { subject: "Visual Arts",           note: "Composition, light, color" },
-                  { subject: "Photography",           note: "Technical & artistic craft" },
-                  { subject: "STEAM",                 note: "Cross-disciplinary integration" },
-                  { subject: "Outdoor Education",     note: "Place-based learning" },
-                  { subject: "Career Exploration",    note: "Photographer · Naturalist · Educator" },
+                  { subject: "Biology", note: "Species, adaptation, life cycles" },
+                  { subject: "Ecology", note: "Interdependence & food webs" },
+                  { subject: "Conservation", note: "Stewardship & local action" },
+                  { subject: "Observation Skills", note: "Field notes & attention" },
+                  { subject: "Creative Writing", note: "Nature journaling & narrative" },
+                  { subject: "Visual Arts", note: "Composition, light, color" },
+                  { subject: "Photography", note: "Technical & artistic craft" },
+                  { subject: "STEAM", note: "Cross-disciplinary integration" },
+                  { subject: "Outdoor Education", note: "Place-based learning" },
+                  { subject: "Career Exploration", note: "Photographer · Naturalist · Educator" },
                 ].map((c) => (
                   <li
                     key={c.subject}
@@ -391,20 +381,20 @@ function Education() {
               className="mt-8 font-serif italic text-ivory leading-[1.02]"
               style={{ fontSize: "clamp(2.5rem, 5.5vw, 4.75rem)" }}
             >
-              The Martography<br />Wildlife Academy.
+              The Martography
+              <br />
+              Wildlife Academy.
             </h2>
             <p className="mt-10 text-lg md:text-xl text-ivory-muted leading-[1.75]">
-              An educational initiative devoted to a single idea: that the next
-              generation of naturalists, scientists, artists, and stewards
-              begins with a child who learns to <em>look</em>. The Wildlife
-              Academy is a growing home for programs, projects, and
-              partnerships that use wildlife photography as a doorway into
-              curiosity, conservation, and careful observation.
+              An educational initiative devoted to a single idea: that the next generation of
+              naturalists, scientists, artists, and stewards begins with a child who learns to{" "}
+              <em>look</em>. The Wildlife Academy is a growing home for programs, projects, and
+              partnerships that use wildlife photography as a doorway into curiosity, conservation,
+              and careful observation.
             </p>
             <p className="mt-6 text-lg text-ivory-muted leading-[1.75]">
-              Schools, libraries, nature centers, scout troops, and youth
-              organizations are invited to participate as founding partners as
-              new programs launch.
+              Schools, libraries, nature centers, scout troops, and youth organizations are invited
+              to participate as founding partners as new programs launch.
             </p>
           </div>
 
@@ -467,27 +457,46 @@ function Education() {
                 Learning that continues after the lights come up.
               </h2>
               <p className="mt-8 text-lg text-ivory-muted leading-[1.75]">
-                Every school, library, and nature center visit includes a
-                companion set of educational materials — designed to extend
-                the presentation into lessons, activities, and quiet
-                observation long after Paul has packed up his camera.
+                Every school, library, and nature center visit includes a companion set of
+                educational materials — designed to extend the presentation into lessons,
+                activities, and quiet observation long after Paul has packed up his camera.
               </p>
               <p className="mt-4 text-sm text-ivory/55 leading-[1.7]">
-                Materials are provided as printable PDFs, cleared for
-                classroom use. Downloadable links will appear here as each
-                resource is finalized.
+                Materials are provided as printable PDFs, cleared for classroom use. Downloadable
+                links will appear here as each resource is finalized.
               </p>
             </div>
             <div className="lg:col-span-7">
               <ul className="divide-y divide-border border-t border-border">
                 {[
-                  { t: "Teacher Guide",                  d: "Presentation overview, learning objectives, and grade-band notes." },
-                  { t: "Classroom Activities",           d: "Short exercises to run before, during, or after the visit." },
-                  { t: "Wildlife Observation Journal",   d: "A printable journal for students to record sightings and sketches." },
-                  { t: "Student Photography Challenge",  d: "A guided week-long photography prompt for any camera or phone." },
-                  { t: "Vocabulary Sheet",               d: "Key terms — habitat, behavior, composition, exposure — by grade level." },
-                  { t: "Parent Letter",                  d: "A short letter to send home introducing the program and how families can extend it." },
-                  { t: "Follow-up Activities",           d: "Longer-form projects that connect the visit to ongoing curriculum units." },
+                  {
+                    t: "Teacher Guide",
+                    d: "Presentation overview, learning objectives, and grade-band notes.",
+                  },
+                  {
+                    t: "Classroom Activities",
+                    d: "Short exercises to run before, during, or after the visit.",
+                  },
+                  {
+                    t: "Wildlife Observation Journal",
+                    d: "A printable journal for students to record sightings and sketches.",
+                  },
+                  {
+                    t: "Student Photography Challenge",
+                    d: "A guided week-long photography prompt for any camera or phone.",
+                  },
+                  {
+                    t: "Vocabulary Sheet",
+                    d: "Key terms — habitat, behavior, composition, exposure — by grade level.",
+                  },
+                  {
+                    t: "Parent Letter",
+                    d: "A short letter to send home introducing the program and how families can extend it.",
+                  },
+                  {
+                    t: "Follow-up Activities",
+                    d: "Longer-form projects that connect the visit to ongoing curriculum units.",
+                  },
                 ].map((r) => (
                   <li key={r.t} className="py-6 md:py-7 flex items-baseline justify-between gap-6">
                     <div>
@@ -568,17 +577,14 @@ function Education() {
                 What they carry home.
               </h2>
               <p className="mt-8 text-lg text-ivory-muted leading-[1.75]">
-                A Martography visit doesn't end when the lights come back up.
-                Students walk out changed in small, quiet ways — a little more
-                patient, a little more observant, and a little more in love
-                with the wild lives happening just outside the classroom
-                window.
+                A Martography visit doesn't end when the lights come back up. Students walk out
+                changed in small, quiet ways — a little more patient, a little more observant, and a
+                little more in love with the wild lives happening just outside the classroom window.
               </p>
               <p className="mt-6 text-lg text-ivory-muted leading-[1.75]">
-                Weeks later, a parent will mention that their child stopped in
-                the driveway to watch a hummingbird. A teacher will notice a
-                student sketching a lizard at recess. Those are the moments
-                these programs are built for.
+                Weeks later, a parent will mention that their child stopped in the driveway to watch
+                a hummingbird. A teacher will notice a student sketching a lizard at recess. Those
+                are the moments these programs are built for.
               </p>
             </div>
 
@@ -603,7 +609,7 @@ function Education() {
                   },
                   {
                     t: "A sense of curiosity",
-                    d: "The quiet, life-long habit of asking, \"What is that, and how does it live?\"",
+                    d: 'The quiet, life-long habit of asking, "What is that, and how does it live?"',
                   },
                   {
                     t: "Inspiration to explore outdoors",
@@ -622,9 +628,7 @@ function Education() {
                         >
                           {item.t}
                         </h3>
-                        <p className="mt-3 text-ivory-muted leading-[1.7]">
-                          {item.d}
-                        </p>
+                        <p className="mt-3 text-ivory-muted leading-[1.7]">{item.d}</p>
                       </div>
                     </div>
                   </li>
@@ -646,20 +650,21 @@ function Education() {
                   className="mt-8 font-serif italic text-ivory leading-[1.02]"
                   style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
                 >
-                  Let's Inspire the<br />Next Generation Together.
+                  Let's Inspire the
+                  <br />
+                  Next Generation Together.
                 </h2>
                 <p className="mt-10 text-lg md:text-xl text-ivory-muted leading-[1.75]">
-                  Meaningful conservation begins with curiosity — and
-                  curiosity begins the moment a young person learns to
-                  <em> truly see </em> the natural world. A single walk, a
-                  single photograph, a single quiet minute of attention can
-                  change what a child cares about for the rest of their life.
+                  Meaningful conservation begins with curiosity — and curiosity begins the moment a
+                  young person learns to
+                  <em> truly see </em> the natural world. A single walk, a single photograph, a
+                  single quiet minute of attention can change what a child cares about for the rest
+                  of their life.
                 </p>
                 <p className="mt-6 text-lg text-ivory-muted leading-[1.75]">
-                  Every program is shaped around your students. The best
-                  visits begin as conversations — tell us a little about your
-                  school or organization and Paul will design the experience
-                  with you.
+                  Every program is shaped around your students. The best visits begin as
+                  conversations — tell us a little about your school or organization and Paul will
+                  design the experience with you.
                 </p>
                 <div className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-6">
                   <Link

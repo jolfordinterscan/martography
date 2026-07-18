@@ -6,7 +6,10 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Martography" },
-      { name: "description", content: "Contact Paul Marto for prints, commissions, speaking, and press inquiries." },
+      {
+        name: "description",
+        content: "Contact Paul Marto for prints, commissions, speaking, and press inquiries.",
+      },
     ],
   }),
   component: Contact,
@@ -33,17 +36,26 @@ function Contact() {
             ].map((c) => (
               <div key={c.t}>
                 <div className="eyebrow text-bronze">{c.t}</div>
-                <a href={`mailto:${c.d}`} className="mt-2 font-serif text-2xl text-ivory block hover:text-bronze transition-colors">{c.d}</a>
+                <a
+                  href={`mailto:${c.d}`}
+                  className="mt-2 font-serif text-2xl text-ivory block hover:text-bronze transition-colors"
+                >
+                  {c.d}
+                </a>
               </div>
             ))}
             <div className="pt-8 border-t border-border text-sm leading-relaxed">
-              Martography Studio<br />
+              Martography Studio
+              <br />
               Field correspondence returned within 5 business days.
             </div>
           </div>
 
           <form
-            onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSent(true);
+            }}
             className="space-y-8"
           >
             {[
@@ -75,7 +87,9 @@ function Contact() {
                 {sent ? "Message Sent" : "Send Message"}
               </button>
               {sent && (
-                <p className="mt-4 text-sm text-bronze">Thank you — Paul will be in touch shortly.</p>
+                <p className="mt-4 text-sm text-bronze">
+                  Thank you — Paul will be in touch shortly.
+                </p>
               )}
             </div>
           </form>

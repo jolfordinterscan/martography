@@ -6,12 +6,7 @@
 //  so the store can be swapped for a real DB with minimal changes.
 // =====================================================================
 
-export type Category =
-  | "Birds"
-  | "Mammals"
-  | "Wildlife Behavior"
-  | "Conservation"
-  | "Fine Art";
+export type Category = "Birds" | "Mammals" | "Wildlife Behavior" | "Conservation" | "Fine Art";
 
 export type Collection =
   | "Signature Collection"
@@ -40,14 +35,7 @@ export const CATEGORIES: Category[] = [
 
 export type Orientation = "Horizontal" | "Vertical" | "Square";
 export type EditionType = "Open" | "Limited";
-export type PrintSize =
-  | '8x10'
-  | '11x14'
-  | '16x24'
-  | '20x30'
-  | '24x36'
-  | '30x45'
-  | '40x60';
+export type PrintSize = "8x10" | "11x14" | "16x24" | "20x30" | "24x36" | "30x45" | "40x60";
 
 export const PRINT_SIZES: PrintSize[] = [
   "8x10",
@@ -211,8 +199,7 @@ export const catalog: CatalogPhotograph[] = [
     storyTitle: "Eye Contact",
     storyText:
       "A bobcat emerges from the grass at the edge of last light. For a single held breath, she looks straight through the lens — recognizing something, not fearing it.",
-    description:
-      "Close portrait of an adult bobcat with orange eyes, framed by golden grasses.",
+    description: "Close portrait of an adult bobcat with orange eyes, framed by golden grasses.",
     location: "Orange County, California",
     datePhotographed: "2024-03-14",
     exif: {
@@ -344,8 +331,7 @@ export const catalog: CatalogPhotograph[] = [
     storyTitle: "Ember",
     storyText:
       "Two young foxes cross paths in the last minute of sun. They held the light for four breaths, then were gone.",
-    description:
-      "A pair of red foxes facing each other, warm side-light, soft golden background.",
+    description: "A pair of red foxes facing each other, warm side-light, soft golden background.",
     location: "Southern California",
     datePhotographed: "2024-02-09",
     exif: {
@@ -386,8 +372,7 @@ export const catalog: CatalogPhotograph[] = [
     storyTitle: "The Nest",
     storyText:
       "A mother returns to a nest the size of a walnut. Two chicks, no larger than jellybeans, wait for her every ten minutes.",
-    description:
-      "An Anna's hummingbird at a lichen-camouflaged nest with two chicks.",
+    description: "An Anna's hummingbird at a lichen-camouflaged nest with two chicks.",
     location: "Southern California",
     datePhotographed: "2024-03-27",
     exif: {
@@ -419,8 +404,7 @@ export const catalog: CatalogPhotograph[] = [
       blogStory: true,
       featuredPhotograph: true,
     },
-    notes:
-      "Customer note: two collectors have inquired about a 24x36 metal print of this image.",
+    notes: "Customer note: two collectors have inquired about a 24x36 metal print of this image.",
   },
 ];
 

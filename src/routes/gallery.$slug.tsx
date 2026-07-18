@@ -12,7 +12,9 @@ export const Route = createFileRoute("/gallery/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Photograph — Martography" }, { name: "robots", content: "noindex" }] };
+      return {
+        meta: [{ title: "Photograph — Martography" }, { name: "robots", content: "noindex" }],
+      };
     }
     const { photo } = loaderData;
     return {
@@ -35,7 +37,9 @@ export const Route = createFileRoute("/gallery/$slug")({
       <div className="text-center">
         <div className="eyebrow">Not Found</div>
         <h1 className="mt-4 font-serif text-5xl text-ivory">Photograph unavailable</h1>
-        <Link to="/gallery" className="btn-ghost mt-8 inline-block">Back to Gallery</Link>
+        <Link to="/gallery" className="btn-ghost mt-8 inline-block">
+          Back to Gallery
+        </Link>
       </div>
     </div>
   ),
@@ -96,7 +100,10 @@ function PhotoDetail() {
                   { k: "Year", v: String(photo.year) },
                   { k: "Print", v: photo.printAvailable ? "Available as edition" : "Archive only" },
                 ].map((row) => (
-                  <div key={row.k} className="flex justify-between gap-6 border-b border-border pb-3">
+                  <div
+                    key={row.k}
+                    className="flex justify-between gap-6 border-b border-border pb-3"
+                  >
                     <dt className="eyebrow">{row.k}</dt>
                     <dd className="text-ivory text-right">{row.v}</dd>
                   </div>
@@ -125,7 +132,10 @@ function PhotoDetail() {
 
           <Reveal>
             <div>
-              <div className="eyebrow"><span className="rule-bronze mr-3" />The Story</div>
+              <div className="eyebrow">
+                <span className="rule-bronze mr-3" />
+                The Story
+              </div>
               <div
                 className="mt-10 space-y-8 text-ivory-muted leading-[1.75] font-light"
                 style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.25rem)" }}
@@ -144,7 +154,10 @@ function PhotoDetail() {
       <section className="py-32 md:py-40">
         <div className="container-editorial">
           <Reveal>
-            <div className="eyebrow mb-14"><span className="rule-bronze mr-3" />Elsewhere in the Archive</div>
+            <div className="eyebrow mb-14">
+              <span className="rule-bronze mr-3" />
+              Elsewhere in the Archive
+            </div>
           </Reveal>
           <div className="grid gap-10 md:gap-14 md:grid-cols-3">
             {others.map((o, i) => (

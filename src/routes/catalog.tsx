@@ -92,14 +92,8 @@ function CatalogPage() {
           <div className="flex items-baseline gap-8 text-ivory-muted">
             <Stat label="Photographs" value={all.length} />
             <Stat label="Showing" value={filtered.length} />
-            <Stat
-              label="For Print"
-              value={all.filter((p) => p.print.availableForPrint).length}
-            />
-            <Stat
-              label="Awarded"
-              value={all.filter((p) => p.marketing.awardWinner).length}
-            />
+            <Stat label="For Print" value={all.filter((p) => p.print.availableForPrint).length} />
+            <Stat label="Awarded" value={all.filter((p) => p.marketing.awardWinner).length} />
           </div>
         </div>
 
@@ -167,14 +161,10 @@ function CatalogPage() {
                     key={p.artworkId}
                     onClick={() => setSelectedId(p.artworkId)}
                     className={`w-full text-left grid grid-cols-[80px_1fr_1fr_120px_100px_80px] items-center border-b border-border/60 transition-colors ${
-                      isActive
-                        ? "bg-bronze/10"
-                        : "hover:bg-charcoal/60"
+                      isActive ? "bg-bronze/10" : "hover:bg-charcoal/60"
                     }`}
                   >
-                    <div className="px-4 py-4 font-mono text-xs text-bronze">
-                      {p.artworkId}
-                    </div>
+                    <div className="px-4 py-4 font-mono text-xs text-bronze">{p.artworkId}</div>
                     <div className="px-4 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 shrink-0 overflow-hidden border border-border">
@@ -214,9 +204,7 @@ function CatalogPage() {
                     </div>
                     <div className="px-4 py-4 flex flex-wrap gap-1">
                       {p.heroImage && <Dot title="Hero" className="bg-bronze" />}
-                      {p.homepageFeature && (
-                        <Dot title="Homepage" className="bg-ivory" />
-                      )}
+                      {p.homepageFeature && <Dot title="Homepage" className="bg-ivory" />}
                       {p.marketing.awardWinner && (
                         <Dot title="Award winner" className="bg-forest" />
                       )}
@@ -255,9 +243,7 @@ function DetailPanel({ entry }: { entry: CatalogPhotograph }) {
       <div className="p-6 space-y-6 max-h-[65vh] overflow-y-auto">
         <div>
           <div className="font-mono text-xs text-bronze">{entry.artworkId}</div>
-          <h2 className="mt-2 font-serif text-3xl text-ivory leading-tight">
-            {entry.title}
-          </h2>
+          <h2 className="mt-2 font-serif text-3xl text-ivory leading-tight">{entry.title}</h2>
           <div className="mt-1 text-sm text-ivory-muted italic">
             {entry.species} · {entry.category}
           </div>
@@ -265,25 +251,17 @@ function DetailPanel({ entry }: { entry: CatalogPhotograph }) {
             <Badge tone="bronze">{entry.collection}</Badge>
             {entry.heroImage && <Badge tone="ivory">Hero</Badge>}
             {entry.featuredCollection && <Badge tone="ivory">Featured</Badge>}
-            {entry.marketing.awardWinner && (
-              <Badge tone="forest">Award</Badge>
-            )}
-            {entry.marketing.featuredPhotograph && (
-              <Badge tone="forest">Signature</Badge>
-            )}
+            {entry.marketing.awardWinner && <Badge tone="forest">Award</Badge>}
+            {entry.marketing.featuredPhotograph && <Badge tone="forest">Signature</Badge>}
           </div>
         </div>
 
         {entry.storyText && (
           <Section title="Story">
             {entry.storyTitle && (
-              <div className="font-serif text-lg text-ivory italic mb-2">
-                {entry.storyTitle}
-              </div>
+              <div className="font-serif text-lg text-ivory italic mb-2">{entry.storyTitle}</div>
             )}
-            <p className="text-sm text-ivory-muted leading-relaxed">
-              {entry.storyText}
-            </p>
+            <p className="text-sm text-ivory-muted leading-relaxed">{entry.storyText}</p>
           </Section>
         )}
 
@@ -314,9 +292,7 @@ function DetailPanel({ entry }: { entry: CatalogPhotograph }) {
                 )}
                 {entry.print.signed && <Badge tone="muted">Signed</Badge>}
                 {entry.print.numbered && <Badge tone="muted">Numbered</Badge>}
-                {entry.print.certificateOfAuthenticity && (
-                  <Badge tone="muted">COA</Badge>
-                )}
+                {entry.print.certificateOfAuthenticity && <Badge tone="muted">COA</Badge>}
               </div>
               <div className="flex flex-wrap gap-1.5 mb-4">
                 {entry.print.framedAvailable && <Badge tone="ivory">Framed</Badge>}
@@ -451,21 +427,10 @@ function Badge({
 }
 
 function Dot({ title, className }: { title: string; className: string }) {
-  return (
-    <span
-      title={title}
-      className={`inline-block w-1.5 h-1.5 rounded-full ${className}`}
-    />
-  );
+  return <span title={title} className={`inline-block w-1.5 h-1.5 rounded-full ${className}`} />;
 }
 
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
       <div className="eyebrow text-bronze mb-3">
@@ -500,9 +465,7 @@ function FlagGrid({ flags }: { flags: Array<[string, boolean]> }) {
         <div
           key={k}
           className={`flex items-center gap-2 text-xs px-2.5 py-1.5 border ${
-            v
-              ? "border-bronze/50 text-ivory bg-bronze/5"
-              : "border-border text-ivory-muted/60"
+            v ? "border-bronze/50 text-ivory bg-bronze/5" : "border-border text-ivory-muted/60"
           }`}
         >
           <span

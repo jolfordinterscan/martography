@@ -4,13 +4,7 @@ import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
 import { getPrint } from "@/data/prints";
 
-const SIZES = [
-  '16" × 24"',
-  '20" × 30"',
-  '24" × 36"',
-  '30" × 45"',
-  '40" × 60"',
-] as const;
+const SIZES = ['16" × 24"', '20" × 30"', '24" × 36"', '30" × 45"', '40" × 60"'] as const;
 
 export const Route = createFileRoute("/prints/$slug")({
   loader: ({ params }) => {
@@ -25,7 +19,11 @@ export const Route = createFileRoute("/prints/$slug")({
     return {
       meta: [
         { title: `${title} — Martography` },
-        { name: "description", content: "A limited-edition fine art print by Paul Marto. Inquire for size, framing, and pricing." },
+        {
+          name: "description",
+          content:
+            "A limited-edition fine art print by Paul Marto. Inquire for size, framing, and pricing.",
+        },
       ],
     };
   },
@@ -33,7 +31,9 @@ export const Route = createFileRoute("/prints/$slug")({
     <div className="pt-40 pb-32 container-editorial text-center">
       <div className="eyebrow text-bronze">Not Found</div>
       <h1 className="mt-6 font-serif text-5xl text-ivory">This print could not be located.</h1>
-      <Link to="/prints" className="btn-primary mt-10 inline-block">Return to the collection</Link>
+      <Link to="/prints" className="btn-primary mt-10 inline-block">
+        Return to the collection
+      </Link>
     </div>
   ),
   component: PrintDetail,
@@ -45,13 +45,17 @@ function PrintDetail() {
   const [open, setOpen] = useState(false);
 
   const displayTitle =
-    print.title === "Untitled — Pending Artist Title" ? "Title Pending Artist Approval" : print.title;
-
+    print.title === "Untitled — Pending Artist Title"
+      ? "Title Pending Artist Approval"
+      : print.title;
 
   return (
     <>
       <div className="pt-32 pb-6 container-editorial">
-        <Link to="/prints" className="text-xs tracking-[0.25em] uppercase text-ivory/60 hover:text-bronze">
+        <Link
+          to="/prints"
+          className="text-xs tracking-[0.25em] uppercase text-ivory/60 hover:text-bronze"
+        >
           ← The Collection
         </Link>
       </div>
@@ -61,16 +65,11 @@ function PrintDetail() {
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-20 items-start">
             <div className="lg:col-span-7">
               <Reveal>
-                <Placeholder
-                  subject={print.subject}
-                  filename={print.filename}
-                  natural
-                />
+                <Placeholder subject={print.subject} filename={print.filename} natural />
                 <p className="mt-5 text-xs tracking-[0.3em] uppercase text-ivory/50">
                   {print.species}
                 </p>
               </Reveal>
-
             </div>
 
             <div className="lg:col-span-5 lg:pt-6">
@@ -277,7 +276,10 @@ function InquiryDialog({ artworkTitle, species, selectedSize, onClose }: Inquiry
         {sent ? (
           <div className="p-10 sm:p-14 text-center">
             <div className="eyebrow text-bronze">Inquiry Sent</div>
-            <h2 id="inquiry-title" className="mt-6 font-serif italic text-ivory text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.1]">
+            <h2
+              id="inquiry-title"
+              className="mt-6 font-serif italic text-ivory text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.1]"
+            >
               Thank you.
             </h2>
             <p className="mt-6 font-serif italic text-ivory-muted text-lg leading-[1.55]">
@@ -293,22 +295,43 @@ function InquiryDialog({ artworkTitle, species, selectedSize, onClose }: Inquiry
         ) : (
           <form onSubmit={submit} className="p-8 sm:p-10">
             <div className="eyebrow text-bronze">Collector Inquiry</div>
-            <h2 id="inquiry-title" className="mt-4 font-serif italic text-ivory text-3xl leading-[1.1]">
+            <h2
+              id="inquiry-title"
+              className="mt-4 font-serif italic text-ivory text-3xl leading-[1.1]"
+            >
               Request This Print
             </h2>
 
             <div className="mt-6 border border-border p-4 space-y-1.5 text-sm">
-              <div className="flex justify-between gap-4"><span className="text-ivory/55 eyebrow">Artwork</span><span className="font-serif text-ivory text-right">{artworkTitle}</span></div>
-              <div className="flex justify-between gap-4"><span className="text-ivory/55 eyebrow">Size</span><span className="font-serif text-ivory">{selectedSize}</span></div>
+              <div className="flex justify-between gap-4">
+                <span className="text-ivory/55 eyebrow">Artwork</span>
+                <span className="font-serif text-ivory text-right">{artworkTitle}</span>
+              </div>
+              <div className="flex justify-between gap-4">
+                <span className="text-ivory/55 eyebrow">Size</span>
+                <span className="font-serif text-ivory">{selectedSize}</span>
+              </div>
             </div>
 
             <div className="mt-6 space-y-4">
               <Field label="Full name" value={name} onChange={setName} required maxLength={100} />
               <div className="grid sm:grid-cols-2 gap-4">
-                <Field label="Email" type="email" value={email} onChange={setEmail} required maxLength={255} />
+                <Field
+                  label="Email"
+                  type="email"
+                  value={email}
+                  onChange={setEmail}
+                  required
+                  maxLength={255}
+                />
                 <Field label="Phone" type="tel" value={phone} onChange={setPhone} maxLength={40} />
               </div>
-              <Field label="Shipping city / state" value={cityState} onChange={setCityState} maxLength={120} />
+              <Field
+                label="Shipping city / state"
+                value={cityState}
+                onChange={setCityState}
+                maxLength={120}
+              />
 
               <label className="block">
                 <span className="eyebrow text-ivory/55 block mb-2">Framing interest</span>
@@ -338,9 +361,7 @@ function InquiryDialog({ artworkTitle, species, selectedSize, onClose }: Inquiry
               </label>
             </div>
 
-            {error && (
-              <p className="mt-4 text-sm text-bronze">{error}</p>
-            )}
+            {error && <p className="mt-4 text-sm text-bronze">{error}</p>}
 
             <p className="mt-5 text-[10px] tracking-[0.28em] uppercase text-ivory/45">
               Sent to info@martography.co
@@ -369,15 +390,25 @@ function InquiryDialog({ artworkTitle, species, selectedSize, onClose }: Inquiry
 }
 
 function Field({
-  label, value, onChange, type = "text", required, maxLength,
+  label,
+  value,
+  onChange,
+  type = "text",
+  required,
+  maxLength,
 }: {
-  label: string; value: string; onChange: (v: string) => void;
-  type?: string; required?: boolean; maxLength?: number;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: string;
+  required?: boolean;
+  maxLength?: number;
 }) {
   return (
     <label className="block">
       <span className="eyebrow text-ivory/55 block mb-2">
-        {label}{required && <span className="text-bronze"> *</span>}
+        {label}
+        {required && <span className="text-bronze"> *</span>}
       </span>
       <input
         type={type}

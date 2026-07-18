@@ -90,7 +90,10 @@
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-serif);
     font-weight: 400;
     letter-spacing: -0.01em;
@@ -182,7 +185,9 @@
   letter-spacing: 0.3em;
   text-transform: uppercase;
   transition: background 250ms ease;
-  &:hover { background: color-mix(in oklab, var(--bronze), black 8%); }
+  &:hover {
+    background: color-mix(in oklab, var(--bronze), black 8%);
+  }
 }
 
 @utility btn-back {
@@ -195,7 +200,9 @@
   text-transform: uppercase;
   border: 1px solid var(--border);
   transition: border-color 250ms ease;
-  &:hover { border-color: var(--bronze); }
+  &:hover {
+    border-color: var(--bronze);
+  }
 }
 
 @utility container-editorial {
@@ -212,16 +219,30 @@
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes slow-zoom {
-  from { transform: scale(1.05); }
-  to { transform: scale(1); }
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 @utility animate-fade-up {

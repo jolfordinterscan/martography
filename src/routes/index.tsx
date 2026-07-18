@@ -171,7 +171,6 @@ function Home() {
         </div>
       </section>
 
-
       {/* ══════════════════════════════════════════════════════════════
           II. CURATOR'S NOTE — a quiet editorial introduction.
          ══════════════════════════════════════════════════════════════ */}
@@ -180,18 +179,17 @@ function Home() {
           <Reveal>
             <div className="max-w-4xl mx-auto text-center">
               <div className="eyebrow text-bronze justify-center flex items-center">
-                <span className="rule-bronze mr-3" />
-                A Note from the Photographer
+                <span className="rule-bronze mr-3" />A Note from the Photographer
               </div>
               <p
                 className="mt-14 font-serif text-ivory leading-[1.22] tracking-[-0.01em]"
                 style={{ fontSize: "clamp(1.75rem, 4.2vw, 3.5rem)" }}
               >
-                Every image on this site represents patience, respect for
-                wildlife, and the belief that{" "}
+                Every image on this site represents patience, respect for wildlife, and the belief
+                that{" "}
                 <span className="italic text-ivory-muted">
-                  nature's most extraordinary stories reveal themselves only
-                  to those willing to wait.
+                  nature's most extraordinary stories reveal themselves only to those willing to
+                  wait.
                 </span>
               </p>
               <div className="mt-16 flex flex-col items-center gap-8">
@@ -366,15 +364,16 @@ function Home() {
                 className="mt-10 font-serif text-ivory leading-[0.98] tracking-[-0.02em]"
                 style={{ fontSize: "clamp(2.75rem, 7.5vw, 7rem)" }}
               >
-                Dinner<br />
+                Dinner
+                <br />
                 <span className="italic text-ivory-muted">Is Served.</span>
               </h2>
               <p
                 className="mt-10 md:mt-12 mx-auto font-serif italic text-ivory-muted max-w-2xl leading-[1.5]"
                 style={{ fontSize: "clamp(1.15rem, 1.6vw, 1.5rem)" }}
               >
-                Eleven mornings of waiting for a single four-second exchange —
-                and the small, bright life it was meant to feed.
+                Eleven mornings of waiting for a single four-second exchange — and the small, bright
+                life it was meant to feed.
               </p>
               <div className="mt-12 flex items-center justify-center gap-6 eyebrow text-ivory-muted/80">
                 <span>Words &amp; Photograph · Paul Marto</span>
@@ -397,9 +396,7 @@ function Home() {
                 tone="deep"
               />
               <figcaption className="mt-8 grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-baseline gap-6 md:gap-10 border-t border-border pt-6">
-                <span className="eyebrow text-ivory-muted">
-                  Greater Roadrunner with lizard
-                </span>
+                <span className="eyebrow text-ivory-muted">Greater Roadrunner with lizard</span>
                 <span className="hidden md:block w-8 h-px bg-bronze/60 justify-self-center" />
                 <span className="eyebrow text-ivory-muted/70 md:text-right">
                   Sonoran Desert · 06:14
@@ -412,19 +409,16 @@ function Home() {
           <Reveal>
             <div className="max-w-2xl mx-auto mt-24 md:mt-32">
               <p className="font-serif text-ivory text-xl md:text-2xl leading-[1.75] first-letter:font-serif first-letter:text-6xl md:first-letter:text-7xl first-letter:float-left first-letter:mr-4 first-letter:mt-1 first-letter:text-bronze first-letter:leading-[0.85]">
-                For eleven mornings, Paul returned to the same ironwood at
-                the edge of the arroyo — camera set low, breath held, the
-                desert cooling around him before first light. He watched a
-                pair of adults move through the mesquite in silhouette, and
-                he learned the shape of their route without ever seeing what
-                they carried home.
+                For eleven mornings, Paul returned to the same ironwood at the edge of the arroyo —
+                camera set low, breath held, the desert cooling around him before first light. He
+                watched a pair of adults move through the mesquite in silhouette, and he learned the
+                shape of their route without ever seeing what they carried home.
               </p>
               <p className="mt-8 font-serif text-ivory-muted text-lg md:text-xl leading-[1.8]">
-                On the twelfth morning, at 06:14, one of them arrived with a
-                lizard held crosswise in its beak — crest raised, eye lit
-                copper by a sun that had not yet cleared the ridge. The
-                exchange lasted less than four seconds. What the frame keeps
-                is not the hunt, but the errand: a parent, arriving.
+                On the twelfth morning, at 06:14, one of them arrived with a lizard held crosswise
+                in its beak — crest raised, eye lit copper by a sun that had not yet cleared the
+                ridge. The exchange lasted less than four seconds. What the frame keeps is not the
+                hunt, but the errand: a parent, arriving.
               </p>
             </div>
           </Reveal>
@@ -443,9 +437,8 @@ function Home() {
                 className="mt-2 font-serif italic text-ivory text-center leading-[1.4]"
                 style={{ fontSize: "clamp(1.5rem, 2.6vw, 2.4rem)" }}
               >
-                Some wildlife moments last only a fraction of a second.
-                Others require hours of patience. The most extraordinary
-                stories unfold when no one else is watching.
+                Some wildlife moments last only a fraction of a second. Others require hours of
+                patience. The most extraordinary stories unfold when no one else is watching.
               </blockquote>
               <figcaption className="mt-8 eyebrow text-ivory-muted text-center">
                 <span className="rule-bronze mr-3 inline-block align-middle" />
@@ -468,7 +461,6 @@ function Home() {
           </Reveal>
         </div>
       </section>
-
 
       {/* ══════════════════════════════════════════════════════════════
           V. FINE ART PRINTS — a curated hang, not a shop.
@@ -588,9 +580,8 @@ function Home() {
                 className="max-w-xl font-serif italic text-ivory-muted leading-[1.5]"
                 style={{ fontSize: "clamp(1.05rem, 1.5vw, 1.35rem)" }}
               >
-                Archival fine art prints, hand-signed and numbered by Paul.
-                Paper, edition sizes, and pricing will be announced with the
-                collection release.
+                Archival fine art prints, hand-signed and numbered by Paul. Paper, edition sizes,
+                and pricing will be announced with the collection release.
               </p>
               <Link
                 to="/prints"
@@ -607,10 +598,7 @@ function Home() {
       {/* ══════════════════════════════════════════════════════════════
           VI. BEHIND THE PHOTOGRAPH — an editorial pause before the prints.
          ══════════════════════════════════════════════════════════════ */}
-      <section
-        aria-label="Behind the Photograph"
-        className="py-40 md:py-56 border-t border-border"
-      >
+      <section aria-label="Behind the Photograph" className="py-40 md:py-56 border-t border-border">
         {/* Masthead — quiet, centered, museum wall label */}
         <div className="container-editorial">
           <Reveal>
@@ -648,9 +636,7 @@ function Home() {
             <figcaption className="container-editorial mt-6">
               <div className="flex items-center gap-6 text-ivory-muted">
                 <span className="block h-px w-12 bg-bronze/60" />
-                <span className="eyebrow">
-                  Greater Roadrunner · Field Observation
-                </span>
+                <span className="eyebrow">Greater Roadrunner · Field Observation</span>
               </div>
             </figcaption>
           </figure>
@@ -666,30 +652,23 @@ function Home() {
               >
                 Some photographs happen in an instant.
                 <br />
-                <span className="text-ivory-muted italic">
-                  Others require hours of patience.
-                </span>
+                <span className="text-ivory-muted italic">Others require hours of patience.</span>
               </p>
               <p
                 className="mt-10 text-ivory-muted leading-[1.85] font-light"
                 style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.2rem)" }}
               >
-                <span className="font-serif italic text-ivory">
-                  Dinner Is Served
-                </span>{" "}
-                captures one of those fleeting moments — a roadrunner
-                returning with food for its young. The image is more than a
-                wildlife photograph; it is a reminder that the greatest
-                stories in nature often unfold in silence and disappear just
-                as quickly.
+                <span className="font-serif italic text-ivory">Dinner Is Served</span> captures one
+                of those fleeting moments — a roadrunner returning with food for its young. The
+                image is more than a wildlife photograph; it is a reminder that the greatest stories
+                in nature often unfold in silence and disappear just as quickly.
               </p>
               <p
                 className="mt-8 text-ivory-muted leading-[1.85] font-light"
                 style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.2rem)" }}
               >
-                Every photograph in the Martography collection represents
-                patience, observation, and deep respect for the wildlife
-                being photographed.
+                Every photograph in the Martography collection represents patience, observation, and
+                deep respect for the wildlife being photographed.
               </p>
 
               <div className="mt-16 text-center">
@@ -734,17 +713,14 @@ function Home() {
                 >
                   Storytelling in
                   <br />
-                  <span className="italic text-ivory-muted">
-                    service of the wild.
-                  </span>
+                  <span className="italic text-ivory-muted">service of the wild.</span>
                 </h2>
                 <p
                   className="mt-10 max-w-lg text-ivory-muted leading-[1.75] font-light"
                   style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.2rem)" }}
                 >
-                  School programs, speaking engagements, and conservation
-                  partnerships built around a single idea — when a story is
-                  told well, protection follows.
+                  School programs, speaking engagements, and conservation partnerships built around
+                  a single idea — when a story is told well, protection follows.
                 </p>
 
                 {/* Programme areas — read as an editorial line, not a stat grid */}
@@ -830,67 +806,58 @@ function Home() {
                   className="font-serif italic text-ivory-muted leading-[1.45]"
                   style={{ fontSize: "clamp(1.35rem, 2.2vw, 1.9rem)" }}
                 >
-                  Some photographs happen in an instant. Others take hours — or
-                  even days — of patience, observation, and quiet persistence.
-                  For Paul Marto, those moments are what wildlife photography
-                  is all about.
+                  Some photographs happen in an instant. Others take hours — or even days — of
+                  patience, observation, and quiet persistence. For Paul Marto, those moments are
+                  what wildlife photography is all about.
                 </p>
 
                 <p
                   className="mt-10 text-ivory-muted leading-[1.85] font-light first-letter:font-serif first-letter:text-bronze first-letter:text-6xl first-letter:leading-none first-letter:float-left first-letter:mr-3 first-letter:mt-1"
                   style={{ fontSize: "clamp(1rem, 1.2vw, 1.15rem)" }}
                 >
-                  A lifelong photographer whose passion began in the early
-                  1980s, Paul has spent decades documenting the remarkable
-                  wildlife that thrives throughout California. Raised in the
-                  natural beauty of Carmel Valley and now based in Orange
-                  County, he developed a deep appreciation for the animals
-                  that share our landscapes — many of which go unnoticed by
-                  those who pass them every day.
+                  A lifelong photographer whose passion began in the early 1980s, Paul has spent
+                  decades documenting the remarkable wildlife that thrives throughout California.
+                  Raised in the natural beauty of Carmel Valley and now based in Orange County, he
+                  developed a deep appreciation for the animals that share our landscapes — many of
+                  which go unnoticed by those who pass them every day.
                 </p>
 
                 <p
                   className="mt-8 text-ivory-muted leading-[1.85] font-light"
                   style={{ fontSize: "clamp(1rem, 1.2vw, 1.15rem)" }}
                 >
-                  Rather than simply photographing wildlife, Paul seeks to
-                  capture behavior, emotion, and the fleeting interactions
-                  that reveal an animal's true character. Whether it's a
-                  bobcat emerging silently from the brush, a roadrunner
-                  returning to its nest with a meal, or a hummingbird
-                  nurturing its young, every photograph represents patience,
-                  preparation, and respect for the natural world.
+                  Rather than simply photographing wildlife, Paul seeks to capture behavior,
+                  emotion, and the fleeting interactions that reveal an animal's true character.
+                  Whether it's a bobcat emerging silently from the brush, a roadrunner returning to
+                  its nest with a meal, or a hummingbird nurturing its young, every photograph
+                  represents patience, preparation, and respect for the natural world.
                 </p>
 
                 <p
                   className="mt-8 text-ivory-muted leading-[1.85] font-light"
                   style={{ fontSize: "clamp(1rem, 1.2vw, 1.15rem)" }}
                 >
-                  His work has been recognized by organizations including
-                  National Geographic, the Bolsa Chica Conservancy, the Sea
-                  &amp; Sage Audubon Society, the Environmental Nature Center,
-                  The Orange County Register, Irvine World News, and Irvine
-                  Valley College. His photography has also earned honors in
-                  juried exhibitions, regional competitions, and community
-                  showcases throughout Southern California.
+                  His work has been recognized by organizations including National Geographic, the
+                  Bolsa Chica Conservancy, the Sea &amp; Sage Audubon Society, the Environmental
+                  Nature Center, The Orange County Register, Irvine World News, and Irvine Valley
+                  College. His photography has also earned honors in juried exhibitions, regional
+                  competitions, and community showcases throughout Southern California.
                 </p>
 
                 <p
                   className="mt-10 font-serif italic text-ivory leading-[1.5]"
                   style={{ fontSize: "clamp(1.15rem, 1.6vw, 1.4rem)" }}
                 >
-                  More important than awards, however, is the mission behind
-                  the work.
+                  More important than awards, however, is the mission behind the work.
                 </p>
 
                 <p
                   className="mt-8 text-ivory-muted leading-[1.85] font-light"
                   style={{ fontSize: "clamp(1rem, 1.2vw, 1.15rem)" }}
                 >
-                  Paul believes wildlife photography should inspire people to
-                  slow down, observe more carefully, and develop a deeper
-                  appreciation for the incredible animals that live alongside
-                  us.
+                  Paul believes wildlife photography should inspire people to slow down, observe
+                  more carefully, and develop a deeper appreciation for the incredible animals that
+                  live alongside us.
                 </p>
               </div>
             </Reveal>
@@ -910,14 +877,12 @@ function Home() {
                 className="-mt-6 font-serif italic text-ivory leading-[1.35] tracking-[-0.01em]"
                 style={{ fontSize: "clamp(1.75rem, 3.4vw, 3rem)" }}
               >
-                Through my photography, I hope to bring awareness to the
-                incredible collection of wildlife that calls Southern
-                California home. The more we understand these remarkable
-                animals and the habitats they depend on, the better prepared
-                we are to live alongside them. My goal is to create
-                photographs that inspire, educate, and encourage others to
-                see the natural world with greater curiosity, appreciation,
-                and respect.
+                Through my photography, I hope to bring awareness to the incredible collection of
+                wildlife that calls Southern California home. The more we understand these
+                remarkable animals and the habitats they depend on, the better prepared we are to
+                live alongside them. My goal is to create photographs that inspire, educate, and
+                encourage others to see the natural world with greater curiosity, appreciation, and
+                respect.
               </blockquote>
               <figcaption className="mt-12 flex items-center justify-center gap-5 text-ivory-muted">
                 <span className="block h-px w-12 bg-bronze/60" />
@@ -942,9 +907,7 @@ function Home() {
                   >
                     Featured &amp; honored
                     <br />
-                    <span className="italic text-ivory-muted">
-                      by institutions
-                    </span>
+                    <span className="italic text-ivory-muted">by institutions</span>
                     <br />
                     across California.
                   </h3>
@@ -961,10 +924,7 @@ function Home() {
                     "Irvine Valley College",
                     "City of Irvine 40th Anniversary Photo Contest",
                   ].map((name) => (
-                    <li
-                      key={name}
-                      className="py-6 md:py-7 flex items-baseline gap-6"
-                    >
+                    <li key={name} className="py-6 md:py-7 flex items-baseline gap-6">
                       <span
                         className="font-serif text-bronze/70 tabular-nums"
                         style={{ fontSize: "0.95rem" }}
@@ -1013,17 +973,14 @@ function Home() {
               >
                 A quiet letter,
                 <br />
-                <span className="italic text-ivory-muted">
-                  four times a year.
-                </span>
+                <span className="italic text-ivory-muted">four times a year.</span>
               </h2>
               <p
                 className="mt-10 max-w-xl mx-auto text-ivory-muted leading-[1.75] font-light"
                 style={{ fontSize: "clamp(1rem, 1.2vw, 1.15rem)" }}
               >
-                A new photograph, a short story from the field, and word of the
-                next expedition. No noise, no marketing — just the archive as
-                it grows.
+                A new photograph, a short story from the field, and word of the next expedition. No
+                noise, no marketing — just the archive as it grows.
               </p>
 
               <form
@@ -1059,7 +1016,6 @@ function Home() {
           </Reveal>
         </div>
       </section>
-
     </div>
   );
 }

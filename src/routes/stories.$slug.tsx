@@ -11,7 +11,8 @@ export const Route = createFileRoute("/stories/$slug")({
     return { story };
   },
   head: ({ loaderData }) => {
-    if (!loaderData) return { meta: [{ title: "Story — Martography" }, { name: "robots", content: "noindex" }] };
+    if (!loaderData)
+      return { meta: [{ title: "Story — Martography" }, { name: "robots", content: "noindex" }] };
     const { story } = loaderData;
     return {
       meta: [
@@ -29,7 +30,9 @@ export const Route = createFileRoute("/stories/$slug")({
       <div className="text-center">
         <div className="eyebrow">Not Found</div>
         <h1 className="mt-4 font-serif text-5xl text-ivory">Story unavailable</h1>
-        <Link to="/stories" className="btn-ghost mt-8 inline-block">Back to Stories</Link>
+        <Link to="/stories" className="btn-ghost mt-8 inline-block">
+          Back to Stories
+        </Link>
       </div>
     </div>
   ),
@@ -45,13 +48,19 @@ function StoryDetail() {
       <section className="pt-32 md:pt-40 pb-12">
         <div className="container-editorial max-w-4xl">
           <Reveal>
-            <Link to="/stories" className="eyebrow text-ivory-muted hover:text-bronze transition-colors">
+            <Link
+              to="/stories"
+              className="eyebrow text-ivory-muted hover:text-bronze transition-colors"
+            >
               ← Field Journal
             </Link>
           </Reveal>
           <Reveal>
             <div className="mt-10">
-              <div className="eyebrow"><span className="rule-bronze mr-3" />Signature Story</div>
+              <div className="eyebrow">
+                <span className="rule-bronze mr-3" />
+                Signature Story
+              </div>
               <h1
                 className="mt-8 font-serif text-ivory leading-[1.02] tracking-[-0.015em]"
                 style={{ fontSize: "clamp(3rem, 7vw, 6rem)" }}
@@ -113,8 +122,15 @@ function StoryDetail() {
           {linkedPhoto && (
             <Reveal>
               <div className="mt-24 border-t border-border pt-16">
-                <div className="eyebrow mb-6"><span className="rule-bronze mr-3" />The Photograph</div>
-                <Link to="/gallery/$slug" params={{ slug: linkedPhoto.slug }} className="group block">
+                <div className="eyebrow mb-6">
+                  <span className="rule-bronze mr-3" />
+                  The Photograph
+                </div>
+                <Link
+                  to="/gallery/$slug"
+                  params={{ slug: linkedPhoto.slug }}
+                  className="group block"
+                >
                   <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] items-center">
                     <Placeholder
                       subject={linkedPhoto.title}
@@ -140,7 +156,10 @@ function StoryDetail() {
 
       <section className="py-24 md:py-32 border-t border-border">
         <div className="container-editorial">
-          <div className="eyebrow mb-14"><span className="rule-bronze mr-3" />More From the Journal</div>
+          <div className="eyebrow mb-14">
+            <span className="rule-bronze mr-3" />
+            More From the Journal
+          </div>
           <div className="grid gap-10 md:grid-cols-3">
             {others.map((o, i) => (
               <Reveal key={o.slug} delay={i * 100}>

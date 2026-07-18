@@ -1,15 +1,4 @@
 import type { CSSProperties } from "react";
-import bobcatHero from "@/assets/bobcat-hero.png.asset.json";
-import buntingImg from "@/assets/birds-bunting-in-flight.jpg.asset.json";
-import buntingSalvia from "@/assets/birds-painted-bunting-salvia.jpg.asset.json";
-import buntingPortrait from "@/assets/birds-painted-bunting-portrait.jpg.asset.json";
-import foxImg from "@/assets/mammals-fox.jpg.asset.json";
-import roadrunnerImg from "@/assets/behavior-roadrunner.jpg.asset.json";
-import hummingbirdImg from "@/assets/conservation-hummingbird-nest.jpg.asset.json";
-import dinnerImg from "@/assets/story-dinner-is-served.jpg.asset.json";
-import paulPortrait from "@/assets/about-paul-portrait.jpg.asset.json";
-import quailImg from "@/assets/birds-california-quail.jpg.asset.json";
-
 interface PlaceholderProps {
   subject: string;
   location?: string;
@@ -60,33 +49,31 @@ interface PlaceholderProps {
  *
  *  HOW TO ADD A NEW PHOTOGRAPH
  *  ---------------------------
- *  1. Upload via lovable-assets and drop the pointer in `src/assets/`.
- *  2. Import it at the top of this file.
- *  3. Map the matching filename key in `IMAGE_MAP` below to `img.url`.
+ *  1. Add the optimized image to `public/images/`.
+ *  2. Map the matching filename key in `IMAGE_MAP` below to its public path.
  * =====================================================================
  */
 
 // filename -> Martography photograph URL. Only real uploads belong here.
 const IMAGE_MAP: Record<string, string> = {
   // Homepage
-  "hero.jpg": bobcatHero.url,
+  "hero.jpg": "/images/bobcat-hero.png",
 
   // Featured Collections
-  "birds-painted-bunting.jpg": buntingSalvia.url,
-  "birds-painted-bunting-salvia.jpg": buntingSalvia.url,
-  "birds-painted-bunting-portrait.jpg": buntingPortrait.url,
-  "birds-painted-bunting-flight.jpg": buntingImg.url,
-  "birds-california-quail.jpg": quailImg.url,
-  "mammals-fox.jpg": foxImg.url,
-  "behavior-roadrunner-feeding-chick.jpg": roadrunnerImg.url,
-  "conservation-hummingbird-nest.jpg": hummingbirdImg.url,
+  "birds-painted-bunting.jpg": "/images/birds-painted-bunting-salvia.jpg",
+  "birds-painted-bunting-salvia.jpg": "/images/birds-painted-bunting-salvia.jpg",
+  "birds-painted-bunting-flight.jpg": "/images/birds-bunting-in-flight.jpg",
+  "birds-california-quail.jpg": "/images/birds-california-quail.jpg",
+  "mammals-fox.jpg": "/images/mammals-fox.jpg",
+  "behavior-roadrunner-feeding-chick.jpg": "/images/behavior-roadrunner.jpg",
+  "conservation-hummingbird-nest.jpg": "/images/conservation-hummingbird-nest.jpg",
 
   // Signature Story
-  "story-roadrunner.jpg": dinnerImg.url,
-  "story-dinner-is-served.jpg": dinnerImg.url,
+  "story-roadrunner.jpg": "/images/story-dinner-is-served.jpg",
+  "story-dinner-is-served.jpg": "/images/story-dinner-is-served.jpg",
 
   // About
-  "about-portrait.jpg": paulPortrait.url,
+  "about-portrait.jpg": "/images/about-paul-portrait.png",
 };
 
 export function Placeholder({
@@ -108,12 +95,12 @@ export function Placeholder({
     focus === "right"
       ? "right center"
       : focus === "left"
-      ? "left center"
-      : focus === "top"
-      ? "center top"
-      : focus === "bottom"
-      ? "center bottom"
-      : "center";
+        ? "left center"
+        : focus === "top"
+          ? "center top"
+          : focus === "bottom"
+            ? "center bottom"
+            : "center";
 
   if (!src) {
     return (
@@ -122,10 +109,7 @@ export function Placeholder({
         style={style}
       >
         <div className="absolute inset-0 flex items-center justify-center">
-          <div
-            className="absolute inset-6 md:inset-10 border border-bronze/25"
-            aria-hidden
-          />
+          <div className="absolute inset-6 md:inset-10 border border-bronze/25" aria-hidden />
           <div className="relative z-10 text-center px-8 max-w-[80%]">
             <div className="text-[10px] md:text-xs tracking-[0.35em] uppercase text-bronze/80">
               Martography
@@ -255,7 +239,6 @@ export function Placeholder({
         className={`absolute inset-0 w-full h-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
         style={imgStyle}
       />
-
     </div>
   );
 }

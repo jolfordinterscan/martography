@@ -8,9 +8,15 @@ export const Route = createFileRoute("/stories")({
   head: () => ({
     meta: [
       { title: "Stories — Martography" },
-      { name: "description", content: "Long-form wildlife stories and field journals by Paul Marto." },
+      {
+        name: "description",
+        content: "Long-form wildlife stories and field journals by Paul Marto.",
+      },
       { property: "og:title", content: "Stories — Martography" },
-      { property: "og:description", content: "Long-form wildlife stories and field journals by Paul Marto." },
+      {
+        property: "og:description",
+        content: "Long-form wildlife stories and field journals by Paul Marto.",
+      },
     ],
   }),
   component: Stories,
@@ -30,11 +36,7 @@ function Stories() {
         <div className="container-editorial">
           <Reveal>
             <article className="grid gap-12 lg:gap-20 lg:grid-cols-[1.5fr_1fr] items-center">
-              <Link
-                to="/stories/$slug"
-                params={{ slug: featured.slug }}
-                className="group block"
-              >
+              <Link to="/stories/$slug" params={{ slug: featured.slug }} className="group block">
                 <Placeholder
                   subject={featured.title}
                   location={featured.place}
@@ -44,7 +46,10 @@ function Stories() {
                 />
               </Link>
               <div>
-                <div className="eyebrow"><span className="rule-bronze mr-3" />Signature Story</div>
+                <div className="eyebrow">
+                  <span className="rule-bronze mr-3" />
+                  Signature Story
+                </div>
                 <h2
                   className="mt-8 font-serif text-ivory leading-[1.02] tracking-[-0.01em]"
                   style={{ fontSize: "clamp(2.75rem, 5.2vw, 5rem)" }}
@@ -70,7 +75,10 @@ function Stories() {
 
       <section className="py-24 md:py-32 border-t border-border">
         <div className="container-editorial">
-          <div className="eyebrow mb-16"><span className="rule-bronze mr-3" />From the Journal</div>
+          <div className="eyebrow mb-16">
+            <span className="rule-bronze mr-3" />
+            From the Journal
+          </div>
           <div className="divide-y divide-border">
             {archive.map((s, i) => (
               <Reveal key={s.slug} delay={i * 80}>

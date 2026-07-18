@@ -32,8 +32,7 @@ export const photographs: Photograph[] = [
     focus: "left",
     printAvailable: true,
     year: 2024,
-    story:
-      "A male painted bunting perched on a spray of purple salvia.",
+    story: "A male painted bunting perched on a spray of purple salvia.",
   },
   {
     slug: "painted-bunting-portrait",
@@ -46,8 +45,7 @@ export const photographs: Photograph[] = [
     focus: "center",
     printAvailable: true,
     year: 2024,
-    story:
-      "A formal side portrait of a male painted bunting against a clean, neutral background.",
+    story: "A formal side portrait of a male painted bunting against a clean, neutral background.",
   },
   {
     slug: "painted-bunting-in-flight",

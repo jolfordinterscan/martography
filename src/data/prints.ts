@@ -12,14 +12,14 @@ export interface PrintSize {
 
 export interface Print {
   slug: string;
-  title: string;              // "Untitled — Pending Artist Title" until confirmed
-  subject: string;            // internal descriptor for image + alt
-  species: string;            // species is factual (visible in photograph)
-  location: string | null;    // null when unconfirmed
+  title: string; // "Untitled — Pending Artist Title" until confirmed
+  subject: string; // internal descriptor for image + alt
+  species: string; // species is factual (visible in photograph)
+  location: string | null; // null when unconfirmed
   photoSlug: string;
   filename: string;
   focus?: "center" | "left" | "right" | "top" | "bottom";
-  description: string;        // editorial caption — presentational, not a factual claim
+  description: string; // editorial caption — presentational, not a factual claim
   featured?: boolean;
 }
 
@@ -29,10 +29,10 @@ const LOCATION_TBA = null;
 // A single set of standard sizes offered across the collection.
 // Actual availability per artwork is still being finalized.
 export const STANDARD_SIZES: PrintSize[] = [
-  { label: "Studio",    dimensions: '16" × 24"' },
-  { label: "Studio",    dimensions: '20" × 30"' },
-  { label: "Gallery",   dimensions: '24" × 36"' },
-  { label: "Gallery",   dimensions: '30" × 45"' },
+  { label: "Studio", dimensions: '16" × 24"' },
+  { label: "Studio", dimensions: '20" × 30"' },
+  { label: "Gallery", dimensions: '24" × 36"' },
+  { label: "Gallery", dimensions: '30" × 45"' },
   { label: "Statement", dimensions: '40" × 60"' },
 ];
 

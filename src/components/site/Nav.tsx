@@ -24,16 +24,12 @@ export function Nav() {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-charcoal-deep/85 backdrop-blur-md border-b border-border"
-          : "bg-transparent"
+        scrolled ? "bg-charcoal-deep/85 backdrop-blur-md border-b border-border" : "bg-transparent"
       }`}
     >
       <div className="container-editorial flex items-center justify-between h-20">
         <Link to="/" className="flex flex-col leading-none group">
-          <span className="font-serif text-2xl tracking-tight text-ivory">
-            Martography
-          </span>
+          <span className="font-serif text-2xl tracking-tight text-ivory">Martography</span>
           <span className="eyebrow mt-1 text-[0.6rem] tracking-[0.32em]">
             Paul Marto · Wildlife
           </span>

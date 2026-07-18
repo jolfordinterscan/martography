@@ -3,19 +3,22 @@ import { useState } from "react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
-import {
-  photographs,
-  categoryLabels,
-  type PhotoCategory,
-} from "@/data/photographs";
+import { photographs, categoryLabels, type PhotoCategory } from "@/data/photographs";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
       { title: "Gallery — Martography" },
-      { name: "description", content: "A curated gallery of wildlife photography by Paul Marto — birds, mammals, and rare behavior." },
+      {
+        name: "description",
+        content:
+          "A curated gallery of wildlife photography by Paul Marto — birds, mammals, and rare behavior.",
+      },
       { property: "og:title", content: "Gallery — Martography" },
-      { property: "og:description", content: "A curated gallery of wildlife photography by Paul Marto." },
+      {
+        property: "og:description",
+        content: "A curated gallery of wildlife photography by Paul Marto.",
+      },
     ],
   }),
   component: Gallery,
@@ -70,11 +73,7 @@ function Gallery() {
                 delay={(i % 3) * 120}
                 className={img.span ? "lg:col-span-2" : ""}
               >
-                <Link
-                  to="/gallery/$slug"
-                  params={{ slug: img.slug }}
-                  className="group block"
-                >
+                <Link to="/gallery/$slug" params={{ slug: img.slug }} className="group block">
                   <figure>
                     <Placeholder
                       subject={img.title}
@@ -90,9 +89,7 @@ function Gallery() {
                         <div className="mt-2 font-serif text-2xl md:text-3xl text-ivory transition-colors group-hover:text-bronze">
                           {img.title}
                         </div>
-                        <div className="mt-1 text-xs text-ivory-muted/70 italic">
-                          {img.species}
-                        </div>
+                        <div className="mt-1 text-xs text-ivory-muted/70 italic">{img.species}</div>
                       </div>
                     </figcaption>
                   </figure>
