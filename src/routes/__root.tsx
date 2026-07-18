@@ -85,11 +85,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         property: "og:image",
-        content: "https://martography.co/images/bobcat-hero.png",
+        content: "https://martography.co/images/bobcat-hero.jpg",
+      },
+      {
+        property: "og:image:width",
+        content: "3840",
+      },
+      {
+        property: "og:image:height",
+        content: "2561",
       },
       {
         name: "twitter:image",
-        content: "https://martography.co/images/bobcat-hero.png",
+        content: "https://martography.co/images/bobcat-hero.jpg",
       },
     ],
     links: [

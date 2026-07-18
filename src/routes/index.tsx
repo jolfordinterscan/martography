@@ -455,6 +455,7 @@ function Hero() {
           ratio=""
           className="absolute inset-0 h-full w-full !aspect-auto animate-fade-in"
           focus="right"
+          sizes="100vw"
           priority
         />
         <div
@@ -515,6 +516,7 @@ function Hero() {
           subject="Bobcat watching from the edge of tall grass"
           filename="hero.jpg"
           mode="natural"
+          sizes="100vw"
           priority
         />
         <div className="container-editorial flex items-center justify-between gap-6 pb-14 pt-5">

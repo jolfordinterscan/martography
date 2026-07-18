@@ -23,6 +23,8 @@ interface PlaceholderProps {
    * requested editorial crop on larger screens.
    */
   mode?: ImageMode;
+  /** Browser slot size used to select the most appropriate responsive source. */
+  sizes?: string;
   /** Load immediately when the image is part of the initial viewport. */
   priority?: boolean;
 }
@@ -31,6 +33,7 @@ interface ImageAsset {
   src: string;
   width: number;
   height: number;
+  webpSrcSet?: string;
 }
 
 /**
@@ -50,37 +53,56 @@ interface ImageAsset {
  */
 
 // filename -> Martography photograph URL. Only real uploads belong here.
-const bobcat: ImageAsset = { src: "/images/bobcat-hero.png", width: 4245, height: 2831 };
+const webpSrcSet = (stem: string, widths: number[]) =>
+  widths.map((width) => `/images/${stem}-${width}.webp ${width}w`).join(", ");
+
+const bobcat: ImageAsset = {
+  src: "/images/bobcat-hero.jpg",
+  width: 3840,
+  height: 2561,
+  webpSrcSet: webpSrcSet("bobcat-hero", [960, 1600, 2400, 3840]),
+};
 const bunting: ImageAsset = {
   src: "/images/birds-painted-bunting-salvia.jpg",
   width: 2841,
   height: 1894,
+  webpSrcSet: webpSrcSet("birds-painted-bunting-salvia", [960, 1600, 2400, 2841]),
 };
 const buntingFlight: ImageAsset = {
   src: "/images/birds-bunting-in-flight.jpg",
-  width: 3461,
-  height: 3461,
+  width: 3200,
+  height: 3200,
+  webpSrcSet: webpSrcSet("birds-bunting-in-flight", [960, 1600, 2400, 3200]),
 };
 const quail: ImageAsset = {
   src: "/images/birds-california-quail.jpg",
   width: 3093,
   height: 3092,
+  webpSrcSet: webpSrcSet("birds-california-quail", [960, 1600, 2400, 3093]),
 };
-const foxes: ImageAsset = { src: "/images/mammals-fox.jpg", width: 2184, height: 1456 };
+const foxes: ImageAsset = {
+  src: "/images/mammals-fox.jpg",
+  width: 2184,
+  height: 1456,
+  webpSrcSet: webpSrcSet("mammals-fox", [960, 1600, 2184]),
+};
 const roadrunners: ImageAsset = {
   src: "/images/behavior-roadrunner.jpg",
-  width: 7943,
-  height: 5296,
+  width: 3200,
+  height: 2134,
+  webpSrcSet: webpSrcSet("behavior-roadrunner", [960, 1600, 2400, 3200]),
 };
 const hummingbird: ImageAsset = {
   src: "/images/conservation-hummingbird-nest.jpg",
-  width: 9460,
-  height: 6294,
+  width: 3200,
+  height: 2129,
+  webpSrcSet: webpSrcSet("conservation-hummingbird-nest", [960, 1600, 2400, 3200]),
 };
 const paulPortrait: ImageAsset = {
   src: "/images/about-paul-portrait.png",
   width: 742,
   height: 638,
+  webpSrcSet: "/images/about-paul-portrait-742.webp 742w",
 };
 
 const IMAGE_MAP: Record<string, ImageAsset> = {
@@ -114,9 +136,12 @@ export function Placeholder({
   style,
   focus = "center",
   mode = "editorial",
+  sizes,
   priority = false,
 }: PlaceholderProps) {
   const asset = filename ? IMAGE_MAP[filename] : undefined;
+  const responsiveSizes =
+    sizes ?? (mode === "natural" ? "100vw" : "(min-width: 1024px) 50vw, 100vw");
   const objectPosition =
     focus === "right"
       ? "right center"
@@ -156,22 +181,28 @@ export function Placeholder({
   }
   if (mode === "natural") {
     return (
-      <img
-        src={asset.src}
-        alt={subject}
-        width={asset.width}
-        height={asset.height}
-        loading={priority ? "eager" : "lazy"}
-        fetchPriority={priority ? "high" : "auto"}
-        decoding="async"
-        className={className}
-        style={{
-          width: "100%",
-          height: "auto",
-          display: "block",
-          ...style,
-        }}
-      />
+      <picture className="contents">
+        {asset.webpSrcSet && (
+          <source type="image/webp" srcSet={asset.webpSrcSet} sizes={responsiveSizes} />
+        )}
+        <img
+          src={asset.src}
+          alt={subject}
+          width={asset.width}
+          height={asset.height}
+          sizes={responsiveSizes}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
+          decoding="async"
+          className={className}
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+            ...style,
+          }}
+        />
+      </picture>
     );
   }
 
@@ -183,32 +214,44 @@ export function Placeholder({
     return (
       <>
         <div className={`bg-charcoal-deep lg:hidden ${className}`} style={style}>
-          <img
-            src={asset.src}
-            alt={subject}
-            width={asset.width}
-            height={asset.height}
-            loading={priority ? "eager" : "lazy"}
-            fetchPriority={priority ? "high" : "auto"}
-            decoding="async"
-            className="block h-auto w-full"
-          />
+          <picture className="contents">
+            {asset.webpSrcSet && (
+              <source type="image/webp" srcSet={asset.webpSrcSet} sizes={responsiveSizes} />
+            )}
+            <img
+              src={asset.src}
+              alt={subject}
+              width={asset.width}
+              height={asset.height}
+              sizes={responsiveSizes}
+              loading={priority ? "eager" : "lazy"}
+              fetchPriority={priority ? "high" : "auto"}
+              decoding="async"
+              className="block h-auto w-full"
+            />
+          </picture>
         </div>
         <div
           className={`relative hidden overflow-hidden bg-charcoal-deep lg:block ${ratio} ${className}`}
           style={style}
         >
-          <img
-            src={asset.src}
-            alt={subject}
-            width={asset.width}
-            height={asset.height}
-            loading={priority ? "eager" : "lazy"}
-            fetchPriority={priority ? "high" : "auto"}
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
-            style={imgStyle}
-          />
+          <picture className="contents">
+            {asset.webpSrcSet && (
+              <source type="image/webp" srcSet={asset.webpSrcSet} sizes={responsiveSizes} />
+            )}
+            <img
+              src={asset.src}
+              alt={subject}
+              width={asset.width}
+              height={asset.height}
+              sizes={responsiveSizes}
+              loading={priority ? "eager" : "lazy"}
+              fetchPriority={priority ? "high" : "auto"}
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
+              style={imgStyle}
+            />
+          </picture>
         </div>
       </>
     );
@@ -219,17 +262,23 @@ export function Placeholder({
       className={`relative overflow-hidden bg-charcoal-deep ${ratio} ${className}`}
       style={style}
     >
-      <img
-        src={asset.src}
-        alt={subject}
-        width={asset.width}
-        height={asset.height}
-        loading={priority ? "eager" : "lazy"}
-        fetchPriority={priority ? "high" : "auto"}
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover"
-        style={imgStyle}
-      />
+      <picture className="contents">
+        {asset.webpSrcSet && (
+          <source type="image/webp" srcSet={asset.webpSrcSet} sizes={responsiveSizes} />
+        )}
+        <img
+          src={asset.src}
+          alt={subject}
+          width={asset.width}
+          height={asset.height}
+          sizes={responsiveSizes}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "auto"}
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+          style={imgStyle}
+        />
+      </picture>
     </div>
   );
 }
