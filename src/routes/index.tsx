@@ -75,17 +75,20 @@ function Home() {
     <main className="overflow-x-clip bg-charcoal-deep">
       <Hero />
 
-      <section aria-labelledby="manifesto-title" className="py-28 sm:py-36 lg:py-52">
+      <section
+        aria-labelledby="manifesto-title"
+        className="pb-32 pt-28 sm:pb-40 sm:pt-36 lg:pb-56 lg:pt-48"
+      >
         <div className="container-editorial">
           <Reveal>
-            <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-              <div className="lg:col-span-3">
+            <div className="grid gap-10 lg:grid-cols-12 lg:gap-16 xl:gap-24">
+              <div className="lg:col-span-3 lg:pt-3">
                 <h2 id="manifesto-title" className="eyebrow text-bronze">
                   <span className="rule-bronze mr-3" />A Note from the Photographer
                 </h2>
               </div>
-              <div className="lg:col-span-8 lg:col-start-5">
-                <p className="font-serif text-[clamp(1.9rem,4.2vw,3.8rem)] leading-[1.16] tracking-[-0.015em] text-ivory">
+              <div className="lg:col-span-7 lg:col-start-5">
+                <p className="max-w-[52rem] font-serif text-[clamp(1.9rem,4.1vw,3.6rem)] leading-[1.15] tracking-[-0.015em] text-ivory">
                   Every image represents patience, respect for wildlife, and the belief that
                   nature’s most extraordinary stories reveal themselves only to those willing to
                   wait.
@@ -104,11 +107,11 @@ function Home() {
 
       <section
         aria-labelledby="collections-title"
-        className="border-t border-border py-24 lg:py-36"
+        className="border-t border-border pb-36 pt-28 lg:pb-52 lg:pt-40"
       >
         <div className="container-editorial">
           <Reveal>
-            <div className="grid gap-8 pb-20 lg:grid-cols-12 lg:items-end lg:pb-28">
+            <div className="grid gap-10 pb-24 lg:grid-cols-12 lg:items-end lg:pb-32">
               <div className="lg:col-span-7">
                 <div className="eyebrow">
                   <span className="rule-bronze mr-3" />
@@ -123,14 +126,14 @@ function Home() {
                   <span className="italic text-ivory-muted">paying attention.</span>
                 </h2>
               </div>
-              <p className="max-w-md font-serif text-lg italic leading-[1.6] text-ivory-muted lg:col-span-4 lg:col-start-9">
+              <p className="max-w-sm font-serif text-lg italic leading-[1.6] text-ivory-muted lg:col-span-4 lg:col-start-9">
                 A living archive organized not by spectacle, but by the kinds of patience each
                 subject asks of the photographer.
               </p>
             </div>
           </Reveal>
 
-          <div className="space-y-24 lg:space-y-40">
+          <div className="space-y-28 lg:space-y-48">
             {collections.map((collection, index) => {
               const reverse = index % 2 === 1;
               return (
@@ -139,7 +142,7 @@ function Home() {
                     <Link
                       to="/gallery"
                       aria-label={`Explore the ${collection.title} collection`}
-                      className="group grid gap-10 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-bronze lg:grid-cols-12 lg:items-center lg:gap-16"
+                      className="group grid gap-10 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-bronze lg:grid-cols-12 lg:items-center lg:gap-16 xl:gap-20"
                     >
                       <div
                         className={`lg:col-span-8 ${reverse ? "lg:col-start-5 lg:order-2" : ""}`}
@@ -155,7 +158,7 @@ function Home() {
                       </div>
 
                       <div
-                        className={`max-w-md lg:col-span-4 ${reverse ? "lg:col-start-1 lg:row-start-1" : ""}`}
+                        className={`max-w-sm lg:col-span-4 ${reverse ? "lg:col-start-1 lg:row-start-1" : ""}`}
                       >
                         <div className="flex items-center justify-between border-b border-ivory/10 pb-5">
                           <span className="font-serif text-xl tabular-nums text-bronze">
@@ -163,7 +166,7 @@ function Home() {
                           </span>
                           <span className="eyebrow text-ivory-muted/70">Collection</span>
                         </div>
-                        <h3 className="mt-8 font-serif text-[clamp(2.4rem,5vw,4.8rem)] leading-[0.95] text-ivory transition-colors duration-500 group-hover:text-bronze">
+                        <h3 className="mt-8 font-serif text-[clamp(2.4rem,5vw,4.4rem)] leading-[0.96] text-ivory transition-colors duration-500 group-hover:text-bronze">
                           {collection.title}
                         </h3>
                         <p className="mt-6 font-serif text-xl italic leading-[1.45] text-ivory-muted">
@@ -191,11 +194,11 @@ function Home() {
 
       <section
         aria-labelledby="story-title"
-        className="border-y border-border bg-charcoal py-28 lg:py-44"
+        className="border-y border-border bg-charcoal pb-36 pt-32 lg:pb-52 lg:pt-44"
       >
         <div className="container-editorial">
           <Reveal>
-            <header className="grid gap-8 pb-16 lg:grid-cols-12 lg:items-end lg:pb-24">
+            <header className="grid gap-10 pb-20 lg:grid-cols-12 lg:items-end lg:pb-28">
               <div className="lg:col-span-7">
                 <div className="eyebrow text-bronze">
                   <span className="rule-bronze mr-3" />
@@ -210,7 +213,7 @@ function Home() {
                   <span className="italic text-ivory-muted">Is Served.</span>
                 </h2>
               </div>
-              <div className="max-w-md lg:col-span-4 lg:col-start-9">
+              <div className="max-w-sm lg:col-span-4 lg:col-start-9">
                 <p className="font-serif text-xl italic leading-[1.5] text-ivory-muted">
                   Eleven mornings of waiting for a single four-second exchange — and the small,
                   bright life it was meant to feed.
@@ -240,12 +243,12 @@ function Home() {
           </Reveal>
 
           <Reveal>
-            <div className="mt-16 grid gap-10 lg:mt-24 lg:grid-cols-12">
-              <p className="font-serif text-2xl leading-[1.6] text-ivory lg:col-span-6 lg:col-start-2 lg:text-3xl">
+            <div className="mt-20 grid gap-12 lg:mt-28 lg:grid-cols-12">
+              <p className="max-w-2xl font-serif text-2xl leading-[1.6] text-ivory lg:col-span-6 lg:col-start-2 lg:text-3xl">
                 The exchange lasted less than four seconds. What the frame keeps is not the hunt,
                 but the errand: a parent, arriving.
               </p>
-              <div className="lg:col-span-4 lg:col-start-9">
+              <div className="max-w-md lg:col-span-4 lg:col-start-9">
                 <p className="text-base font-light leading-[1.85] text-ivory-muted">
                   Some wildlife moments happen in an instant. Others require hours of patience. The
                   full story begins before first light, at the edge of an arroyo.
@@ -267,10 +270,10 @@ function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="prints-title" className="py-28 lg:py-48">
+      <section aria-labelledby="prints-title" className="pb-40 pt-32 lg:pb-56 lg:pt-48">
         <div className="container-editorial">
           <Reveal>
-            <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+            <div className="grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-16">
               <div className="lg:col-span-7">
                 <div className="eyebrow">
                   <span className="rule-bronze mr-3" />
@@ -285,7 +288,7 @@ function Home() {
                   <span className="italic text-ivory-muted">made to be lived with.</span>
                 </h2>
               </div>
-              <div className="lg:col-span-4 lg:col-start-9">
+              <div className="max-w-md lg:col-span-4 lg:col-start-9">
                 <p className="font-serif text-xl italic leading-[1.55] text-ivory-muted">
                   Archival fine art prints, hand-signed and numbered by Paul. Each image is
                   presented in its complete original composition.
@@ -301,7 +304,7 @@ function Home() {
             </div>
           </Reveal>
 
-          <div className="mt-20 grid grid-cols-12 gap-x-5 gap-y-16 sm:gap-x-8 lg:mt-28 lg:gap-x-12">
+          <div className="mt-24 grid grid-cols-12 gap-x-5 gap-y-20 sm:gap-x-8 lg:mt-32 lg:gap-x-12">
             <Reveal y={36} className="col-span-12 lg:col-span-7 lg:pt-20">
               <Link
                 to="/prints"
@@ -348,12 +351,12 @@ function Home() {
 
       <section
         aria-labelledby="education-title"
-        className="border-y border-border bg-forest-deep/20 py-28 lg:py-44"
+        className="border-y border-border bg-forest-deep/20 pb-36 pt-32 lg:pb-48 lg:pt-40"
       >
         <div className="container-editorial">
           <Reveal>
-            <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-              <div className="lg:col-span-3">
+            <div className="grid gap-12 lg:grid-cols-12 lg:gap-16 xl:gap-24">
+              <div className="lg:col-span-3 lg:pt-3">
                 <div className="eyebrow text-bronze">
                   <span className="rule-bronze mr-3" />
                   Education &amp; Conservation
@@ -362,13 +365,13 @@ function Home() {
               <div className="lg:col-span-8 lg:col-start-5">
                 <h2
                   id="education-title"
-                  className="font-serif text-[clamp(2.8rem,7vw,6.4rem)] leading-[0.94] tracking-[-0.025em] text-ivory"
+                  className="max-w-[64rem] font-serif text-[clamp(2.8rem,7vw,6.4rem)] leading-[0.94] tracking-[-0.025em] text-ivory"
                 >
                   When a child learns to look,
                   <br />
                   <span className="italic text-ivory-muted">a species gains a defender.</span>
                 </h2>
-                <div className="mt-12 grid gap-10 border-t border-ivory/10 pt-10 md:grid-cols-2 md:gap-14">
+                <div className="mt-14 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-2 md:gap-14">
                   <p className="font-serif text-xl italic leading-[1.6] text-ivory-muted">
                     Photography can carry students into the lives of animals — how they live, what
                     they need, and why paying attention matters.
@@ -397,9 +400,9 @@ function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="photographer-title" className="py-28 lg:py-48">
+      <section aria-labelledby="photographer-title" className="pb-40 pt-32 lg:pb-56 lg:pt-48">
         <div className="container-editorial">
-          <div className="grid gap-14 lg:grid-cols-12 lg:items-center lg:gap-20">
+          <div className="grid gap-16 lg:grid-cols-12 lg:items-center lg:gap-20 xl:gap-24">
             <Reveal y={36} className="lg:col-span-5">
               <Placeholder
                 subject="Paul Marto, wildlife photographer"
