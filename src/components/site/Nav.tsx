@@ -10,6 +10,9 @@ const links = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
+const headerFocus =
+  "focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-bronze";
+
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -28,19 +31,19 @@ export function Nav() {
       }`}
     >
       <div className="container-editorial flex items-center justify-between h-20">
-        <Link to="/" className="flex flex-col leading-none group">
+        <Link to="/" className={`group flex flex-col leading-none ${headerFocus}`}>
           <span className="font-serif text-2xl tracking-tight text-ivory">Martography</span>
-          <span className="eyebrow mt-1 text-[0.6rem] tracking-[0.32em]">
+          <span className="eyebrow mt-1 text-[0.6rem] tracking-[0.32em] lg:text-[0.7rem] lg:tracking-[0.24em] xl:text-[0.72rem]">
             Paul Marto · Wildlife
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-9">
+        <nav className="hidden items-center gap-7 lg:flex xl:gap-9 2xl:gap-10">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className="text-[0.72rem] uppercase tracking-[0.22em] text-ivory-muted hover:text-ivory transition-colors"
+              className={`text-[0.75rem] uppercase tracking-[0.18em] text-ivory-muted transition-colors hover:text-ivory xl:text-[0.8125rem] xl:tracking-[0.16em] 2xl:text-[0.85rem] ${headerFocus}`}
               activeProps={{ className: "text-ivory" }}
             >
               {l.label}
@@ -50,7 +53,7 @@ export function Nav() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="lg:hidden text-ivory text-[0.72rem] uppercase tracking-[0.22em]"
+          className={`text-[0.72rem] uppercase tracking-[0.22em] text-ivory lg:hidden ${headerFocus}`}
           aria-label="Toggle menu"
         >
           {open ? "Close" : "Menu"}
@@ -65,7 +68,7 @@ export function Nav() {
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="text-sm uppercase tracking-[0.22em] text-ivory-muted"
+                className={`text-sm uppercase tracking-[0.22em] text-ivory-muted ${headerFocus}`}
               >
                 {l.label}
               </Link>
