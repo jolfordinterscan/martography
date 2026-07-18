@@ -23,6 +23,14 @@ interface PlaceholderProps {
    * requested editorial crop on larger screens.
    */
   mode?: ImageMode;
+  /** Load immediately when the image is part of the initial viewport. */
+  priority?: boolean;
+}
+
+interface ImageAsset {
+  src: string;
+  width: number;
+  height: number;
 }
 
 /**
@@ -42,26 +50,59 @@ interface PlaceholderProps {
  */
 
 // filename -> Martography photograph URL. Only real uploads belong here.
-const IMAGE_MAP: Record<string, string> = {
+const bobcat: ImageAsset = { src: "/images/bobcat-hero.png", width: 4245, height: 2831 };
+const bunting: ImageAsset = {
+  src: "/images/birds-painted-bunting-salvia.jpg",
+  width: 2841,
+  height: 1894,
+};
+const buntingFlight: ImageAsset = {
+  src: "/images/birds-bunting-in-flight.jpg",
+  width: 3461,
+  height: 3461,
+};
+const quail: ImageAsset = {
+  src: "/images/birds-california-quail.jpg",
+  width: 3093,
+  height: 3092,
+};
+const foxes: ImageAsset = { src: "/images/mammals-fox.jpg", width: 2184, height: 1456 };
+const roadrunners: ImageAsset = {
+  src: "/images/behavior-roadrunner.jpg",
+  width: 7943,
+  height: 5296,
+};
+const hummingbird: ImageAsset = {
+  src: "/images/conservation-hummingbird-nest.jpg",
+  width: 9460,
+  height: 6294,
+};
+const paulPortrait: ImageAsset = {
+  src: "/images/about-paul-portrait.png",
+  width: 742,
+  height: 638,
+};
+
+const IMAGE_MAP: Record<string, ImageAsset> = {
   // Homepage
-  "hero.jpg": "/images/bobcat-hero.png",
+  "hero.jpg": bobcat,
 
   // Featured Collections
-  "birds-painted-bunting.jpg": "/images/birds-painted-bunting-salvia.jpg",
-  "birds-painted-bunting-salvia.jpg": "/images/birds-painted-bunting-salvia.jpg",
-  "birds-painted-bunting-flight.jpg": "/images/birds-bunting-in-flight.jpg",
-  "birds-california-quail.jpg": "/images/birds-california-quail.jpg",
-  "mammals-fox.jpg": "/images/mammals-fox.jpg",
-  "behavior-roadrunner-feeding-chick.jpg": "/images/behavior-roadrunner.jpg",
-  "conservation-hummingbird-nest.jpg": "/images/conservation-hummingbird-nest.jpg",
+  "birds-painted-bunting.jpg": bunting,
+  "birds-painted-bunting-salvia.jpg": bunting,
+  "birds-painted-bunting-flight.jpg": buntingFlight,
+  "birds-california-quail.jpg": quail,
+  "mammals-fox.jpg": foxes,
+  "behavior-roadrunner-feeding-chick.jpg": roadrunners,
+  "conservation-hummingbird-nest.jpg": hummingbird,
 
   // Signature Story
-  "story-roadrunner.jpg": "/images/behavior-roadrunner.jpg",
-  "story-dinner-is-served.jpg": "/images/behavior-roadrunner.jpg",
-  "story-07.jpg": "/images/behavior-roadrunner.jpg",
+  "story-roadrunner.jpg": roadrunners,
+  "story-dinner-is-served.jpg": roadrunners,
+  "story-07.jpg": roadrunners,
 
   // About
-  "about-portrait.jpg": "/images/about-paul-portrait.png",
+  "about-portrait.jpg": paulPortrait,
 };
 
 export function Placeholder({
@@ -73,8 +114,9 @@ export function Placeholder({
   style,
   focus = "center",
   mode = "editorial",
+  priority = false,
 }: PlaceholderProps) {
-  const src = filename ? IMAGE_MAP[filename] : undefined;
+  const asset = filename ? IMAGE_MAP[filename] : undefined;
   const objectPosition =
     focus === "right"
       ? "right center"
@@ -86,7 +128,7 @@ export function Placeholder({
             ? "center bottom"
             : "center";
 
-  if (!src) {
+  if (!asset) {
     return (
       <div
         className={`relative overflow-hidden bg-charcoal-deep ${ratio} ${className}`}
@@ -115,9 +157,12 @@ export function Placeholder({
   if (mode === "natural") {
     return (
       <img
-        src={src}
+        src={asset.src}
         alt={subject}
-        loading="lazy"
+        width={asset.width}
+        height={asset.height}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
         decoding="async"
         className={className}
         style={{
@@ -139,9 +184,12 @@ export function Placeholder({
       <>
         <div className={`bg-charcoal-deep lg:hidden ${className}`} style={style}>
           <img
-            src={src}
+            src={asset.src}
             alt={subject}
-            loading="lazy"
+            width={asset.width}
+            height={asset.height}
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
             decoding="async"
             className="block h-auto w-full"
           />
@@ -151,9 +199,12 @@ export function Placeholder({
           style={style}
         >
           <img
-            src={src}
+            src={asset.src}
             alt={subject}
-            loading="lazy"
+            width={asset.width}
+            height={asset.height}
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
             style={imgStyle}
@@ -169,9 +220,12 @@ export function Placeholder({
       style={style}
     >
       <img
-        src={src}
+        src={asset.src}
         alt={subject}
-        loading="lazy"
+        width={asset.width}
+        height={asset.height}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
         decoding="async"
         className="absolute inset-0 h-full w-full object-cover"
         style={imgStyle}

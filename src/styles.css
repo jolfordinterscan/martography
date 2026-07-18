@@ -254,3 +254,15 @@
 @utility animate-slow-zoom {
   animation: slow-zoom 8s ease-out both;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-slow-zoom {
+    animation: none;
+  }
+}
