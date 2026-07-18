@@ -481,8 +481,8 @@ function Hero() {
               <span className="italic text-ivory-muted">Has a Story.</span>
             </h1>
             <p className="mt-8 max-w-xl font-serif text-xl italic leading-[1.45] text-ivory-muted xl:text-2xl">
-              A quiet archive of wild lives, patient observation, and the moments that disappear
-              almost as soon as they arrive.
+              Martography is wildlife photographer Paul Marto’s visual field journal — an archive
+              shaped by patience, respect, and the stories revealed in the wild.
             </p>
           </div>
         </div>
@@ -508,8 +508,8 @@ function Hero() {
             <span className="italic text-ivory-muted">Has a Story.</span>
           </h1>
           <p className="mt-7 max-w-xl font-serif text-lg italic leading-[1.5] text-ivory-muted sm:text-xl">
-            A quiet archive of wild lives and the moments that disappear almost as soon as they
-            arrive.
+            Martography is wildlife photographer Paul Marto’s visual field journal — an archive
+            shaped by patience, respect, and the stories revealed in the wild.
           </p>
         </div>
         <Placeholder
