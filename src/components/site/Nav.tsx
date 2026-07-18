@@ -32,18 +32,20 @@ export function Nav() {
     >
       <div className="container-editorial flex items-center justify-between h-20">
         <Link to="/" className={`group flex flex-col leading-none ${headerFocus}`}>
-          <span className="font-serif text-2xl tracking-tight text-ivory">Martography</span>
+          <span className="font-serif text-2xl tracking-tight text-ivory lg:text-[1.8rem] xl:text-[2rem]">
+            Martography
+          </span>
           <span className="eyebrow mt-1 text-[0.6rem] tracking-[0.32em] lg:text-[0.7rem] lg:tracking-[0.24em] xl:text-[0.72rem]">
             Paul Marto · Wildlife
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex xl:gap-9 2xl:gap-10">
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-7 2xl:gap-8">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className={`text-[0.75rem] uppercase tracking-[0.18em] text-ivory-muted transition-colors hover:text-ivory xl:text-[0.8125rem] xl:tracking-[0.16em] 2xl:text-[0.85rem] ${headerFocus}`}
+              className={`text-[0.8125rem] uppercase tracking-[0.14em] text-ivory-muted transition-colors hover:text-ivory xl:text-[0.9375rem] xl:tracking-[0.12em] 2xl:text-base ${headerFocus}`}
               activeProps={{ className: "text-ivory" }}
             >
               {l.label}

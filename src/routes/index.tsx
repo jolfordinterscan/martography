@@ -484,6 +484,10 @@ function Hero() {
               Martography is wildlife photographer Paul Marto’s visual field journal — an archive
               shaped by patience, respect, and the stories revealed in the wild.
             </p>
+            <Link to="/gallery" className={`${editorialLink} mt-10`}>
+              <span className="eyebrow text-ivory">Explore the photographs</span>
+              <span className="h-px w-10 bg-bronze" aria-hidden />
+            </Link>
           </div>
         </div>
 
@@ -511,6 +515,10 @@ function Hero() {
             Martography is wildlife photographer Paul Marto’s visual field journal — an archive
             shaped by patience, respect, and the stories revealed in the wild.
           </p>
+          <Link to="/gallery" className={`${editorialLink} mt-8`}>
+            <span className="eyebrow text-ivory">Explore the photographs</span>
+            <span className="h-px w-10 bg-bronze" aria-hidden />
+          </Link>
         </div>
         <Placeholder
           subject="Bobcat watching from the edge of tall grass"
