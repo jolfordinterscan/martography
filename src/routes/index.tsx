@@ -453,7 +453,7 @@ function Hero() {
           subject="Bobcat watching from the edge of tall grass"
           filename="hero.jpg"
           ratio=""
-          className="absolute inset-0 h-full w-full !aspect-auto animate-fade-in"
+          className="!absolute inset-0 h-full w-full !aspect-auto animate-fade-in"
           focus="right"
           sizes="100vw"
           priority
