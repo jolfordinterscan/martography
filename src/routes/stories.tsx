@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
@@ -19,8 +19,13 @@ export const Route = createFileRoute("/stories")({
       },
     ],
   }),
-  component: Stories,
+  component: StoriesRouteShell,
 });
+
+function StoriesRouteShell() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  return pathname.replace(/\/+$/, "") === "/stories" ? <Stories /> : <Outlet />;
+}
 
 function Stories() {
   const stories = getPublishedStories();

@@ -58,6 +58,14 @@ export function getPhotosByCollection(collectionIdOrSlug: string) {
     ? collection.photoIds.map(getPhotoById).filter((photo) => photo && isPublicStatus(photo.status))
     : [];
 }
+export function getCollectionsForPhoto(photoId: string) {
+  const photo = getPhotoById(photoId);
+  return photo
+    ? photo.collectionIds
+        .map((collectionId) => collections.find((item) => item.id === collectionId))
+        .filter((collection) => collection !== undefined)
+    : [];
+}
 export function getSpeciesById(id: string) {
   return species.find((item) => item.id === id);
 }
@@ -115,10 +123,41 @@ export function getPrintsForPhoto(photoIdOrSlug: string) {
     ? prints.filter((print) => print.photoId === photo.id && print.status !== "unavailable")
     : [];
 }
-export function getRelatedPhotos(photoIdOrSlug: string, limit = 3) {
+export function getRelatedPhotos(photoIdOrSlug: string, limit = 6) {
   const photo = photos.find((item) => item.id === photoIdOrSlug || item.slug === photoIdOrSlug);
   if (!photo) return [];
+
+  const galleryOrder = new Map(getGalleryPhotos().map((item, index) => [item.id, index]));
+
   return getGalleryPhotos()
     .filter((item) => item.id !== photo.id)
+    .sort((a, b) => {
+      const aSameSpecies = Number(Boolean(photo.speciesId && a.speciesId === photo.speciesId));
+      const bSameSpecies = Number(Boolean(photo.speciesId && b.speciesId === photo.speciesId));
+      if (aSameSpecies !== bSameSpecies) return bSameSpecies - aSameSpecies;
+
+      const aCollections = a.collectionIds.filter((id) => photo.collectionIds.includes(id)).length;
+      const bCollections = b.collectionIds.filter((id) => photo.collectionIds.includes(id)).length;
+      if (aCollections !== bCollections) return bCollections - aCollections;
+
+      const aBehaviors = a.behaviors.filter((item) => photo.behaviors.includes(item)).length;
+      const bBehaviors = b.behaviors.filter((item) => photo.behaviors.includes(item)).length;
+      if (aBehaviors !== bBehaviors) return bBehaviors - aBehaviors;
+
+      return (galleryOrder.get(a.id) ?? 0) - (galleryOrder.get(b.id) ?? 0);
+    })
     .slice(0, limit);
+}
+
+export function getAdjacentGalleryPhotos(photoIdOrSlug: string) {
+  const gallery = getGalleryPhotos();
+  const index = gallery.findIndex(
+    (photo) => photo.id === photoIdOrSlug || photo.slug === photoIdOrSlug,
+  );
+  if (gallery.length < 2) return {};
+  if (index < 0) return { previous: gallery[gallery.length - 1], next: gallery[0] };
+  return {
+    previous: gallery[(index - 1 + gallery.length) % gallery.length],
+    next: gallery[(index + 1) % gallery.length],
+  };
 }

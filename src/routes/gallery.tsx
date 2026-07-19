@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Placeholder } from "@/components/site/Placeholder";
@@ -28,11 +28,16 @@ export const Route = createFileRoute("/gallery")({
       },
     ],
   }),
-  component: Gallery,
+  component: GalleryRouteShell,
 });
 
 type Filter = PhotoCategory | "all";
 const filters: Filter[] = ["all", "birds", "mammals", "behavior", "conservation"];
+
+function GalleryRouteShell() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  return pathname.replace(/\/+$/, "") === "/gallery" ? <Gallery /> : <Outlet />;
+}
 
 function Gallery() {
   const photographs = getGalleryPhotos();
