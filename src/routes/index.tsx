@@ -11,6 +11,7 @@ import {
   getPopulatedWildlifeCategories,
   getPrintBySlug,
   getPrintDisplayTitle,
+  getPublicSpecies,
   getRecentlyAddedPhotos,
   getSpeciesForPhoto,
   getStoryBySlug,
@@ -55,6 +56,7 @@ function Home() {
   const recentlyAdded = getRecentlyAddedPhotos(3);
   const wildlifeCategories = getPopulatedWildlifeCategories();
   const galleryPhotos = getGalleryPhotos();
+  const publicSpecies = getPublicSpecies();
   return (
     <main className="overflow-x-clip bg-charcoal-deep">
       <Hero />
@@ -113,6 +115,10 @@ function Home() {
               <p className="max-w-sm font-serif text-lg italic leading-[1.6] text-ivory-muted lg:col-span-4 lg:col-start-9">
                 The archive grows by species and wildlife class, connecting each photograph to the
                 larger natural record.
+                <span className="mt-5 block font-sans text-[0.65rem] not-italic uppercase tracking-[0.24em] text-ivory-muted/60">
+                  {galleryPhotos.length.toString().padStart(2, "0")} photographs ·{" "}
+                  {publicSpecies.length.toString().padStart(2, "0")} species
+                </span>
               </p>
             </div>
           </Reveal>
@@ -134,7 +140,7 @@ function Home() {
                       sizes="(min-width: 768px) 33vw, 100vw"
                     />
                     <div className="mt-5 border-t border-ivory/10 pt-5">
-                      <div className="eyebrow text-bronze">Recently Added</div>
+                      <div className="eyebrow text-bronze">Recently Published</div>
                       <h3 className="mt-3 font-serif text-2xl text-ivory transition-colors group-hover:text-bronze md:text-3xl">
                         {getPhotoDisplayTitle(photo)}
                       </h3>
@@ -288,7 +294,7 @@ function Home() {
               <div className="lg:col-span-7">
                 <div className="eyebrow text-bronze">
                   <span className="rule-bronze mr-3" />
-                  Signature Story · {signatureStory.number}
+                  Latest Story · {signatureStory.number}
                 </div>
                 <h2
                   id="story-title"
@@ -579,10 +585,19 @@ function Hero() {
           </div>
         </div>
 
-        <div className="absolute bottom-16 right-8 z-10 flex items-center gap-4 text-ivory-muted/70 xl:right-12">
-          <span className="eyebrow text-[0.58rem]">Scroll to enter</span>
-          <span className="h-px w-12 bg-bronze/70" aria-hidden />
-        </div>
+        <Link
+          to="/gallery/$slug"
+          params={{ slug: hero.slug }}
+          className="group absolute bottom-16 right-8 z-10 text-right focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-bronze xl:right-12"
+        >
+          <span className="eyebrow text-bronze">Featured Photograph</span>
+          <span className="mt-2 block font-serif text-lg text-ivory transition-colors group-hover:text-bronze">
+            {getPhotoDisplayTitle(hero)}
+          </span>
+          <span className="mt-1 block text-xs italic text-ivory-muted/70">
+            {species.commonName}
+          </span>
+        </Link>
       </section>
 
       <section aria-labelledby="hero-title-mobile" className="bg-charcoal-deep lg:hidden">
@@ -615,11 +630,23 @@ function Hero() {
           sizes="100vw"
           priority
         />
-        <div className="container-editorial flex items-center justify-between gap-6 pb-14 pt-5">
-          <span className="eyebrow text-[0.58rem] text-ivory-muted/70">
-            {species.commonName} · Field Portrait
-          </span>
-          <span className="h-px w-10 bg-bronze/60" aria-hidden />
+        <div className="container-editorial pb-14 pt-5">
+          <Link
+            to="/gallery/$slug"
+            params={{ slug: hero.slug }}
+            className="group flex items-start justify-between gap-6 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-bronze"
+          >
+            <span>
+              <span className="eyebrow text-bronze">Featured Photograph</span>
+              <span className="mt-2 block font-serif text-xl text-ivory transition-colors group-hover:text-bronze">
+                {getPhotoDisplayTitle(hero)}
+              </span>
+              <span className="mt-1 block text-xs italic text-ivory-muted/70">
+                {species.commonName}
+              </span>
+            </span>
+            <span className="mt-3 h-px w-10 bg-bronze/60" aria-hidden />
+          </Link>
         </div>
       </section>
     </>

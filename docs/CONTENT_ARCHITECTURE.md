@@ -62,7 +62,7 @@ Add a unique record to `species.ts`. Include only a confirmed common name and, w
 - Story: add its ID to `photo.storyIds`, and the photo ID to `story.photoIds`. Set `heroPhotoId` when that photo supplies the cover.
 - Print: add the print record with `photoId`, then set the photo's `printId` to the print ID.
 
-Routes should use selectors such as `getPhotoBySlug`, `getPhotosByCollection`, `getPhotosForSpecies`, `getPublicSpecies`, `getStoryBySlug`, `getPrintBySlug`, `getPrintsForPhoto`, and `getRelatedPhotos`. Collection and species selectors derive photographs from the relationships on photo records rather than hardcoded page lists. Unknown dynamic slugs return the routes' existing not-found UI.
+Routes should use selectors such as `getPhotoBySlug`, `getPhotosByCollection`, `getPhotosForSpecies`, `getCollectionsForSpecies`, `getStoriesForSpecies`, `getPublicSpecies`, `getStoryBySlug`, `getPrintBySlug`, `getPrintsForPhoto`, and `getRelatedPhotos`. Collection and species selectors derive photographs from the relationships on photo records rather than hardcoded page lists. Unknown dynamic slugs return the routes' existing not-found UI.
 
 ## Validation
 
@@ -89,6 +89,8 @@ Batch-02 adds 19 image-backed records for editorial review. The Martography Prev
 The v1.1 content sprint recovered six source-only mammal photographs—two coyotes, one beaver, two additional bobcats, and one deer fawn—and added public, title-pending records with responsive production assets. Exact deer species identification remains pending; the record therefore uses the factual generic taxon `Deer` without a scientific name.
 
 The complete follow-up repository audit registered nine additional source-only works as intentional drafts, including the second spider and five Batch-03 birds. See `docs/PHOTO_INVENTORY_AUDIT.md` for the full record-by-record visibility report and source-file reconciliation.
+
+The v1.2 photographer-review release makes Species a primary editorial surface: each public Species page leads with its first released photograph, reports the complete public count, and derives related collections and stories from content relationships. Empty related sections remain absent. See `docs/PHOTOGRAPHER_REVIEW_RELEASE.md` for the draft-publication review and hero, story, and print recommendations.
 
 ## Deliberately separate route copy
 

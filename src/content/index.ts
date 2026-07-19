@@ -85,6 +85,16 @@ export function getCollectionsForPhoto(photoId: string) {
         .filter((collection) => collection !== undefined)
     : [];
 }
+export function getCollectionsForSpecies(speciesIdOrSlug: string) {
+  const item = species.find(
+    (entry) => entry.id === speciesIdOrSlug || entry.slug === speciesIdOrSlug,
+  );
+  if (!item) return [];
+  const photoIds = new Set(getPhotosForSpecies(item.id).map((photo) => photo.id));
+  return collections.filter((collection) =>
+    collection.photoIds.some((photoId) => photoIds.has(photoId)),
+  );
+}
 export function getSpeciesById(id: string) {
   return species.find((item) => item.id === id);
 }
@@ -138,6 +148,17 @@ export function getStoryBySlug(slug: string) {
 }
 export function getPublishedStories() {
   return stories.filter((story) => story.status === "published");
+}
+export function getStoriesForSpecies(speciesIdOrSlug: string) {
+  const item = species.find(
+    (entry) => entry.id === speciesIdOrSlug || entry.slug === speciesIdOrSlug,
+  );
+  if (!item) return [];
+  const photoIds = new Set(getPhotosForSpecies(item.id).map((photo) => photo.id));
+  return getPublishedStories().filter(
+    (story) =>
+      story.speciesIds.includes(item.id) || story.photoIds.some((photoId) => photoIds.has(photoId)),
+  );
 }
 export function getPrintBySlug(slug: string) {
   return prints.find((print) => print.slug === slug && print.status !== "unavailable");
