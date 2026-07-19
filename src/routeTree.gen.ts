@@ -16,10 +16,12 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EducationRouteImport } from './routes/education'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SpeciesRouteImport } from './routes/species'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as GallerySlugRouteImport } from './routes/gallery.$slug'
 import { Route as PrintsIndexRouteImport } from './routes/prints.index'
 import { Route as PrintsSlugRouteImport } from './routes/prints.$slug'
+import { Route as SpeciesSlugRouteImport } from './routes/species.$slug'
 import { Route as StoriesSlugRouteImport } from './routes/stories.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -57,6 +59,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpeciesRoute = SpeciesRouteImport.update({
+  id: '/species',
+  path: '/species',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StoriesRoute = StoriesRouteImport.update({
   id: '/stories',
   path: '/stories',
@@ -77,6 +84,11 @@ const PrintsSlugRoute = PrintsSlugRouteImport.update({
   path: '/prints/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpeciesSlugRoute = SpeciesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SpeciesRoute,
+} as any)
 const StoriesSlugRoute = StoriesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -91,9 +103,11 @@ export interface FileRoutesByFullPath {
   '/education': typeof EducationRoute
   '/gallery': typeof GalleryRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/species': typeof SpeciesRouteWithChildren
   '/stories': typeof StoriesRouteWithChildren
   '/gallery/$slug': typeof GallerySlugRoute
   '/prints/$slug': typeof PrintsSlugRoute
+  '/species/$slug': typeof SpeciesSlugRoute
   '/stories/$slug': typeof StoriesSlugRoute
   '/prints/': typeof PrintsIndexRoute
 }
@@ -105,9 +119,11 @@ export interface FileRoutesByTo {
   '/education': typeof EducationRoute
   '/gallery': typeof GalleryRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/species': typeof SpeciesRouteWithChildren
   '/stories': typeof StoriesRouteWithChildren
   '/gallery/$slug': typeof GallerySlugRoute
   '/prints/$slug': typeof PrintsSlugRoute
+  '/species/$slug': typeof SpeciesSlugRoute
   '/stories/$slug': typeof StoriesSlugRoute
   '/prints': typeof PrintsIndexRoute
 }
@@ -120,9 +136,11 @@ export interface FileRoutesById {
   '/education': typeof EducationRoute
   '/gallery': typeof GalleryRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/species': typeof SpeciesRouteWithChildren
   '/stories': typeof StoriesRouteWithChildren
   '/gallery/$slug': typeof GallerySlugRoute
   '/prints/$slug': typeof PrintsSlugRoute
+  '/species/$slug': typeof SpeciesSlugRoute
   '/stories/$slug': typeof StoriesSlugRoute
   '/prints/': typeof PrintsIndexRoute
 }
@@ -136,9 +154,11 @@ export interface FileRouteTypes {
     | '/education'
     | '/gallery'
     | '/sitemap.xml'
+    | '/species'
     | '/stories'
     | '/gallery/$slug'
     | '/prints/$slug'
+    | '/species/$slug'
     | '/stories/$slug'
     | '/prints/'
   fileRoutesByTo: FileRoutesByTo
@@ -150,9 +170,11 @@ export interface FileRouteTypes {
     | '/education'
     | '/gallery'
     | '/sitemap.xml'
+    | '/species'
     | '/stories'
     | '/gallery/$slug'
     | '/prints/$slug'
+    | '/species/$slug'
     | '/stories/$slug'
     | '/prints'
   id:
@@ -164,9 +186,11 @@ export interface FileRouteTypes {
     | '/education'
     | '/gallery'
     | '/sitemap.xml'
+    | '/species'
     | '/stories'
     | '/gallery/$slug'
     | '/prints/$slug'
+    | '/species/$slug'
     | '/stories/$slug'
     | '/prints/'
   fileRoutesById: FileRoutesById
@@ -179,6 +203,7 @@ export interface RootRouteChildren {
   EducationRoute: typeof EducationRoute
   GalleryRoute: typeof GalleryRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SpeciesRoute: typeof SpeciesRouteWithChildren
   StoriesRoute: typeof StoriesRouteWithChildren
   PrintsSlugRoute: typeof PrintsSlugRoute
   PrintsIndexRoute: typeof PrintsIndexRoute
@@ -235,6 +260,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/species': {
+      id: '/species'
+      path: '/species'
+      fullPath: '/species'
+      preLoaderRoute: typeof SpeciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/stories': {
       id: '/stories'
       path: '/stories'
@@ -263,6 +295,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrintsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/species/$slug': {
+      id: '/species/$slug'
+      path: '/$slug'
+      fullPath: '/species/$slug'
+      preLoaderRoute: typeof SpeciesSlugRouteImport
+      parentRoute: typeof SpeciesRoute
+    }
     '/stories/$slug': {
       id: '/stories/$slug'
       path: '/$slug'
@@ -284,6 +323,17 @@ const GalleryRouteChildren: GalleryRouteChildren = {
 const GalleryRouteWithChildren =
   GalleryRoute._addFileChildren(GalleryRouteChildren)
 
+interface SpeciesRouteChildren {
+  SpeciesSlugRoute: typeof SpeciesSlugRoute
+}
+
+const SpeciesRouteChildren: SpeciesRouteChildren = {
+  SpeciesSlugRoute: SpeciesSlugRoute,
+}
+
+const SpeciesRouteWithChildren =
+  SpeciesRoute._addFileChildren(SpeciesRouteChildren)
+
 interface StoriesRouteChildren {
   StoriesSlugRoute: typeof StoriesSlugRoute
 }
@@ -303,6 +353,7 @@ const rootRouteChildren: RootRouteChildren = {
   EducationRoute: EducationRoute,
   GalleryRoute: GalleryRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SpeciesRoute: SpeciesRouteWithChildren,
   StoriesRoute: StoriesRouteWithChildren,
   PrintsSlugRoute: PrintsSlugRoute,
   PrintsIndexRoute: PrintsIndexRoute,

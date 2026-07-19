@@ -24,6 +24,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link to="/species" className="hover:text-ivory transition-colors">
+                Species
+              </Link>
+            </li>
+            <li>
               <Link to="/prints" className="hover:text-ivory transition-colors">
                 Fine Art Prints
               </Link>

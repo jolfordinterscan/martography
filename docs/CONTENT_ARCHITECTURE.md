@@ -37,7 +37,9 @@ Every photo has a factual `workingTitle` based only on visible content. Paul-app
 
 Photo and story statuses are `published`, `draft`, `awaiting-title`, or `awaiting-story`. Public selectors exclude only `draft`; this allows established public “Photograph Coming Soon” records to retain their current treatment while ensuring new incomplete launch records remain private. A `published` photo must have a real production image. `awaiting-title` and `awaiting-story` honestly describe incomplete editorial fields.
 
-Print statuses are `preview`, `available`, or `unavailable`. Current prints are previews. Their pricing status is `pending`, and the UI continues to say pricing is confirmed by inquiry.
+Print statuses are `preview`, `available`, or `unavailable`. Current prints are previews. Commercial metadata remains internal while the public collector experience omits pricing.
+
+Wildlife taxonomy uses seven durable classes: Mammals, Birds, Insects, Arachnids, Reptiles, Amphibians, and Aquatic Life. Behavior and Conservation remain editorial collections rather than biological categories. Category navigation exposes only classes with public photographs, preventing empty archive views while leaving the schema ready to grow. Non-wildlife supporting media, such as Paul's portrait, is marked `archiveEligible: false` and excluded from wildlife selectors.
 
 ## Adding a photograph
 
@@ -52,7 +54,7 @@ Production filenames use lowercase descriptive kebab-case, for example `wood-duc
 
 ## Adding a species
 
-Add a unique record to `species.ts`. Include only a confirmed common name and, when known, scientific name. Set `photoIds` to existing photo IDs, and set the matching `speciesId` on each photo. Species pages are intentionally outside the current scope.
+Add a unique record to `species.ts`. Include only a confirmed common name and, when known, scientific name. Set `photoIds` to existing photo IDs, and set the matching `speciesId` on each photo. `/species` and `/species/:slug` are generated from these records; draft-only species are omitted until at least one related photograph is public.
 
 ## Connecting content
 
@@ -60,11 +62,11 @@ Add a unique record to `species.ts`. Include only a confirmed common name and, w
 - Story: add its ID to `photo.storyIds`, and the photo ID to `story.photoIds`. Set `heroPhotoId` when that photo supplies the cover.
 - Print: add the print record with `photoId`, then set the photo's `printId` to the print ID.
 
-Routes should use selectors such as `getPhotoBySlug`, `getPhotosByCollection`, `getStoryBySlug`, `getPrintBySlug`, `getPrintsForPhoto`, and `getRelatedPhotos`. Unknown dynamic slugs return the routes' existing not-found UI.
+Routes should use selectors such as `getPhotoBySlug`, `getPhotosByCollection`, `getPhotosForSpecies`, `getPublicSpecies`, `getStoryBySlug`, `getPrintBySlug`, `getPrintsForPhoto`, and `getRelatedPhotos`. Collection and species selectors derive photographs from the relationships on photo records rather than hardcoded page lists. Unknown dynamic slugs return the routes' existing not-found UI.
 
 ## Validation
 
-`npm run validate:content` uses Node's built-in TypeScript stripping and adds no dependency. It checks duplicate IDs/slugs, required working titles, removal of the legacy photo-title field, broken species/collection/story/print/photo references, alt text on public records, responsive image keys, and real files for published photo paths. Draft records may intentionally have no image. The production build script runs validation first, so broken public content fails the build.
+`npm run validate:content` uses Node's built-in TypeScript stripping and adds no dependency. It checks duplicate IDs/slugs, required working titles, wildlife category and species assignments, bidirectional species/collection relationships, broken references, alt text on public records, responsive image keys, real production files, and gallery reachability for published wildlife. Draft records may intentionally have no image. The production build script runs validation first, so broken public content fails the build.
 
 ## Founding collection status
 
@@ -83,6 +85,8 @@ The nine founding-collection launch records have optimized JPEG fallbacks and re
 Their artist-approved titles, locations, dates, stories, collection assignments, and print decisions remain pending. The established Painted Bunting formal-portrait placeholder remains intentionally image-less and expects `birds-painted-bunting-portrait.jpg`; it is a separate photograph.
 
 Batch-02 adds 19 image-backed records for editorial review. The Martography Preview Release publishes the seven masterpiece candidates; the remaining 12 stay hidden from public selectors and the sitemap. See `docs/BATCH_02_EDITORIAL_REPORT.md` for the complete source review, duplicate decisions, editorial recommendations, and preview release decision.
+
+The v1.1 content sprint recovered six source-only mammal photographs—two coyotes, one beaver, two additional bobcats, and one deer fawn—and added public, title-pending records with responsive production assets. Exact deer species identification remains pending; the record therefore uses the factual generic taxon `Deer` without a scientific name.
 
 ## Deliberately separate route copy
 

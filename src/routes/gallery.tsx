@@ -1,18 +1,29 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { useState } from "react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
 import {
   categoryLabels,
   getGalleryPhotos,
+  getPopulatedWildlifeCategories,
   getPhotoDisplayTitle,
-  getSpeciesForPhoto,
   getSpeciesDisplayName,
+  getSpeciesForPhoto,
+  isPhotoCategory,
   type PhotoCategory,
 } from "@/content";
 
+interface GallerySearch {
+  category?: PhotoCategory;
+}
+
 export const Route = createFileRoute("/gallery")({
+  validateSearch: (search: Record<string, unknown>): GallerySearch => ({
+    category:
+      isPhotoCategory(search.category) && getPopulatedWildlifeCategories().includes(search.category)
+        ? search.category
+        : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Gallery — Martography" },
@@ -32,7 +43,6 @@ export const Route = createFileRoute("/gallery")({
 });
 
 type Filter = PhotoCategory | "all";
-const filters: Filter[] = ["all", "birds", "mammals", "behavior", "conservation"];
 
 function GalleryRouteShell() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
@@ -41,7 +51,10 @@ function GalleryRouteShell() {
 
 function Gallery() {
   const photographs = getGalleryPhotos();
-  const [active, setActive] = useState<Filter>("all");
+  const { category } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const active: Filter = category ?? "all";
+  const filters: Filter[] = ["all", ...getPopulatedWildlifeCategories()];
   const shown = active === "all" ? photographs : photographs.filter((p) => p.category === active);
 
   return (
@@ -62,7 +75,9 @@ function Gallery() {
                 return (
                   <button
                     key={f}
-                    onClick={() => setActive(f)}
+                    onClick={() =>
+                      void navigate({ search: f === "all" ? {} : { category: f }, replace: true })
+                    }
                     className={`text-[0.72rem] uppercase tracking-[0.22em] transition-colors ${
                       isActive ? "text-ivory" : "text-ivory-muted hover:text-ivory"
                     }`}

@@ -2,13 +2,19 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
 import {
+  categoryLabels,
   getCollectionCover,
   getFeaturedCollections,
+  getGalleryPhotos,
+  getPhotoDisplayTitle,
   getPhotoById,
+  getPopulatedWildlifeCategories,
   getPrintBySlug,
   getPrintDisplayTitle,
+  getRecentlyAddedPhotos,
   getSpeciesForPhoto,
   getStoryBySlug,
+  isPhotoCategory,
 } from "@/content";
 
 export const Route = createFileRoute("/")({
@@ -46,6 +52,9 @@ function Home() {
   const hummingbirdPrint = getPrintBySlug("hummingbird-nest")!;
   const hummingbirdPhoto = getPhotoById(hummingbirdPrint.photoId)!;
   const portrait = getPhotoById("photo-paul-portrait")!;
+  const recentlyAdded = getRecentlyAddedPhotos(3);
+  const wildlifeCategories = getPopulatedWildlifeCategories();
+  const galleryPhotos = getGalleryPhotos();
   return (
     <main className="overflow-x-clip bg-charcoal-deep">
       <Hero />
@@ -74,6 +83,106 @@ function Home() {
                     Paul Marto · Wildlife Photographer
                   </span>
                 </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="archive-title"
+        className="border-t border-border pb-32 pt-28 lg:pb-44 lg:pt-36"
+      >
+        <div className="container-editorial">
+          <Reveal>
+            <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-7">
+                <div className="eyebrow">
+                  <span className="rule-bronze mr-3" />
+                  The Living Archive
+                </div>
+                <h2
+                  id="archive-title"
+                  className="mt-7 font-serif text-[clamp(2.8rem,7vw,6.4rem)] leading-[0.92] tracking-[-0.025em] text-ivory"
+                >
+                  New encounters,
+                  <br />
+                  <span className="italic text-ivory-muted">carefully catalogued.</span>
+                </h2>
+              </div>
+              <p className="max-w-sm font-serif text-lg italic leading-[1.6] text-ivory-muted lg:col-span-4 lg:col-start-9">
+                The archive grows by species and wildlife class, connecting each photograph to the
+                larger natural record.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="mt-20 grid gap-x-8 gap-y-14 md:grid-cols-3 lg:mt-28">
+            {recentlyAdded.map((photo, index) => {
+              const itemSpecies = getSpeciesForPhoto(photo.id);
+              return (
+                <Reveal key={photo.id} delay={index * 100}>
+                  <Link
+                    to="/gallery/$slug"
+                    params={{ slug: photo.slug }}
+                    className="group block focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-bronze"
+                  >
+                    <Placeholder
+                      subject={photo.alt}
+                      responsiveImageKey={photo.responsiveImageKey}
+                      mode="natural"
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                    />
+                    <div className="mt-5 border-t border-ivory/10 pt-5">
+                      <div className="eyebrow text-bronze">Recently Added</div>
+                      <h3 className="mt-3 font-serif text-2xl text-ivory transition-colors group-hover:text-bronze md:text-3xl">
+                        {getPhotoDisplayTitle(photo)}
+                      </h3>
+                      {itemSpecies && (
+                        <p className="mt-2 text-sm italic text-ivory-muted">
+                          {itemSpecies.commonName}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          <Reveal>
+            <div className="mt-24 border-t border-border pt-10 md:mt-32 md:pt-12">
+              <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <div className="eyebrow text-ivory-muted/70">Explore Wildlife Categories</div>
+                  <p className="mt-4 max-w-2xl font-serif text-2xl italic text-ivory-muted md:text-3xl">
+                    Browse the archive through the living world it documents.
+                  </p>
+                </div>
+                <Link to="/species" className={editorialLink}>
+                  <span className="eyebrow">Browse Species</span>
+                  <span className="h-px w-8 bg-bronze" aria-hidden />
+                </Link>
+              </div>
+              <div className="mt-10 grid border-t border-ivory/10 sm:grid-cols-2 lg:grid-cols-3">
+                {wildlifeCategories.map((category) => {
+                  const count = galleryPhotos.filter((photo) => photo.category === category).length;
+                  return (
+                    <Link
+                      key={category}
+                      to="/gallery"
+                      search={{ category }}
+                      className="group flex items-center justify-between border-b border-ivory/10 py-6 pr-6 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-bronze sm:odd:mr-8 lg:mr-8"
+                    >
+                      <span className="font-serif text-2xl text-ivory transition-colors group-hover:text-bronze">
+                        {categoryLabels[category]}
+                      </span>
+                      <span className="eyebrow text-ivory-muted/60">
+                        {count.toString().padStart(2, "0")}
+                      </span>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </Reveal>
@@ -117,6 +226,7 @@ function Home() {
                   <article className="border-t border-ivory/10 pt-8 lg:pt-10">
                     <Link
                       to="/gallery"
+                      search={isPhotoCategory(collection.slug) ? { category: collection.slug } : {}}
                       aria-label={`Explore the ${collection.title} collection`}
                       className="group grid gap-10 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-bronze lg:grid-cols-12 lg:items-center lg:gap-16 xl:gap-20"
                     >

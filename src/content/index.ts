@@ -19,11 +19,27 @@ export {
 
 export const categoryLabels: Record<PhotoCategory | "all", string> = {
   all: "All Work",
-  birds: "Birds",
   mammals: "Mammals",
-  behavior: "Behavior",
-  conservation: "Conservation",
+  birds: "Birds",
+  insects: "Insects",
+  arachnids: "Arachnids",
+  reptiles: "Reptiles",
+  amphibians: "Amphibians",
+  "aquatic-life": "Aquatic Life",
 };
+
+export const wildlifeCategoryOrder: PhotoCategory[] = [
+  "mammals",
+  "birds",
+  "insects",
+  "arachnids",
+  "reptiles",
+  "amphibians",
+  "aquatic-life",
+];
+
+export const isPhotoCategory = (value: unknown): value is PhotoCategory =>
+  typeof value === "string" && wildlifeCategoryOrder.includes(value as PhotoCategory);
 
 export const isPublicStatus = (status: string) => status !== "draft";
 
@@ -31,7 +47,10 @@ export function getPhotoById(id: string) {
   return photos.find((photo) => photo.id === id);
 }
 export function getPhotoBySlug(slug: string) {
-  return photos.find((photo) => photo.slug === slug && isPublicStatus(photo.status));
+  return photos.find(
+    (photo) =>
+      photo.slug === slug && photo.archiveEligible !== false && isPublicStatus(photo.status),
+  );
 }
 export function getPublishedPhotos() {
   return photos.filter((photo) => photo.status === "published");
@@ -41,7 +60,7 @@ export function getPublicPhotos() {
 }
 export function getGalleryPhotos() {
   return getPublicPhotos()
-    .filter((photo) => photo.galleryVisible !== false)
+    .filter((photo) => photo.archiveEligible !== false && photo.galleryVisible !== false)
     .sort(
       (a, b) =>
         (a.galleryOrder ?? Number.MAX_SAFE_INTEGER) - (b.galleryOrder ?? Number.MAX_SAFE_INTEGER),
@@ -55,7 +74,7 @@ export function getPhotosByCollection(collectionIdOrSlug: string) {
     (item) => item.id === collectionIdOrSlug || item.slug === collectionIdOrSlug,
   );
   return collection
-    ? collection.photoIds.map(getPhotoById).filter((photo) => photo && isPublicStatus(photo.status))
+    ? getPublicPhotos().filter((photo) => photo.collectionIds.includes(collection.id))
     : [];
 }
 export function getCollectionsForPhoto(photoId: string) {
@@ -90,8 +109,22 @@ export function getPhotosForSpecies(speciesIdOrSlug: string) {
     (entry) => entry.id === speciesIdOrSlug || entry.slug === speciesIdOrSlug,
   );
   return item
-    ? item.photoIds.map(getPhotoById).filter((photo) => photo && isPublicStatus(photo.status))
+    ? getPublicPhotos().filter(
+        (photo) => photo.archiveEligible !== false && photo.speciesId === item.id,
+      )
     : [];
+}
+export function getPublicSpecies() {
+  return species.filter((item) => getPhotosForSpecies(item.id).length > 0);
+}
+export function getPopulatedWildlifeCategories() {
+  const publicPhotos = getGalleryPhotos();
+  return wildlifeCategoryOrder.filter((category) =>
+    publicPhotos.some((photo) => photo.category === category),
+  );
+}
+export function getRecentlyAddedPhotos(limit = 3) {
+  return [...getGalleryPhotos()].reverse().slice(0, limit);
 }
 export function getFeaturedCollections() {
   return collections.filter((collection) => collection.featured);

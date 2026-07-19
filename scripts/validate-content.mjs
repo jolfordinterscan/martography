@@ -7,6 +7,15 @@ import { species } from "../src/content/species.ts";
 import { stories } from "../src/content/stories.ts";
 
 const errors = [];
+const wildlifeCategories = new Set([
+  "mammals",
+  "birds",
+  "insects",
+  "arachnids",
+  "reptiles",
+  "amphibians",
+  "aquatic-life",
+]);
 const publicFileExists = (url) =>
   existsSync(resolve(process.cwd(), "public", url.replace(/^\//, "")));
 const duplicateCheck = (records, label, field) => {
@@ -50,6 +59,10 @@ for (const photo of photos) {
   if ("title" in photo) errors.push(`${photo.id} uses the legacy photo title field`);
   if (photo.speciesId && !speciesIds.has(photo.speciesId))
     errors.push(`${photo.id} references missing species ${photo.speciesId}`);
+  if (photo.archiveEligible !== false && !wildlifeCategories.has(photo.category))
+    errors.push(`${photo.id} has no valid wildlife category`);
+  if (photo.archiveEligible !== false && !photo.speciesId)
+    errors.push(`${photo.id} has no species assignment`);
   for (const id of photo.collectionIds)
     if (!collectionIds.has(id)) errors.push(`${photo.id} references missing collection ${id}`);
   for (const id of photo.storyIds)
@@ -65,6 +78,21 @@ for (const photo of photos) {
   if (photo.status === "published") {
     if (!photo.image || !photo.responsiveImageKey)
       errors.push(`${photo.id} is published but has no public image`);
+    if (photo.archiveEligible !== false && photo.galleryVisible === false)
+      errors.push(`${photo.id} is published wildlife but is not reachable from the gallery`);
+  }
+
+  if (photo.speciesId) {
+    const item = species.find(({ id }) => id === photo.speciesId);
+    if (item && item.category !== photo.category)
+      errors.push(`${photo.id} category does not match ${item.id}`);
+    if (item && !item.photoIds.includes(photo.id))
+      errors.push(`${photo.id} is missing from ${item.id}.photoIds`);
+  }
+  for (const id of photo.collectionIds) {
+    const collection = collections.find((item) => item.id === id);
+    if (collection && !collection.photoIds.includes(photo.id))
+      errors.push(`${photo.id} is missing from ${collection.id}.photoIds`);
   }
 }
 for (const print of prints)
@@ -83,9 +111,13 @@ for (const story of stories) {
 for (const collection of collections)
   for (const id of collection.photoIds)
     if (!photoIds.has(id)) errors.push(`${collection.id} references missing photo ${id}`);
+    else if (!photos.find((photo) => photo.id === id)?.collectionIds.includes(collection.id))
+      errors.push(`${collection.id} is missing from ${id}.collectionIds`);
 for (const item of species)
   for (const id of item.photoIds)
     if (!photoIds.has(id)) errors.push(`${item.id} references missing photo ${id}`);
+    else if (photos.find((photo) => photo.id === id)?.speciesId !== item.id)
+      errors.push(`${item.id} does not match ${id}.speciesId`);
 
 if (errors.length) {
   console.error(

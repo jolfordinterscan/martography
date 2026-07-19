@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
-import { getPublishedPhotos, getPublishedPrints, getPublishedStories } from "@/content";
+import {
+  getGalleryPhotos,
+  getPublishedPrints,
+  getPublishedStories,
+  getPublicSpecies,
+} from "@/content";
 
 const BASE_URL = "https://martography.co";
 
@@ -11,14 +16,14 @@ export const Route = createFileRoute("/sitemap.xml")({
         const paths = [
           "/",
           "/gallery",
+          "/species",
           "/prints",
           "/stories",
           "/education",
           "/about",
           "/contact",
-          ...getPublishedPhotos()
-            .filter((photo) => photo.galleryVisible !== false)
-            .map((photo) => `/gallery/${photo.slug}`),
+          ...getGalleryPhotos().map((photo) => `/gallery/${photo.slug}`),
+          ...getPublicSpecies().map((species) => `/species/${species.slug}`),
           ...getPublishedPrints().map((print) => `/prints/${print.slug}`),
           ...getPublishedStories().map((story) => `/stories/${story.slug}`),
         ];

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 const links = [
   { to: "/gallery", label: "Gallery" },
+  { to: "/species", label: "Species" },
   { to: "/prints", label: "Fine Art Prints" },
   { to: "/stories", label: "Field Notes" },
   { to: "/education", label: "Education & Conservation" },
@@ -40,12 +41,12 @@ export function Nav() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex xl:gap-7 2xl:gap-8">
+        <nav className="hidden items-center gap-4 lg:flex xl:gap-6 2xl:gap-7">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className={`text-[0.8125rem] uppercase tracking-[0.14em] text-ivory-muted transition-colors hover:text-ivory xl:text-[0.9375rem] xl:tracking-[0.12em] 2xl:text-base ${headerFocus}`}
+              className={`text-[0.72rem] uppercase tracking-[0.12em] text-ivory-muted transition-colors hover:text-ivory xl:text-[0.85rem] 2xl:text-[0.9375rem] ${headerFocus}`}
               activeProps={{ className: "text-ivory" }}
             >
               {l.label}

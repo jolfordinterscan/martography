@@ -1,6 +1,7 @@
 export type ContentStatus = "published" | "draft" | "awaiting-title" | "awaiting-story";
 export type PhotoOrientation = "landscape" | "portrait" | "square";
-export type PhotoCategory = "birds" | "mammals" | "behavior" | "conservation";
+export type PhotoCategory =
+  "mammals" | "birds" | "insects" | "arachnids" | "reptiles" | "amphibians" | "aquatic-life";
 export type ImageFocus = "center" | "right" | "left" | "top" | "bottom";
 
 export interface ResponsiveImage {
@@ -45,6 +46,7 @@ export interface Photo {
   focus?: ImageFocus;
   galleryVisible?: boolean;
   galleryOrder?: number;
+  archiveEligible?: boolean;
 }
 
 export interface Species {
