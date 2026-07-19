@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
-import { stories } from "@/data/stories";
+import { getPublishedStories } from "@/content";
 
 export const Route = createFileRoute("/stories")({
   head: () => ({
@@ -23,6 +23,7 @@ export const Route = createFileRoute("/stories")({
 });
 
 function Stories() {
+  const stories = getPublishedStories();
   const [featured, ...archive] = stories;
   return (
     <>
@@ -38,9 +39,9 @@ function Stories() {
             <article className="grid gap-12 lg:gap-20 lg:grid-cols-[1.5fr_1fr] items-center">
               <Link to="/stories/$slug" params={{ slug: featured.slug }} className="group block">
                 <Placeholder
-                  subject={featured.title}
+                  subject={featured.coverAlt}
                   location={featured.place}
-                  filename={featured.coverFilename}
+                  responsiveImageKey={featured.coverImageKey}
                   mode="natural"
                 />
               </Link>
@@ -88,8 +89,8 @@ function Stories() {
                 >
                   <div className="max-w-[280px] w-full">
                     <Placeholder
-                      subject={s.title}
-                      filename={s.coverFilename}
+                      subject={s.coverAlt}
+                      responsiveImageKey={s.coverImageKey}
                       ratio="aspect-[4/3]"
                       mode="mobile-natural"
                       className="lg:transition-transform lg:duration-[1400ms] lg:group-hover:scale-[1.03]"

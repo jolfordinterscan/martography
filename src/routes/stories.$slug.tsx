@@ -1,12 +1,17 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
-import { getStory, stories, type Story } from "@/data/stories";
-import { getPhotograph } from "@/data/photographs";
+import {
+  getPhotoById,
+  getPublishedStories,
+  getSpeciesDisplayName,
+  getStoryBySlug,
+  type Story,
+} from "@/content";
 
 export const Route = createFileRoute("/stories/$slug")({
   loader: ({ params }) => {
-    const story = getStory(params.slug);
+    const story = getStoryBySlug(params.slug);
     if (!story) throw notFound();
     return { story };
   },
@@ -40,8 +45,10 @@ export const Route = createFileRoute("/stories/$slug")({
 
 function StoryDetail() {
   const { story } = Route.useLoaderData() as { story: Story };
-  const linkedPhoto = story.photoSlug ? getPhotograph(story.photoSlug) : undefined;
-  const others = stories.filter((s) => s.slug !== story.slug).slice(0, 3);
+  const linkedPhoto = story.heroPhotoId ? getPhotoById(story.heroPhotoId) : undefined;
+  const others = getPublishedStories()
+    .filter((s) => s.slug !== story.slug)
+    .slice(0, 3);
 
   return (
     <>
@@ -85,9 +92,9 @@ function StoryDetail() {
         <div className="container-editorial">
           <Reveal>
             <Placeholder
-              subject={story.title}
+              subject={story.coverAlt}
               location={story.place}
-              filename={story.coverFilename}
+              responsiveImageKey={story.coverImageKey}
               mode="natural"
             />
           </Reveal>
@@ -133,15 +140,17 @@ function StoryDetail() {
                 >
                   <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] items-center">
                     <Placeholder
-                      subject={linkedPhoto.title}
-                      filename={linkedPhoto.filename}
+                      subject={linkedPhoto.alt}
+                      responsiveImageKey={linkedPhoto.responsiveImageKey}
                       mode="natural"
                     />
                     <div>
                       <h3 className="font-serif text-3xl md:text-4xl text-ivory group-hover:text-bronze transition-colors">
                         {linkedPhoto.title}
                       </h3>
-                      <p className="mt-3 text-ivory-muted italic">{linkedPhoto.species}</p>
+                      <p className="mt-3 text-ivory-muted italic">
+                        {getSpeciesDisplayName(linkedPhoto.id)}
+                      </p>
                       <p className="mt-2 text-sm text-ivory-muted">{linkedPhoto.location}</p>
                       <span className="btn-ghost mt-8">View in the Gallery</span>
                     </div>
@@ -164,8 +173,8 @@ function StoryDetail() {
               <Reveal key={o.slug} delay={i * 100}>
                 <Link to="/stories/$slug" params={{ slug: o.slug }} className="group block">
                   <Placeholder
-                    subject={o.title}
-                    filename={o.coverFilename}
+                    subject={o.coverAlt}
+                    responsiveImageKey={o.coverImageKey}
                     ratio="aspect-[4/3]"
                     mode="mobile-natural"
                     className="lg:transition-transform lg:duration-[1400ms] lg:group-hover:scale-[1.02]"

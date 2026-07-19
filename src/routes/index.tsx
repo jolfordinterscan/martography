@@ -1,6 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
+import {
+  getCollectionCover,
+  getFeaturedCollections,
+  getPhotoById,
+  getPrintBySlug,
+  getPrintDisplayTitle,
+  getSpeciesForPhoto,
+  getStoryBySlug,
+} from "@/content";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -24,53 +33,19 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const collections = [
-  {
-    number: "01",
-    title: "Birds",
-    line: "The aerial life of a continent, held in stillness.",
-    story:
-      "A study of flight, feather, and color — from the painted bunting's impossible palette to the small dramas of the air.",
-    subject: "Painted Bunting on Salvia",
-    location: "Location — to be confirmed",
-    filename: "birds-painted-bunting-salvia.jpg",
-  },
-  {
-    number: "02",
-    title: "Mammals",
-    line: "The intelligence of a gaze. The weight of an animal at rest.",
-    story:
-      "Portraits made close, but never intrusively — a quiet catalogue of the animals that share these forests, deserts, and coastlines.",
-    subject: "Red Fox Pair",
-    location: "Northern Woodlands",
-    filename: "mammals-fox.jpg",
-  },
-  {
-    number: "03",
-    title: "Wildlife Behavior",
-    line: "The moments most photographers miss.",
-    story:
-      "The hunt, the courtship, the feeding of a chick — behavior seen only after long hours of stillness, and rarely captured whole.",
-    subject: "Roadrunner feeding its chick",
-    location: "Desert Southwest",
-    filename: "behavior-roadrunner-feeding-chick.jpg",
-  },
-  {
-    number: "04",
-    title: "Conservation",
-    line: "Small lives whose futures hang on the choices being made today.",
-    story:
-      "A hummingbird nest, no larger than a walnut — photographed in the hope that seeing these lives clearly is the first step toward keeping them here.",
-    subject: "Hummingbird at the Nest",
-    location: "Backyard Oak",
-    filename: "conservation-hummingbird-nest.jpg",
-  },
-];
-
 const editorialLink =
   "group inline-flex items-center gap-4 text-ivory transition-colors hover:text-bronze focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-bronze";
 
 function Home() {
+  const collections = getFeaturedCollections();
+  const signatureStory = getStoryBySlug("dinner-is-served")!;
+  const signaturePhoto = getPhotoById(signatureStory.heroPhotoId!)!;
+  const [signatureLead, ...signatureRest] = signatureStory.title.split(" ");
+  const foxPrint = getPrintBySlug("foxes")!;
+  const foxPhoto = getPhotoById(foxPrint.photoId)!;
+  const hummingbirdPrint = getPrintBySlug("hummingbird-nest")!;
+  const hummingbirdPhoto = getPhotoById(hummingbirdPrint.photoId)!;
+  const portrait = getPhotoById("photo-paul-portrait")!;
   return (
     <main className="overflow-x-clip bg-charcoal-deep">
       <Hero />
@@ -136,6 +111,7 @@ function Home() {
           <div className="space-y-28 lg:space-y-48">
             {collections.map((collection, index) => {
               const reverse = index % 2 === 1;
+              const cover = getCollectionCover(collection.id)!;
               return (
                 <Reveal key={collection.title} y={40}>
                   <article className="border-t border-ivory/10 pt-8 lg:pt-10">
@@ -149,9 +125,9 @@ function Home() {
                       >
                         <div className="overflow-hidden bg-charcoal">
                           <Placeholder
-                            subject={collection.subject}
-                            location={collection.location}
-                            filename={collection.filename}
+                            subject={cover.alt}
+                            location={collection.coverLocation}
+                            responsiveImageKey={cover.responsiveImageKey}
                             mode="natural"
                           />
                         </div>
@@ -170,10 +146,10 @@ function Home() {
                           {collection.title}
                         </h3>
                         <p className="mt-6 font-serif text-xl italic leading-[1.45] text-ivory-muted">
-                          {collection.line}
+                          {collection.subtitle}
                         </p>
                         <p className="mt-6 text-sm font-light leading-[1.8] text-ivory-muted/80">
-                          {collection.story}
+                          {collection.description}
                         </p>
                         <div className="mt-9 flex items-center gap-4 text-ivory">
                           <span className="eyebrow text-[0.65rem]">Enter the collection</span>
@@ -202,21 +178,20 @@ function Home() {
               <div className="lg:col-span-7">
                 <div className="eyebrow text-bronze">
                   <span className="rule-bronze mr-3" />
-                  Signature Story · Nº 07
+                  Signature Story · {signatureStory.number}
                 </div>
                 <h2
                   id="story-title"
                   className="mt-7 font-serif text-[clamp(3rem,8vw,7.5rem)] leading-[0.88] tracking-[-0.025em] text-ivory"
                 >
-                  Dinner
+                  {signatureLead}
                   <br />
-                  <span className="italic text-ivory-muted">Is Served.</span>
+                  <span className="italic text-ivory-muted">{signatureRest.join(" ")}.</span>
                 </h2>
               </div>
               <div className="max-w-sm lg:col-span-4 lg:col-start-9">
                 <p className="font-serif text-xl italic leading-[1.5] text-ivory-muted">
-                  Eleven mornings of waiting for a single four-second exchange — and the small,
-                  bright life it was meant to feed.
+                  {signatureStory.homepageExcerpt}
                 </p>
                 <p className="mt-6 eyebrow text-ivory-muted/70">
                   Words &amp; Photograph · Paul Marto
@@ -228,16 +203,14 @@ function Home() {
           <Reveal y={32}>
             <figure>
               <Placeholder
-                subject="A roadrunner parent feeding its chick"
-                location="Sonoran Desert"
-                filename="story-dinner-is-served.jpg"
+                subject={signaturePhoto.alt}
+                location={signatureStory.place}
+                responsiveImageKey={signaturePhoto.responsiveImageKey}
                 mode="natural"
               />
               <figcaption className="mt-5 flex flex-col gap-3 border-t border-ivory/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
-                <span className="eyebrow text-ivory-muted">
-                  Greater Roadrunner · Parent and chick
-                </span>
-                <span className="eyebrow text-ivory-muted/60">Sonoran Desert · 06:14</span>
+                <span className="eyebrow text-ivory-muted">{signatureStory.homepageCaption}</span>
+                <span className="eyebrow text-ivory-muted/60">{signatureStory.homepageMeta}</span>
               </figcaption>
             </figure>
           </Reveal>
@@ -245,17 +218,15 @@ function Home() {
           <Reveal>
             <div className="mt-20 grid gap-12 lg:mt-28 lg:grid-cols-12">
               <p className="max-w-2xl font-serif text-2xl leading-[1.6] text-ivory lg:col-span-6 lg:col-start-2 lg:text-3xl">
-                The exchange lasted less than four seconds. What the frame keeps is not the hunt,
-                but the errand: a parent, arriving.
+                {signatureStory.homepageIntro}
               </p>
               <div className="max-w-md lg:col-span-4 lg:col-start-9">
                 <p className="text-base font-light leading-[1.85] text-ivory-muted">
-                  Some wildlife moments happen in an instant. Others require hours of patience. The
-                  full story begins before first light, at the edge of an arroyo.
+                  {signatureStory.homepageBody}
                 </p>
                 <Link
                   to="/stories/$slug"
-                  params={{ slug: "dinner-is-served" }}
+                  params={{ slug: signatureStory.slug }}
                   className={`${editorialLink} mt-10`}
                 >
                   <span className="eyebrow">Read the Full Story</span>
@@ -311,18 +282,20 @@ function Home() {
                 className="group block focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-bronze"
               >
                 <Placeholder
-                  subject="Two red foxes meeting at golden hour"
-                  filename="mammals-fox.jpg"
+                  subject={foxPhoto.alt}
+                  responsiveImageKey={foxPhoto.responsiveImageKey}
                   mode="natural"
                 />
                 <div className="mt-6 flex items-start justify-between gap-8 border-t border-ivory/10 pt-5">
                   <div>
                     <div className="eyebrow text-bronze">Fine Art Print · Nº 01</div>
                     <h3 className="mt-3 font-serif text-3xl text-ivory transition-colors group-hover:text-bronze">
-                      Title Pending Artist Approval
+                      {getPrintDisplayTitle(foxPrint)}
                     </h3>
                   </div>
-                  <span className="hidden eyebrow text-ivory-muted/60 sm:block">Red Fox</span>
+                  <span className="hidden eyebrow text-ivory-muted/60 sm:block">
+                    {getSpeciesForPhoto(foxPhoto.id)?.commonName}
+                  </span>
                 </div>
               </Link>
             </Reveal>
@@ -333,14 +306,14 @@ function Home() {
                 className="group block focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8 focus-visible:outline-bronze"
               >
                 <Placeholder
-                  subject="Hummingbird returning to its nest"
-                  filename="conservation-hummingbird-nest.jpg"
+                  subject={hummingbirdPhoto.alt}
+                  responsiveImageKey={hummingbirdPhoto.responsiveImageKey}
                   mode="natural"
                 />
                 <div className="mt-6 border-t border-ivory/10 pt-5">
                   <div className="eyebrow text-bronze">Fine Art Print · Nº 02</div>
                   <h3 className="mt-3 font-serif text-2xl text-ivory transition-colors group-hover:text-bronze">
-                    Title Pending Artist Approval
+                    {getPrintDisplayTitle(hummingbirdPrint)}
                   </h3>
                 </div>
               </Link>
@@ -405,8 +378,8 @@ function Home() {
           <div className="grid gap-16 lg:grid-cols-12 lg:items-center lg:gap-20 xl:gap-24">
             <Reveal y={36} className="lg:col-span-5">
               <Placeholder
-                subject="Paul Marto, wildlife photographer"
-                filename="about-portrait.jpg"
+                subject={portrait.alt}
+                responsiveImageKey={portrait.responsiveImageKey}
                 mode="natural"
               />
             </Reveal>
@@ -446,6 +419,8 @@ function Home() {
 }
 
 function Hero() {
+  const hero = getPhotoById("photo-bobcat-hero")!;
+  const species = getSpeciesForPhoto(hero.id)!;
   return (
     <>
       <section
@@ -453,8 +428,8 @@ function Hero() {
         className="relative hidden min-h-[680px] overflow-hidden lg:block lg:h-[100svh]"
       >
         <Placeholder
-          subject="Bobcat watching from the edge of tall grass"
-          filename="hero.jpg"
+          subject={hero.alt}
+          responsiveImageKey={hero.responsiveImageKey}
           ratio=""
           className="!absolute inset-0 h-full w-full !aspect-auto animate-fade-in"
           focus="right"
@@ -524,15 +499,15 @@ function Hero() {
           </Link>
         </div>
         <Placeholder
-          subject="Bobcat watching from the edge of tall grass"
-          filename="hero.jpg"
+          subject={hero.alt}
+          responsiveImageKey={hero.responsiveImageKey}
           mode="natural"
           sizes="100vw"
           priority
         />
         <div className="container-editorial flex items-center justify-between gap-6 pb-14 pt-5">
           <span className="eyebrow text-[0.58rem] text-ivory-muted/70">
-            Bobcat · Field Portrait
+            {species.commonName} · Field Portrait
           </span>
           <span className="h-px w-10 bg-bronze/60" aria-hidden />
         </div>

@@ -1,16 +1,15 @@
 import type { CSSProperties } from "react";
+import { imageAliases, responsiveImages } from "@/content";
 
 type ImageMode = "editorial" | "natural" | "mobile-natural";
 
 interface PlaceholderProps {
   subject: string;
   location?: string;
-  /**
-   * Stable key used to look up the image URL for this slot.
-   * Only slots mapped to a real Martography asset render a photograph.
-   * All other slots render an elegant "Coming Soon" panel — never stock imagery.
-   */
+  /** Legacy slot key retained for the operational catalog and placeholders. */
   filename?: string;
+  /** Stable content key used to look up a real Martography image asset. */
+  responsiveImageKey?: string;
   ratio?: string; // e.g. "aspect-[4/5]"
   className?: string;
   style?: CSSProperties;
@@ -29,13 +28,6 @@ interface PlaceholderProps {
   priority?: boolean;
 }
 
-interface ImageAsset {
-  src: string;
-  width: number;
-  height: number;
-  webpSrcSet?: string;
-}
-
 /**
  * =====================================================================
  *  Martography image slot
@@ -48,89 +40,15 @@ interface ImageAsset {
  *  HOW TO ADD A NEW PHOTOGRAPH
  *  ---------------------------
  *  1. Add the optimized image to `public/images/`.
- *  2. Map the matching filename key in `IMAGE_MAP` below to its public path.
+ *  2. Add its responsive image metadata to `src/content/photos.ts`.
  * =====================================================================
  */
-
-// filename -> Martography photograph URL. Only real uploads belong here.
-const webpSrcSet = (stem: string, widths: number[]) =>
-  widths.map((width) => `/images/${stem}-${width}.webp ${width}w`).join(", ");
-
-const bobcat: ImageAsset = {
-  src: "/images/bobcat-hero.jpg",
-  width: 3840,
-  height: 2561,
-  webpSrcSet: webpSrcSet("bobcat-hero", [960, 1600, 2400, 3840]),
-};
-const bunting: ImageAsset = {
-  src: "/images/birds-painted-bunting-salvia.jpg",
-  width: 2841,
-  height: 1894,
-  webpSrcSet: webpSrcSet("birds-painted-bunting-salvia", [960, 1600, 2400, 2841]),
-};
-const buntingFlight: ImageAsset = {
-  src: "/images/birds-bunting-in-flight.jpg",
-  width: 3200,
-  height: 3200,
-  webpSrcSet: webpSrcSet("birds-bunting-in-flight", [960, 1600, 2400, 3200]),
-};
-const quail: ImageAsset = {
-  src: "/images/birds-california-quail.jpg",
-  width: 3093,
-  height: 3092,
-  webpSrcSet: webpSrcSet("birds-california-quail", [960, 1600, 2400, 3093]),
-};
-const foxes: ImageAsset = {
-  src: "/images/mammals-fox.jpg",
-  width: 2184,
-  height: 1456,
-  webpSrcSet: webpSrcSet("mammals-fox", [960, 1600, 2184]),
-};
-const roadrunners: ImageAsset = {
-  src: "/images/behavior-roadrunner.jpg",
-  width: 3200,
-  height: 2134,
-  webpSrcSet: webpSrcSet("behavior-roadrunner", [960, 1600, 2400, 3200]),
-};
-const hummingbird: ImageAsset = {
-  src: "/images/conservation-hummingbird-nest.jpg",
-  width: 3200,
-  height: 2129,
-  webpSrcSet: webpSrcSet("conservation-hummingbird-nest", [960, 1600, 2400, 3200]),
-};
-const paulPortrait: ImageAsset = {
-  src: "/images/about-paul-portrait.png",
-  width: 742,
-  height: 638,
-  webpSrcSet: "/images/about-paul-portrait-742.webp 742w",
-};
-
-const IMAGE_MAP: Record<string, ImageAsset> = {
-  // Homepage
-  "hero.jpg": bobcat,
-
-  // Featured Collections
-  "birds-painted-bunting.jpg": bunting,
-  "birds-painted-bunting-salvia.jpg": bunting,
-  "birds-painted-bunting-flight.jpg": buntingFlight,
-  "birds-california-quail.jpg": quail,
-  "mammals-fox.jpg": foxes,
-  "behavior-roadrunner-feeding-chick.jpg": roadrunners,
-  "conservation-hummingbird-nest.jpg": hummingbird,
-
-  // Signature Story
-  "story-roadrunner.jpg": roadrunners,
-  "story-dinner-is-served.jpg": roadrunners,
-  "story-07.jpg": roadrunners,
-
-  // About
-  "about-portrait.jpg": paulPortrait,
-};
 
 export function Placeholder({
   subject,
   location,
   filename,
+  responsiveImageKey,
   ratio = "aspect-[4/5]",
   className = "",
   style,
@@ -139,7 +57,8 @@ export function Placeholder({
   sizes,
   priority = false,
 }: PlaceholderProps) {
-  const asset = filename ? IMAGE_MAP[filename] : undefined;
+  const assetKey = responsiveImageKey ?? (filename ? imageAliases[filename] : undefined);
+  const asset = assetKey ? responsiveImages[assetKey] : undefined;
   const responsiveSizes =
     sizes ?? (mode === "natural" ? "100vw" : "(min-width: 1024px) 50vw, 100vw");
   const objectPosition =

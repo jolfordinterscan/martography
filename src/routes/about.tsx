@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
+import { getPhotoById } from "@/content";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/about")({
 });
 
 function About() {
+  const portrait = getPhotoById("photo-paul-portrait")!;
   return (
     <>
       <PageHeader
@@ -31,9 +33,9 @@ function About() {
           <Reveal>
             <div className="grid gap-16 lg:gap-24 lg:grid-cols-[1fr_1.5fr]">
               <Placeholder
-                subject="Paul Marto · Portrait"
+                subject={portrait.alt}
                 location="Studio · black & white"
-                filename="about-portrait.jpg"
+                responsiveImageKey={portrait.responsiveImageKey}
                 mode="natural"
                 className="max-w-md"
               />

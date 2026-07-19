@@ -2,19 +2,22 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
-import { getPrint } from "@/data/prints";
-
-const SIZES = ['16" × 24"', '20" × 30"', '24" × 36"', '30" × 45"', '40" × 60"'] as const;
+import {
+  getPhotoById,
+  getPrintBySlug,
+  getPrintDisplayTitle,
+  getSpeciesDisplayName,
+} from "@/content";
 
 export const Route = createFileRoute("/prints/$slug")({
   loader: ({ params }) => {
-    const print = getPrint(params.slug);
+    const print = getPrintBySlug(params.slug);
     if (!print) throw notFound();
     return { print };
   },
   head: ({ loaderData }) => {
     const title = loaderData?.print
-      ? `${loaderData.print.title === "Untitled — Pending Artist Title" ? loaderData.print.subject : loaderData.print.title} — Fine Art Print`
+      ? `${getPrintDisplayTitle(loaderData.print)} — Fine Art Print`
       : "Fine Art Print";
     return {
       meta: [
@@ -41,13 +44,12 @@ export const Route = createFileRoute("/prints/$slug")({
 
 function PrintDetail() {
   const { print } = Route.useLoaderData();
+  const photo = getPhotoById(print.photoId)!;
+  const species = getSpeciesDisplayName(photo.id) ?? "Wildlife";
   const [size, setSize] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
-  const displayTitle =
-    print.title === "Untitled — Pending Artist Title"
-      ? "Title Pending Artist Approval"
-      : print.title;
+  const displayTitle = getPrintDisplayTitle(print);
 
   return (
     <>
@@ -65,10 +67,12 @@ function PrintDetail() {
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-20 items-start">
             <div className="lg:col-span-7">
               <Reveal>
-                <Placeholder subject={print.subject} filename={print.filename} mode="natural" />
-                <p className="mt-5 text-xs tracking-[0.3em] uppercase text-ivory/50">
-                  {print.species}
-                </p>
+                <Placeholder
+                  subject={photo.alt}
+                  responsiveImageKey={photo.responsiveImageKey}
+                  mode="natural"
+                />
+                <p className="mt-5 text-xs tracking-[0.3em] uppercase text-ivory/50">{species}</p>
               </Reveal>
             </div>
 
@@ -84,7 +88,8 @@ function PrintDetail() {
               <fieldset className="mt-12">
                 <legend className="eyebrow text-ivory/55 mb-4">Select a Print Size</legend>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {SIZES.map((s) => {
+                  {print.sizes.map((printSize) => {
+                    const s = printSize.dimensions;
                     const selected = size === s;
                     return (
                       <button
@@ -183,7 +188,7 @@ function PrintDetail() {
       {open && (
         <InquiryDialog
           artworkTitle={displayTitle}
-          species={print.species}
+          species={species}
           selectedSize={size!}
           onClose={() => setOpen(false)}
         />

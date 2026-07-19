@@ -3,7 +3,12 @@ import { useState } from "react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
-import { photographs, categoryLabels, type PhotoCategory } from "@/data/photographs";
+import {
+  categoryLabels,
+  getGalleryPhotos,
+  getSpeciesDisplayName,
+  type PhotoCategory,
+} from "@/content";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -28,6 +33,7 @@ type Filter = PhotoCategory | "all";
 const filters: Filter[] = ["all", "birds", "mammals", "behavior", "conservation"];
 
 function Gallery() {
+  const photographs = getGalleryPhotos();
   const [active, setActive] = useState<Filter>("all");
   const shown = active === "all" ? photographs : photographs.filter((p) => p.category === active);
 
@@ -76,9 +82,9 @@ function Gallery() {
                 <Link to="/gallery/$slug" params={{ slug: img.slug }} className="group block">
                   <figure>
                     <Placeholder
-                      subject={img.title}
+                      subject={img.alt}
                       location={img.location}
-                      filename={img.filename}
+                      responsiveImageKey={img.responsiveImageKey}
                       mode="natural"
                     />
                     <figcaption className="mt-5 flex items-start justify-between gap-6">
@@ -87,7 +93,9 @@ function Gallery() {
                         <div className="mt-2 font-serif text-2xl md:text-3xl text-ivory transition-colors group-hover:text-bronze">
                           {img.title}
                         </div>
-                        <div className="mt-1 text-xs text-ivory-muted/70 italic">{img.species}</div>
+                        <div className="mt-1 text-xs text-ivory-muted/70 italic">
+                          {getSpeciesDisplayName(img.id)}
+                        </div>
                       </div>
                     </figcaption>
                   </figure>

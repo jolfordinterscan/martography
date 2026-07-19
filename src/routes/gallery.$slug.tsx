@@ -1,12 +1,18 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
-import { getPhotograph, photographs, categoryLabels, type Photograph } from "@/data/photographs";
-import { prints } from "@/data/prints";
+import {
+  categoryLabels,
+  getPhotoBySlug,
+  getPrintsForPhoto,
+  getRelatedPhotos,
+  getSpeciesDisplayName,
+  type Photo,
+} from "@/content";
 
 export const Route = createFileRoute("/gallery/$slug")({
   loader: ({ params }) => {
-    const photo = getPhotograph(params.slug);
+    const photo = getPhotoBySlug(params.slug);
     if (!photo) throw notFound();
     return { photo };
   },
@@ -20,9 +26,12 @@ export const Route = createFileRoute("/gallery/$slug")({
     return {
       meta: [
         { title: `${photo.title} — Martography` },
-        { name: "description", content: `${photo.species} · ${photo.location}. ${photo.story}` },
+        {
+          name: "description",
+          content: `${getSpeciesDisplayName(photo.id) ?? "Wildlife"} · ${photo.location ?? "Location to be confirmed"}. ${photo.shortCaption ?? ""}`,
+        },
         { property: "og:title", content: `${photo.title} — Martography` },
-        { property: "og:description", content: photo.story },
+        { property: "og:description", content: photo.shortCaption ?? photo.alt },
       ],
     };
   },
@@ -46,9 +55,10 @@ export const Route = createFileRoute("/gallery/$slug")({
 });
 
 function PhotoDetail() {
-  const { photo } = Route.useLoaderData() as { photo: Photograph };
-  const relatedPrint = prints.find((p) => p.photoSlug === photo.slug);
-  const others = photographs.filter((p) => p.slug !== photo.slug).slice(0, 3);
+  const { photo } = Route.useLoaderData() as { photo: Photo };
+  const relatedPrint = getPrintsForPhoto(photo.id)[0];
+  const others = getRelatedPhotos(photo.id);
+  const speciesName = getSpeciesDisplayName(photo.id);
 
   return (
     <>
@@ -67,9 +77,9 @@ function PhotoDetail() {
           <Reveal>
             <div className="mt-10">
               <Placeholder
-                subject={photo.title}
+                subject={photo.alt}
                 location={photo.location}
-                filename={photo.filename}
+                responsiveImageKey={photo.responsiveImageKey}
                 mode="natural"
               />
             </div>
@@ -94,10 +104,10 @@ function PhotoDetail() {
               </h1>
               <dl className="mt-10 grid grid-cols-1 gap-y-6 text-sm">
                 {[
-                  { k: "Species", v: photo.species },
-                  { k: "Location", v: photo.location },
-                  { k: "Year", v: String(photo.year) },
-                  { k: "Print", v: photo.printAvailable ? "Available as edition" : "Archive only" },
+                  { k: "Species", v: speciesName ?? "To be confirmed" },
+                  { k: "Location", v: photo.location ?? "To be confirmed" },
+                  { k: "Year", v: photo.year ? String(photo.year) : "To be confirmed" },
+                  { k: "Print", v: relatedPrint ? "Available as edition" : "Archive only" },
                 ].map((row) => (
                   <div
                     key={row.k}
@@ -139,7 +149,7 @@ function PhotoDetail() {
                 className="mt-10 space-y-8 text-ivory-muted leading-[1.75] font-light"
                 style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.25rem)" }}
               >
-                {(photo.longStory ?? [photo.story]).map((p, i) => (
+                {(photo.storyBody ?? [photo.shortCaption ?? "Story coming soon."]).map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
               </div>
@@ -162,7 +172,11 @@ function PhotoDetail() {
             {others.map((o, i) => (
               <Reveal key={o.slug} delay={i * 120}>
                 <Link to="/gallery/$slug" params={{ slug: o.slug }} className="group block">
-                  <Placeholder subject={o.title} filename={o.filename} mode="natural" />
+                  <Placeholder
+                    subject={o.alt}
+                    responsiveImageKey={o.responsiveImageKey}
+                    mode="natural"
+                  />
                   <div className="mt-5">
                     <div className="eyebrow text-bronze">{o.location}</div>
                     <div className="mt-2 font-serif text-2xl text-ivory group-hover:text-bronze transition-colors">

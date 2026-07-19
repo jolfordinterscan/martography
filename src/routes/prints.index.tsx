@@ -2,7 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
-import { prints, STANDARD_SIZES } from "@/data/prints";
+import {
+  getPhotoById,
+  getPrintDisplayTitle,
+  getPublishedPrints,
+  getSpeciesDisplayName,
+  STANDARD_SIZES,
+} from "@/content";
 
 export const Route = createFileRoute("/prints/")({
   head: () => ({
@@ -25,8 +31,8 @@ export const Route = createFileRoute("/prints/")({
 });
 
 function Prints() {
-  const featured = prints[0]; // Bobcat — entrance piece
-  const rest = prints.slice(1);
+  const [featured, ...rest] = getPublishedPrints(); // Bobcat — entrance piece
+  const featuredPhoto = getPhotoById(featured.photoId)!;
 
   return (
     <>
@@ -43,9 +49,9 @@ function Prints() {
             <div className="grid items-start gap-12 md:gap-16 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)] lg:gap-16 xl:grid-cols-[minmax(0,3fr)_minmax(19rem,1fr)] 2xl:gap-24">
               <div>
                 <Placeholder
-                  subject={featured.subject}
-                  location={featured.location ?? undefined}
-                  filename={featured.filename}
+                  subject={featuredPhoto.alt}
+                  location={featuredPhoto.location}
+                  responsiveImageKey={featuredPhoto.responsiveImageKey}
                   mode="natural"
                 />
                 <p className="mt-5 text-xs uppercase tracking-[0.3em] text-ivory/50">
@@ -57,13 +63,15 @@ function Prints() {
                 <div className="eyebrow text-bronze">Featured Artwork</div>
 
                 <h2 className="mt-6 font-serif text-[clamp(2.25rem,4.5vw,3.75rem)] italic leading-[1.05] text-ivory">
-                  Title Pending Artist Approval
+                  {getPrintDisplayTitle(featured)}
                 </h2>
 
                 <dl className="mt-10 space-y-6">
                   <div>
                     <dt className="eyebrow text-ivory/45">Species</dt>
-                    <dd className="mt-2 font-serif text-xl text-ivory/95">{featured.species}</dd>
+                    <dd className="mt-2 font-serif text-xl text-ivory/95">
+                      {getSpeciesDisplayName(featured.photoId)}
+                    </dd>
                   </div>
 
                   <div>
@@ -148,53 +156,58 @@ function Prints() {
           </div>
 
           <div className="grid gap-x-10 gap-y-24 md:grid-cols-2 xl:gap-x-20 xl:gap-y-32 2xl:gap-x-24">
-            {rest.map((print, index) => (
-              <Reveal key={print.slug} delay={(index % 2) * 120}>
-                <article className="group">
-                  <Placeholder
-                    subject={print.subject}
-                    location={print.location ?? undefined}
-                    filename={print.filename}
-                    mode="natural"
-                    className="block h-auto w-full"
-                  />
+            {rest.map((print, index) => {
+              const photo = getPhotoById(print.photoId)!;
+              return (
+                <Reveal key={print.slug} delay={(index % 2) * 120}>
+                  <article className="group">
+                    <Placeholder
+                      subject={photo.alt}
+                      location={photo.location}
+                      responsiveImageKey={photo.responsiveImageKey}
+                      mode="natural"
+                      className="block h-auto w-full"
+                    />
 
-                  <div className="mt-6 max-w-2xl">
-                    <div className="text-[11px] uppercase tracking-[0.25em] text-bronze/80">
-                      Fine Art Print
+                    <div className="mt-6 max-w-2xl">
+                      <div className="text-[11px] uppercase tracking-[0.25em] text-bronze/80">
+                        Fine Art Print
+                      </div>
+
+                      <h3 className="mt-3 font-serif text-2xl leading-tight text-ivory md:text-3xl">
+                        {print.title}
+                      </h3>
+
+                      <p className="mt-2 text-sm text-ivory/70">
+                        {getSpeciesDisplayName(photo.id)}
+                      </p>
+
+                      <p className="mt-1 text-xs uppercase tracking-[0.2em] text-ivory/45">
+                        Location — to be announced
+                      </p>
+
+                      <p className="mt-4 font-serif text-base italic leading-[1.55] text-ivory/75">
+                        “{print.description}”
+                      </p>
+
+                      <div className="mt-6 flex items-center justify-between border-t border-border pt-5">
+                        <span className="text-xs uppercase tracking-[0.2em] text-ivory/50">
+                          Signed · Numbered
+                        </span>
+
+                        <Link
+                          to="/prints/$slug"
+                          params={{ slug: print.slug }}
+                          className="shrink-0 text-xs uppercase tracking-[0.25em] text-ivory transition-colors hover:text-bronze"
+                        >
+                          View →
+                        </Link>
+                      </div>
                     </div>
-
-                    <h3 className="mt-3 font-serif text-2xl leading-tight text-ivory md:text-3xl">
-                      {print.title}
-                    </h3>
-
-                    <p className="mt-2 text-sm text-ivory/70">{print.species}</p>
-
-                    <p className="mt-1 text-xs uppercase tracking-[0.2em] text-ivory/45">
-                      Location — to be announced
-                    </p>
-
-                    <p className="mt-4 font-serif text-base italic leading-[1.55] text-ivory/75">
-                      “{print.description}”
-                    </p>
-
-                    <div className="mt-6 flex items-center justify-between border-t border-border pt-5">
-                      <span className="text-xs uppercase tracking-[0.2em] text-ivory/50">
-                        Signed · Numbered
-                      </span>
-
-                      <Link
-                        to="/prints/$slug"
-                        params={{ slug: print.slug }}
-                        className="shrink-0 text-xs uppercase tracking-[0.25em] text-ivory transition-colors hover:text-bronze"
-                      >
-                        View →
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
 
           <div className="mt-32 grid gap-12 border-t border-border pt-20 text-base text-ivory-muted md:grid-cols-3">

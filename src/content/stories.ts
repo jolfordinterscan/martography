@@ -1,29 +1,30 @@
-export interface Story {
-  slug: string;
-  number: string;
-  title: string;
-  place: string;
-  season: string;
-  dek: string;
-  coverFilename: string;
-  coverRatio?: string;
-  photoSlug?: string; // linked photograph
-  readingMinutes: number;
-  body: string[]; // paragraphs
-}
+import type { Story } from "./types.ts";
 
 export const stories: Story[] = [
   {
+    id: "story-dinner-is-served",
     slug: "dinner-is-served",
     number: "Nº 07",
     title: "Dinner Is Served",
     place: "Sonoran Desert",
     season: "Spring",
     dek: "On the twenty-minute call of a hungry roadrunner chick, and the parent that answered.",
-    coverFilename: "story-07.jpg",
+    coverAlt: "A roadrunner parent feeding its chick",
+    coverImageKey: "roadrunners",
     coverRatio: "aspect-[4/3]",
-    photoSlug: "roadrunner-dinner",
+    heroPhotoId: "photo-roadrunner-dinner",
+    photoIds: ["photo-roadrunner-dinner"],
+    speciesIds: ["species-greater-roadrunner"],
+    status: "published",
     readingMinutes: 6,
+    homepageExcerpt:
+      "Eleven mornings of waiting for a single four-second exchange — and the small, bright life it was meant to feed.",
+    homepageIntro:
+      "The exchange lasted less than four seconds. What the frame keeps is not the hunt, but the errand: a parent, arriving.",
+    homepageCaption: "Greater Roadrunner · Parent and chick",
+    homepageMeta: "Sonoran Desert · 06:14",
+    homepageBody:
+      "Some wildlife moments happen in an instant. Others require hours of patience. The full story begins before first light, at the edge of an arroyo.",
     body: [
       "Some wildlife moments last only a fraction of a second. Others require hours of patience. This one asked for both.",
       "I had marked the nest two weeks earlier without ever getting closer than eighty yards. It was tucked into the arms of a cholla the size of a small car, invisible from every angle except one narrow line of sight that ran between two mesquites.",
@@ -33,15 +34,18 @@ export const stories: Story[] = [
     ],
   },
   {
+    id: "story-the-run",
     slug: "the-run",
     number: "Nº 06",
     title: "The Run",
     place: "Coastal Alaska",
     season: "Autumn",
     dek: "A single week each autumn draws bears and salmon into a rhythm older than memory.",
-    coverFilename: "story-06.jpg",
+    coverAlt: "The Run",
     coverRatio: "aspect-[4/3]",
-    photoSlug: "grizzly-salmon-run",
+    photoIds: [],
+    speciesIds: [],
+    status: "published",
     readingMinutes: 8,
     body: [
       "The salmon arrive first, in a pulse so sudden the river seems to change colour overnight.",
@@ -51,15 +55,18 @@ export const stories: Story[] = [
     ],
   },
   {
+    id: "story-kinship-in-snow",
     slug: "kinship-in-snow",
     number: "Nº 05",
     title: "Kinship in Snow",
     place: "Boreal North",
     season: "Winter",
     dek: "What two wolves say to each other, without a sound, in the middle of a winter forest.",
-    coverFilename: "story-05.jpg",
+    coverAlt: "Kinship in Snow",
     coverRatio: "aspect-[4/3]",
-    photoSlug: "wolves-winter",
+    photoIds: [],
+    speciesIds: [],
+    status: "published",
     readingMinutes: 7,
     body: [
       "They came from opposite directions, along the same frozen creek, and met exactly in the middle.",
@@ -68,15 +75,18 @@ export const stories: Story[] = [
     ],
   },
   {
+    id: "story-last-of-the-herd",
     slug: "last-of-the-herd",
     number: "Nº 04",
     title: "Last of the Herd",
     place: "Great Plains",
     season: "Summer",
     dek: "The bison were nearly lost. Their return is the quietest conservation story of our time.",
-    coverFilename: "story-04.jpg",
+    coverAlt: "Last of the Herd",
     coverRatio: "aspect-[4/3]",
-    photoSlug: "bison-silhouette",
+    photoIds: [],
+    speciesIds: [],
+    status: "published",
     readingMinutes: 9,
     body: [
       "By 1889, there were fewer than a thousand American bison left alive. From something like thirty million.",
@@ -85,15 +95,18 @@ export const stories: Story[] = [
     ],
   },
   {
+    id: "story-first-light",
     slug: "first-light",
     number: "Nº 03",
     title: "First Light",
     place: "East Africa",
     season: "Dry",
     dek: "On tracking an elephant matriarch across a plain at the edge of dawn.",
-    coverFilename: "story-03.jpg",
+    coverAlt: "First Light",
     coverRatio: "aspect-[4/3]",
-    photoSlug: "elephant-matriarch",
+    photoIds: [],
+    speciesIds: [],
+    status: "published",
     readingMinutes: 10,
     body: [
       "Her name is Nasha. She is fifty-two years old and she has led her family for the last twenty of them.",
@@ -102,7 +115,3 @@ export const stories: Story[] = [
     ],
   },
 ];
-
-export function getStory(slug: string): Story | undefined {
-  return stories.find((s) => s.slug === slug);
-}
