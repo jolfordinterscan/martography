@@ -64,9 +64,9 @@ Routes should use selectors such as `getPhotoBySlug`, `getPhotosByCollection`, `
 
 `npm run validate:content` uses Node's built-in TypeScript stripping and adds no dependency. It checks duplicate IDs/slugs, broken species/collection/story/print/photo references, alt text on public records, responsive image keys, and real files for published photo paths. Draft records may intentionally have no image. The production build script runs validation first, so broken public content fails the build.
 
-## Images still awaited
+## Founding collection status
 
-These launch records are drafts and are not rendered or included in the sitemap until production assets are added and their status is intentionally changed:
+The nine founding-collection launch records have optimized JPEG fallbacks and responsive WebP derivatives under `public/images/` and are published in the gallery:
 
 - `otter-carrying-fish.jpg`
 - `red-shouldered-hawk-feeding.jpg`
@@ -78,7 +78,7 @@ These launch records are drafts and are not rendered or included in the sitemap 
 - `bald-eagle-pair.jpg`
 - `otter-family-swimming.jpg`
 
-The established Painted Bunting portrait placeholder also remains intentionally image-less and expects `birds-painted-bunting-portrait.jpg`; it is not one of the new launch records.
+Their artist-approved titles, locations, dates, stories, collection assignments, and print decisions remain pending. The established Painted Bunting formal-portrait placeholder remains intentionally image-less and expects `birds-painted-bunting-portrait.jpg`; it is a separate photograph.
 
 ## Deliberately separate route copy
 

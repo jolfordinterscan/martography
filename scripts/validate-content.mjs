@@ -7,6 +7,8 @@ import { species } from "../src/content/species.ts";
 import { stories } from "../src/content/stories.ts";
 
 const errors = [];
+const publicFileExists = (url) =>
+  existsSync(resolve(process.cwd(), "public", url.replace(/^\//, "")));
 const duplicateCheck = (records, label, field) => {
   const seen = new Set();
   for (const record of records) {
@@ -31,6 +33,14 @@ const collectionIds = new Set(collections.map(({ id }) => id));
 const storyIds = new Set(stories.map(({ id }) => id));
 const printIds = new Set(prints.map(({ id }) => id));
 
+for (const image of Object.values(responsiveImages)) {
+  if (!publicFileExists(image.src)) errors.push(`${image.key} source does not exist: ${image.src}`);
+  for (const candidate of image.webpSrcSet?.split(",") ?? []) {
+    const url = candidate.trim().split(/\s+/)[0];
+    if (!publicFileExists(url)) errors.push(`${image.key} derivative does not exist: ${url}`);
+  }
+}
+
 for (const photo of photos) {
   if (photo.speciesId && !speciesIds.has(photo.speciesId))
     errors.push(`${photo.id} references missing species ${photo.speciesId}`);
@@ -42,10 +52,7 @@ for (const photo of photos) {
     errors.push(`${photo.id} references missing print ${photo.printId}`);
   if (photo.status !== "draft" && !photo.alt.trim())
     errors.push(`${photo.id} is public but has no alt text`);
-  if (
-    photo.image &&
-    !existsSync(resolve(process.cwd(), "public", photo.image.replace(/^\/images\//, "images/")))
-  )
+  if (photo.image && !publicFileExists(photo.image))
     errors.push(`${photo.id} image does not exist: ${photo.image}`);
   if (photo.responsiveImageKey && !responsiveImages[photo.responsiveImageKey])
     errors.push(`${photo.id} references missing responsive image ${photo.responsiveImageKey}`);
