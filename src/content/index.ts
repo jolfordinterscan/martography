@@ -117,6 +117,50 @@ export function getPrintDisplayTitle(print: (typeof prints)[number]) {
 export function getPublishedPrints() {
   return prints.filter((print) => print.status !== "unavailable");
 }
+export function getRelatedPrints(printIdOrSlug: string, limit = 3) {
+  const print = prints.find((item) => item.id === printIdOrSlug || item.slug === printIdOrSlug);
+  const photo = print ? getPhotoById(print.photoId) : undefined;
+  if (!print || !photo) return [];
+
+  const printOrder = new Map(getPublishedPrints().map((item, index) => [item.id, index]));
+
+  return getPublishedPrints()
+    .filter((item) => item.id !== print.id)
+    .sort((a, b) => {
+      const aPhoto = getPhotoById(a.photoId);
+      const bPhoto = getPhotoById(b.photoId);
+      const aSameSpecies = Number(
+        Boolean(photo.speciesId && aPhoto?.speciesId === photo.speciesId),
+      );
+      const bSameSpecies = Number(
+        Boolean(photo.speciesId && bPhoto?.speciesId === photo.speciesId),
+      );
+      if (aSameSpecies !== bSameSpecies) return bSameSpecies - aSameSpecies;
+
+      const aCollections =
+        aPhoto?.collectionIds.filter((id) => photo.collectionIds.includes(id)).length ?? 0;
+      const bCollections =
+        bPhoto?.collectionIds.filter((id) => photo.collectionIds.includes(id)).length ?? 0;
+      if (aCollections !== bCollections) return bCollections - aCollections;
+
+      return (printOrder.get(a.id) ?? 0) - (printOrder.get(b.id) ?? 0);
+    })
+    .slice(0, limit);
+}
+export function getAdjacentPrints(printIdOrSlug: string) {
+  const availablePrints = getPublishedPrints();
+  const index = availablePrints.findIndex(
+    (print) => print.id === printIdOrSlug || print.slug === printIdOrSlug,
+  );
+  if (availablePrints.length < 2) return {};
+  if (index < 0) {
+    return { previous: availablePrints[availablePrints.length - 1], next: availablePrints[0] };
+  }
+  return {
+    previous: availablePrints[(index - 1 + availablePrints.length) % availablePrints.length],
+    next: availablePrints[(index + 1) % availablePrints.length],
+  };
+}
 export function getPrintsForPhoto(photoIdOrSlug: string) {
   const photo = photos.find((item) => item.id === photoIdOrSlug || item.slug === photoIdOrSlug);
   return photo

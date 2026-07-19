@@ -3,10 +3,12 @@ import { useState } from "react";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
 import {
+  getAdjacentPrints,
   getPhotoById,
   getPrintBySlug,
   getPrintDisplayTitle,
-  getSpeciesDisplayName,
+  getRelatedPrints,
+  getSpeciesForPhoto,
 } from "@/content";
 
 export const Route = createFileRoute("/prints/$slug")({
@@ -24,8 +26,7 @@ export const Route = createFileRoute("/prints/$slug")({
         { title: `${title} — Martography` },
         {
           name: "description",
-          content:
-            "A limited-edition fine art print by Paul Marto. Inquire for size, framing, and pricing.",
+          content: "A fine art wildlife photograph by Paul Marto, presented for collectors.",
         },
       ],
     };
@@ -45,151 +46,269 @@ export const Route = createFileRoute("/prints/$slug")({
 function PrintDetail() {
   const { print } = Route.useLoaderData();
   const photo = getPhotoById(print.photoId)!;
-  const species = getSpeciesDisplayName(photo.id) ?? "Wildlife";
+  const species = getSpeciesForPhoto(photo.id);
+  const speciesName = species?.commonName ?? "Wildlife";
   const [size, setSize] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-
   const displayTitle = getPrintDisplayTitle(print);
+  const relatedPrints = getRelatedPrints(print.id);
+  const { previous, next } = getAdjacentPrints(print.id);
 
   return (
     <>
-      <div className="pt-32 pb-6 container-editorial">
-        <Link
-          to="/prints"
-          className="text-xs tracking-[0.25em] uppercase text-ivory/60 hover:text-bronze"
-        >
-          ← The Collection
-        </Link>
-      </div>
+      <article>
+        <header className="pt-28 md:pt-36">
+          <div className="container-editorial pb-8 md:pb-10">
+            <Reveal>
+              <Link
+                to="/prints"
+                className="eyebrow inline-flex text-ivory-muted transition-colors hover:text-bronze focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze"
+              >
+                ← The Collection
+              </Link>
+            </Reveal>
+          </div>
 
-      <section className="pb-24 md:pb-32">
-        <div className="container-editorial">
-          <div className="grid gap-14 lg:grid-cols-12 lg:gap-20 items-start">
-            <div className="lg:col-span-7">
-              <Reveal>
+          <Reveal>
+            <figure>
+              <div className="flex w-full justify-center bg-black/10">
                 <Placeholder
                   subject={photo.alt}
                   responsiveImageKey={photo.responsiveImageKey}
                   mode="natural"
+                  sizes="100vw"
+                  priority
+                  className="max-w-full"
+                  style={{ width: "auto", maxHeight: "calc(100svh - 7rem)" }}
                 />
-                <p className="mt-5 text-xs tracking-[0.3em] uppercase text-ivory/50">{species}</p>
+              </div>
+
+              <figcaption className="container-editorial py-12 md:py-16 lg:py-20">
+                <div className="max-w-5xl">
+                  <div className="eyebrow text-bronze">Fine Art Photograph · Paul Marto</div>
+                  <h1
+                    className="mt-5 font-serif leading-[0.96] tracking-[-0.025em] text-ivory"
+                    style={{ fontSize: "clamp(3rem, 7vw, 7rem)" }}
+                  >
+                    {displayTitle}
+                  </h1>
+                  <p className="mt-6 text-base font-light tracking-wide text-ivory-muted md:text-lg">
+                    <span className="text-ivory">{speciesName}</span>
+                    {species?.scientificName && (
+                      <span className="ml-3 italic text-ivory-muted">{species.scientificName}</span>
+                    )}
+                  </p>
+                </div>
+              </figcaption>
+            </figure>
+          </Reveal>
+        </header>
+
+        <section
+          className="border-t border-border py-24 md:py-32 lg:py-40"
+          aria-labelledby="artwork-description"
+        >
+          <div className="container-editorial">
+            <div className="mx-auto max-w-4xl">
+              <Reveal>
+                <div className="eyebrow">
+                  <span className="rule-bronze mr-3" />
+                  The Artwork
+                </div>
+                <h2 id="artwork-description" className="sr-only">
+                  About {displayTitle}
+                </h2>
+                <p
+                  className="mt-10 font-serif font-light leading-[1.45] text-ivory md:mt-14"
+                  style={{ fontSize: "clamp(1.75rem, 3.3vw, 3.25rem)" }}
+                >
+                  {print.description}
+                </p>
               </Reveal>
             </div>
+          </div>
+        </section>
 
-            <div className="lg:col-span-5 lg:pt-6">
-              <div className="eyebrow text-bronze">Fine Art Print</div>
-              <h1 className="mt-5 font-serif italic text-ivory leading-[1.05] text-[clamp(2.25rem,4.5vw,3.5rem)]">
-                {displayTitle}
-              </h1>
-              <p className="mt-6 font-serif italic text-ivory/75 text-lg leading-[1.55]">
-                "{print.description}"
-              </p>
-
-              <fieldset className="mt-12">
-                <legend className="eyebrow text-ivory/55 mb-4">Select a Print Size</legend>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {print.sizes.map((printSize) => {
-                    const s = printSize.dimensions;
-                    const selected = size === s;
-                    return (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => setSize(s)}
-                        aria-pressed={selected}
-                        className={`px-4 py-4 border font-serif text-lg tracking-wide transition-colors ${
-                          selected
-                            ? "border-bronze bg-bronze/[0.08] text-ivory"
-                            : "border-border text-ivory/85 hover:border-ivory/50"
-                        }`}
-                      >
-                        {s}
-                      </button>
-                    );
-                  })}
-                </div>
-              </fieldset>
-
-              <div className="mt-10 border-t border-border pt-6">
-                <div className="eyebrow text-ivory/55">Pricing</div>
-                <p className="mt-2 font-serif italic text-ivory/85 text-lg">
-                  Pricing confirmed by inquiry
-                </p>
-              </div>
-
-              <div className="mt-8">
-                <button
-                  onClick={() => setOpen(true)}
-                  disabled={!size}
-                  className="w-full bg-bronze text-charcoal-deep px-10 py-4 text-xs tracking-[0.3em] uppercase hover:bg-bronze/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+        <section
+          className="border-t border-border py-24 md:py-32"
+          aria-labelledby="print-details-heading"
+        >
+          <div className="container-editorial">
+            <div className="grid gap-16 lg:grid-cols-[0.8fr_1.6fr] lg:gap-24">
+              <Reveal>
+                <div className="eyebrow">Collector Information</div>
+                <h2
+                  id="print-details-heading"
+                  className="mt-5 font-serif text-4xl leading-tight text-ivory md:text-5xl"
                 >
-                  Request This Print
-                </button>
-                {!size && (
-                  <p className="mt-3 text-xs tracking-[0.2em] uppercase text-ivory/45">
-                    Select a size to continue
-                  </p>
-                )}
-              </div>
+                  The Print
+                </h2>
+              </Reveal>
 
-              <div className="mt-10 space-y-2 text-xs tracking-[0.2em] uppercase text-ivory/60">
-                <div>Archival Fine Art Print</div>
-                <div>Hand Signed by Paul Marto</div>
-                <div>Certificate of Authenticity</div>
+              <div className="grid gap-14 md:grid-cols-2 md:gap-12">
+                <Reveal>
+                  <div className="border-t border-border pt-5">
+                    <h3 className="eyebrow text-ivory-muted/70">Archival Presentation</h3>
+                    {print.material && (
+                      <p className="mt-5 font-serif text-2xl text-ivory">{print.material}</p>
+                    )}
+                    <p className="mt-5 font-light leading-relaxed text-ivory-muted">
+                      Paper, edition, signing, and archival presentation details are being finalized
+                      and will be available before launch.
+                    </p>
+                  </div>
+                </Reveal>
+
+                <Reveal delay={100}>
+                  <fieldset className="border-t border-border pt-5">
+                    <legend className="eyebrow text-ivory-muted/70">Available Sizes</legend>
+                    <p className="mt-5 font-light leading-relaxed text-ivory-muted">
+                      Select a preferred size to include it with your artwork request.
+                    </p>
+                    <div className="mt-7 grid grid-cols-2 gap-x-6 gap-y-3">
+                      {print.sizes.map((printSize) => {
+                        const dimensions = printSize.dimensions;
+                        const selected = size === dimensions;
+                        return (
+                          <button
+                            key={dimensions}
+                            type="button"
+                            onClick={() => setSize(selected ? null : dimensions)}
+                            aria-pressed={selected}
+                            className={`border-t py-4 text-left font-serif text-lg tracking-wide transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze ${selected ? "border-bronze text-bronze" : "border-border text-ivory hover:border-ivory/50"}`}
+                          >
+                            {dimensions}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </fieldset>
+                </Reveal>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="border-t border-border py-24 md:py-32">
-        <div className="container-editorial grid gap-16 lg:grid-cols-3">
-          <div>
-            <div className="eyebrow text-bronze mb-5">Certificate of Authenticity</div>
-            <p className="font-serif italic text-ivory text-2xl leading-[1.35] mb-6">
-              Every print is documented and provenanced.
-            </p>
-            <ul className="space-y-3 text-ivory-muted text-sm leading-[1.7]">
-              <li>· Hand-signed and numbered by Paul Marto</li>
-              <li>· Unique certificate matching the edition number</li>
-              <li>· Capture date, location, camera, and lens</li>
-              <li>· Registered in the Martography archive</li>
-            </ul>
+        <section
+          className="border-y border-border py-20 md:py-28"
+          aria-labelledby="request-heading"
+        >
+          <div className="container-editorial">
+            <Reveal>
+              <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto] lg:gap-20">
+                <div className="max-w-3xl">
+                  <div className="eyebrow">Private Collector Inquiry</div>
+                  <h2
+                    id="request-heading"
+                    className="mt-5 font-serif text-4xl leading-tight text-ivory md:text-6xl"
+                  >
+                    Live with the photograph.
+                  </h2>
+                  <p className="mt-6 max-w-2xl text-lg font-light leading-relaxed text-ivory-muted">
+                    Request availability and presentation details directly from the Martography
+                    studio.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpen(true)}
+                  className="btn-ghost w-fit focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze"
+                >
+                  Request This Artwork
+                </button>
+              </div>
+            </Reveal>
           </div>
+        </section>
 
-          <div>
-            <div className="eyebrow text-bronze mb-5">Collector Notes</div>
-            <p className="font-serif italic text-ivory text-2xl leading-[1.35] mb-6">
-              For the wall you will look at for the rest of your life.
-            </p>
-            <ul className="space-y-3 text-ivory-muted text-sm leading-[1.7]">
-              <li>· Display away from direct sunlight for longest life</li>
-              <li>· Anti-reflective museum glazing recommended for framed pieces</li>
-              <li>· Custom sizing available on request</li>
-              <li>· Trade and interior-designer inquiries welcome</li>
-            </ul>
-          </div>
+        {relatedPrints.length > 0 && (
+          <section className="py-24 md:py-32 lg:py-40" aria-labelledby="related-prints-heading">
+            <div className="container-editorial">
+              <Reveal>
+                <div className="mb-12 max-w-3xl md:mb-16">
+                  <div className="eyebrow">Related Prints</div>
+                  <h2
+                    id="related-prints-heading"
+                    className="mt-5 font-serif text-4xl leading-tight text-ivory md:text-6xl"
+                  >
+                    From the collection.
+                  </h2>
+                </div>
+              </Reveal>
+              <div className="grid gap-x-10 gap-y-14 md:grid-cols-2 xl:grid-cols-3 xl:gap-y-20">
+                {relatedPrints.map((relatedPrint, index) => {
+                  const relatedPhoto = getPhotoById(relatedPrint.photoId)!;
+                  return (
+                    <Reveal key={relatedPrint.id} delay={index * 100}>
+                      <Link
+                        to="/prints/$slug"
+                        params={{ slug: relatedPrint.slug }}
+                        className="group block focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze"
+                      >
+                        <Placeholder
+                          subject={relatedPhoto.alt}
+                          responsiveImageKey={relatedPhoto.responsiveImageKey}
+                          mode="natural"
+                          sizes="(min-width: 1280px) 30vw, (min-width: 768px) 50vw, 100vw"
+                        />
+                        <h3 className="mt-5 font-serif text-2xl leading-tight text-ivory transition-colors group-hover:text-bronze md:text-3xl">
+                          {getPrintDisplayTitle(relatedPrint)}
+                        </h3>
+                      </Link>
+                    </Reveal>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
 
-          <div>
-            <div className="eyebrow text-bronze mb-5">Shipping</div>
-            <p className="font-serif italic text-ivory text-2xl leading-[1.35] mb-6">
-              Insured. Signed for. Delivered with care.
-            </p>
-            <ul className="space-y-3 text-ivory-muted text-sm leading-[1.7]">
-              <li>· Studio &amp; Gallery sizes ship in archival tubes or flat crates</li>
-              <li>· Larger and framed pieces ship in custom wood crates</li>
-              <li>· Fully insured, signature required on delivery</li>
-              <li>· International shipping quoted per destination</li>
-            </ul>
+        <nav
+          className="border-t border-border py-20 md:py-28"
+          aria-label="Continue exploring prints"
+        >
+          <div className="container-editorial grid gap-12 md:grid-cols-[1fr_auto_1fr] md:items-start">
+            {previous && (
+              <Link
+                to="/prints/$slug"
+                params={{ slug: previous.slug }}
+                rel="prev"
+                className="group border-t border-border pt-6 focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze"
+              >
+                <span className="eyebrow text-ivory-muted/70">← Previous Artwork</span>
+                <span className="mt-4 block font-serif text-3xl leading-tight text-ivory transition-colors group-hover:text-bronze">
+                  {getPrintDisplayTitle(previous)}
+                </span>
+              </Link>
+            )}
+            <Link
+              to="/prints"
+              className="eyebrow w-fit border-t border-border pt-6 text-ivory-muted transition-colors hover:text-bronze focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze md:justify-self-center"
+            >
+              The Collection
+            </Link>
+            {next && (
+              <Link
+                to="/prints/$slug"
+                params={{ slug: next.slug }}
+                rel="next"
+                className="group border-t border-border pt-6 focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze md:text-right"
+              >
+                <span className="eyebrow text-ivory-muted/70">Next Artwork →</span>
+                <span className="mt-4 block font-serif text-3xl leading-tight text-ivory transition-colors group-hover:text-bronze">
+                  {getPrintDisplayTitle(next)}
+                </span>
+              </Link>
+            )}
           </div>
-        </div>
-      </section>
+        </nav>
+      </article>
 
       {open && (
         <InquiryDialog
           artworkTitle={displayTitle}
-          species={species}
-          selectedSize={size!}
+          species={speciesName}
+          selectedSize={size}
           onClose={() => setOpen(false)}
         />
       )}
@@ -202,7 +321,7 @@ function PrintDetail() {
 interface InquiryDialogProps {
   artworkTitle: string;
   species: string;
-  selectedSize: string;
+  selectedSize: string | null;
   onClose: () => void;
 }
 
@@ -236,11 +355,12 @@ function InquiryDialog({ artworkTitle, species, selectedSize, onClose }: Inquiry
       return;
     }
 
-    const subject = `Print Inquiry — ${artworkTitle} (${selectedSize})`;
+    const preferredSize = selectedSize ?? "Not selected";
+    const subject = `Artwork Inquiry — ${artworkTitle}`;
     const body = [
       `Artwork: ${artworkTitle}`,
       `Subject: ${species}`,
-      `Size: ${selectedSize}`,
+      `Preferred size: ${preferredSize}`,
       `Framing interest: ${framing}`,
       ``,
       `Name: ${trimmedName}`,
@@ -288,7 +408,7 @@ function InquiryDialog({ artworkTitle, species, selectedSize, onClose }: Inquiry
               Thank you.
             </h2>
             <p className="mt-6 font-serif italic text-ivory-muted text-lg leading-[1.55]">
-              Paul will follow up with availability, pricing, and production details.
+              Paul will follow up with availability and presentation details.
             </p>
             <button
               onClick={onClose}
@@ -304,7 +424,7 @@ function InquiryDialog({ artworkTitle, species, selectedSize, onClose }: Inquiry
               id="inquiry-title"
               className="mt-4 font-serif italic text-ivory text-3xl leading-[1.1]"
             >
-              Request This Print
+              Request This Artwork
             </h2>
 
             <div className="mt-6 border border-border p-4 space-y-1.5 text-sm">
@@ -313,8 +433,8 @@ function InquiryDialog({ artworkTitle, species, selectedSize, onClose }: Inquiry
                 <span className="font-serif text-ivory text-right">{artworkTitle}</span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-ivory/55 eyebrow">Size</span>
-                <span className="font-serif text-ivory">{selectedSize}</span>
+                <span className="text-ivory/55 eyebrow">Preferred Size</span>
+                <span className="font-serif text-ivory">{selectedSize ?? "Not selected"}</span>
               </div>
             </div>
 
