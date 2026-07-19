@@ -108,7 +108,9 @@ These are recommendations only. No print records were created.
 - Roadrunner portrait: visible human-made background elements distract from the subject.
 - Otter carrying an unidentified green object: the foreground is obstructed and the carried object is unclear.
 
-All Batch-02 records remain drafts regardless of recommendation until editorial review is complete.
+## Preview release decision
+
+The Martography Preview Release publishes the seven masterpiece candidates listed in section A. All other Batch-02 records remain drafts, including the strong gallery additions in section B, pending further editorial review. Artist titles remain internally pending and public presentation uses species labels instead.
 
 ## Draft production filenames
 

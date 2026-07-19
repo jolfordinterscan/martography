@@ -44,6 +44,7 @@ export interface Photo {
   span?: boolean;
   focus?: ImageFocus;
   galleryVisible?: boolean;
+  galleryOrder?: number;
 }
 
 export interface Species {

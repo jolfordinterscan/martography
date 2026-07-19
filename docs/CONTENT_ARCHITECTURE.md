@@ -80,7 +80,7 @@ The nine founding-collection launch records have optimized JPEG fallbacks and re
 
 Their artist-approved titles, locations, dates, stories, collection assignments, and print decisions remain pending. The established Painted Bunting formal-portrait placeholder remains intentionally image-less and expects `birds-painted-bunting-portrait.jpg`; it is a separate photograph.
 
-Batch-02 adds 19 image-backed draft records for editorial review. They remain hidden from public selectors and the sitemap. See `docs/BATCH_02_EDITORIAL_REPORT.md` for the complete source review, duplicate decisions, and editorial recommendations.
+Batch-02 adds 19 image-backed records for editorial review. The Martography Preview Release publishes the seven masterpiece candidates; the remaining 12 stay hidden from public selectors and the sitemap. See `docs/BATCH_02_EDITORIAL_REPORT.md` for the complete source review, duplicate decisions, editorial recommendations, and preview release decision.
 
 ## Deliberately separate route copy
 

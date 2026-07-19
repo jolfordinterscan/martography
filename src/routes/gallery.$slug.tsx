@@ -3,6 +3,7 @@ import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
 import {
   categoryLabels,
+  getPhotoDisplayTitle,
   getPhotoBySlug,
   getPrintsForPhoto,
   getRelatedPhotos,
@@ -23,14 +24,15 @@ export const Route = createFileRoute("/gallery/$slug")({
       };
     }
     const { photo } = loaderData;
+    const displayTitle = getPhotoDisplayTitle(photo);
     return {
       meta: [
-        { title: `${photo.title} — Martography` },
+        { title: `${displayTitle} — Martography` },
         {
           name: "description",
           content: `${getSpeciesDisplayName(photo.id) ?? "Wildlife"} · ${photo.location ?? "Location to be confirmed"}. ${photo.shortCaption ?? ""}`,
         },
-        { property: "og:title", content: `${photo.title} — Martography` },
+        { property: "og:title", content: `${displayTitle} — Martography` },
         { property: "og:description", content: photo.shortCaption ?? photo.alt },
       ],
     };
@@ -100,7 +102,7 @@ function PhotoDetail() {
                 className="mt-8 font-serif text-ivory leading-[1.02] tracking-[-0.01em]"
                 style={{ fontSize: "clamp(2.75rem, 5.5vw, 5rem)" }}
               >
-                {photo.title}
+                {getPhotoDisplayTitle(photo)}
               </h1>
               <dl className="mt-10 grid grid-cols-1 gap-y-6 text-sm">
                 {[
@@ -180,7 +182,7 @@ function PhotoDetail() {
                   <div className="mt-5">
                     <div className="eyebrow text-bronze">{o.location}</div>
                     <div className="mt-2 font-serif text-2xl text-ivory group-hover:text-bronze transition-colors">
-                      {o.title}
+                      {getPhotoDisplayTitle(o)}
                     </div>
                   </div>
                 </Link>

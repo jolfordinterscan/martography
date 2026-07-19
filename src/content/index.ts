@@ -3,7 +3,7 @@ import { imageAliases, photos, responsiveImages } from "./photos.ts";
 import { prints, STANDARD_SIZES } from "./prints.ts";
 import { species } from "./species.ts";
 import { stories } from "./stories.ts";
-import type { PhotoCategory } from "./types.ts";
+import type { Photo, PhotoCategory } from "./types.ts";
 
 export * from "./types.ts";
 export {
@@ -40,7 +40,12 @@ export function getPublicPhotos() {
   return photos.filter((photo) => isPublicStatus(photo.status));
 }
 export function getGalleryPhotos() {
-  return getPublicPhotos().filter((photo) => photo.galleryVisible !== false);
+  return getPublicPhotos()
+    .filter((photo) => photo.galleryVisible !== false)
+    .sort(
+      (a, b) =>
+        (a.galleryOrder ?? Number.MAX_SAFE_INTEGER) - (b.galleryOrder ?? Number.MAX_SAFE_INTEGER),
+    );
 }
 export function getFeaturedPhotos() {
   return getPublicPhotos().filter((photo) => photo.featured);
@@ -68,6 +73,10 @@ export function getSpeciesDisplayName(photoId: string) {
   return item
     ? `${item.commonName}${item.scientificName ? ` (${item.scientificName})` : ""}`
     : undefined;
+}
+export function getPhotoDisplayTitle(photo: Photo) {
+  if (photo.title !== "Title Pending Artist Approval") return photo.title;
+  return getSpeciesForPhoto(photo.id)?.commonName ?? "Wildlife Photograph";
 }
 export function getPhotosForSpecies(speciesIdOrSlug: string) {
   const item = species.find(

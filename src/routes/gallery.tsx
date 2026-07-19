@@ -6,6 +6,8 @@ import { Reveal } from "@/components/site/Reveal";
 import {
   categoryLabels,
   getGalleryPhotos,
+  getPhotoDisplayTitle,
+  getSpeciesForPhoto,
   getSpeciesDisplayName,
   type PhotoCategory,
 } from "@/content";
@@ -73,35 +75,47 @@ function Gallery() {
           </Reveal>
 
           <div className="grid gap-8 md:gap-12 md:grid-cols-2 lg:grid-cols-3">
-            {shown.map((img, i) => (
-              <Reveal
-                key={img.slug}
-                delay={(i % 3) * 120}
-                className={img.span ? "lg:col-span-2" : ""}
-              >
-                <Link to="/gallery/$slug" params={{ slug: img.slug }} className="group block">
-                  <figure>
-                    <Placeholder
-                      subject={img.alt}
-                      location={img.location}
-                      responsiveImageKey={img.responsiveImageKey}
-                      mode="natural"
-                    />
-                    <figcaption className="mt-5 flex items-start justify-between gap-6">
-                      <div>
-                        <div className="eyebrow text-bronze">{img.location}</div>
-                        <div className="mt-2 font-serif text-2xl md:text-3xl text-ivory transition-colors group-hover:text-bronze">
-                          {img.title}
+            {shown.map((img, i) => {
+              const itemSpecies = getSpeciesForPhoto(img.id);
+              const titlePending = img.title === "Title Pending Artist Approval";
+              const secondaryLabel = titlePending
+                ? itemSpecies?.scientificName
+                : getSpeciesDisplayName(img.id);
+
+              return (
+                <Reveal
+                  key={img.slug}
+                  delay={(i % 3) * 120}
+                  className={img.span ? "lg:col-span-2" : ""}
+                >
+                  <Link to="/gallery/$slug" params={{ slug: img.slug }} className="group block">
+                    <figure>
+                      <Placeholder
+                        subject={img.alt}
+                        location={img.location}
+                        responsiveImageKey={img.responsiveImageKey}
+                        mode="natural"
+                      />
+                      <figcaption className="mt-5 flex items-start justify-between gap-6">
+                        <div>
+                          {img.location && (
+                            <div className="eyebrow text-bronze">{img.location}</div>
+                          )}
+                          <div className="mt-2 font-serif text-2xl md:text-3xl text-ivory transition-colors group-hover:text-bronze">
+                            {getPhotoDisplayTitle(img)}
+                          </div>
+                          {secondaryLabel && (
+                            <div className="mt-1 text-xs text-ivory-muted/70 italic">
+                              {secondaryLabel}
+                            </div>
+                          )}
                         </div>
-                        <div className="mt-1 text-xs text-ivory-muted/70 italic">
-                          {getSpeciesDisplayName(img.id)}
-                        </div>
-                      </div>
-                    </figcaption>
-                  </figure>
-                </Link>
-              </Reveal>
-            ))}
+                      </figcaption>
+                    </figure>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
 
           {shown.length === 0 && (
