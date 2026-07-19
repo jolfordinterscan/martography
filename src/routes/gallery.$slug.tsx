@@ -15,8 +15,15 @@ import {
   type Photo,
 } from "@/content";
 
-const STORY_PLACEHOLDER =
-  "Paul's story behind this remarkable moment will be published here before launch.";
+const EDITORIAL_PLACEHOLDER = [
+  "Every remarkable wildlife photograph begins with a moment worth waiting for.",
+  "Paul's story behind this photograph will be published before launch.",
+];
+
+const BEHIND_PHOTOGRAPH_PLACEHOLDER = [
+  "Behind every Martography photograph is patience, observation, and respect for the natural world.",
+  "Paul will share the story behind this encounter before launch.",
+];
 
 const isConfirmed = (value?: string) =>
   Boolean(value?.trim() && !value.toLowerCase().includes("to be confirmed"));
@@ -156,26 +163,28 @@ function PhotoDetail() {
 
         <section
           className="border-t border-border py-24 md:py-32 lg:py-40"
-          aria-labelledby="photograph-story"
+          aria-labelledby="editorial-introduction"
         >
           <div className="container-editorial">
             <div className="mx-auto max-w-4xl">
               <Reveal>
                 <div className="eyebrow">
                   <span className="rule-bronze mr-3" />
-                  Behind the Photograph
+                  Editorial Introduction
                 </div>
-                <h2 id="photograph-story" className="sr-only">
-                  The story behind {getPhotoDisplayTitle(photo)}
+                <h2 id="editorial-introduction" className="sr-only">
+                  Introduction to {getPhotoDisplayTitle(photo)}
                 </h2>
               </Reveal>
               <div className="mt-10 space-y-8 md:mt-14">
-                {(storyBody.length > 0 ? storyBody : [STORY_PLACEHOLDER]).map(
+                {(storyBody.length > 0 ? storyBody : EDITORIAL_PLACEHOLDER).map(
                   (paragraph, index) => (
                     <Reveal key={index} delay={index * 80}>
                       <p
                         className={`font-serif font-light leading-[1.45] ${
-                          storyBody.length > 0 ? "text-ivory" : "italic text-ivory-muted"
+                          storyBody.length > 0 || index === 0
+                            ? "text-ivory"
+                            : "italic text-ivory-muted"
                         }`}
                         style={{ fontSize: "clamp(1.75rem, 3.3vw, 3.25rem)" }}
                       >
@@ -208,7 +217,7 @@ function PhotoDetail() {
                       id="species-heading"
                       className="mt-5 font-serif text-4xl leading-tight text-ivory md:text-5xl"
                     >
-                      Species &amp; context
+                      The Species
                     </h2>
                   </div>
                   <dl className="grid gap-x-12 gap-y-8 sm:grid-cols-2">
@@ -252,6 +261,40 @@ function PhotoDetail() {
             </div>
           </section>
         )}
+
+        <section
+          className="border-t border-border py-24 md:py-32 lg:py-40"
+          aria-labelledby="behind-photograph-heading"
+        >
+          <div className="container-editorial">
+            <div className="grid gap-12 lg:grid-cols-[0.8fr_1.6fr] lg:gap-24">
+              <Reveal>
+                <div className="eyebrow">Field Notes</div>
+                <h2
+                  id="behind-photograph-heading"
+                  className="mt-5 font-serif text-4xl leading-tight text-ivory md:text-5xl"
+                >
+                  Behind the Photograph
+                </h2>
+              </Reveal>
+              <div className="space-y-8 lg:pt-10">
+                {BEHIND_PHOTOGRAPH_PLACEHOLDER.map((paragraph, index) => (
+                  <Reveal key={paragraph} delay={index * 80}>
+                    <p
+                      className={
+                        index === 0
+                          ? "font-serif text-2xl font-light leading-relaxed text-ivory md:text-3xl"
+                          : "max-w-2xl text-lg font-light leading-relaxed text-ivory-muted"
+                      }
+                    >
+                      {paragraph}
+                    </p>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {others.length > 0 && (
           <section
@@ -323,7 +366,7 @@ function PhotoDetail() {
                   <p className="mt-6 max-w-2xl text-lg font-light leading-relaxed text-ivory-muted">
                     {relatedPrint
                       ? "Fine art print presentation details are available for this photograph."
-                      : "Fine Art Print information coming soon."}
+                      : "Fine Art Print information will be available before launch."}
                   </p>
                 </div>
                 {relatedPrint && (
@@ -342,7 +385,7 @@ function PhotoDetail() {
 
         <nav className="py-20 md:py-28" aria-label="Continue exploring photographs">
           <div className="container-editorial">
-            <div className="grid gap-12 md:grid-cols-2 md:gap-16">
+            <div className="grid gap-12 md:grid-cols-[1fr_auto_1fr] md:items-start md:gap-12">
               {previous && (
                 <Link
                   to="/gallery/$slug"
@@ -356,6 +399,12 @@ function PhotoDetail() {
                   </span>
                 </Link>
               )}
+              <Link
+                to="/gallery"
+                className="eyebrow w-fit border-t border-border pt-6 text-ivory-muted transition-colors hover:text-bronze focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze md:justify-self-center"
+              >
+                Gallery
+              </Link>
               {next && (
                 <Link
                   to="/gallery/$slug"
@@ -369,14 +418,6 @@ function PhotoDetail() {
                   </span>
                 </Link>
               )}
-            </div>
-            <div className="mt-16 text-center md:mt-20">
-              <Link
-                to="/gallery"
-                className="btn-ghost focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-bronze"
-              >
-                Back to Gallery
-              </Link>
             </div>
           </div>
         </nav>
