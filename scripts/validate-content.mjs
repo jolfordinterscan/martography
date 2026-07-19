@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { collections } from "../src/content/collections.ts";
 import { photos, responsiveImages } from "../src/content/photos.ts";
@@ -41,6 +41,14 @@ const speciesIds = new Set(species.map(({ id }) => id));
 const collectionIds = new Set(collections.map(({ id }) => id));
 const storyIds = new Set(stories.map(({ id }) => id));
 const printIds = new Set(prints.map(({ id }) => id));
+const registeredProductionImages = new Set(
+  photos.flatMap((photo) => (photo.image ? [photo.image.replace(/^\/images\//, "")] : [])),
+);
+
+for (const filename of readdirSync(resolve(process.cwd(), "public/images"))) {
+  if (/\.(?:jpe?g|png)$/i.test(filename) && !registeredProductionImages.has(filename))
+    errors.push(`Production image has no content record: /images/${filename}`);
+}
 
 for (const image of Object.values(responsiveImages)) {
   if (!publicFileExists(image.src)) errors.push(`${image.key} source does not exist: ${image.src}`);
@@ -81,6 +89,15 @@ for (const photo of photos) {
     if (photo.archiveEligible !== false && photo.galleryVisible === false)
       errors.push(`${photo.id} is published wildlife but is not reachable from the gallery`);
   }
+  if (
+    photo.status !== "draft" &&
+    photo.archiveEligible !== false &&
+    photo.image &&
+    photo.galleryVisible === false
+  )
+    errors.push(`${photo.id} is public and image-backed but excluded from the gallery`);
+  if (photo.status === "draft" && photo.galleryVisible !== false)
+    errors.push(`${photo.id} is draft but is not explicitly excluded from the public gallery`);
 
   if (photo.speciesId) {
     const item = species.find(({ id }) => id === photo.speciesId);

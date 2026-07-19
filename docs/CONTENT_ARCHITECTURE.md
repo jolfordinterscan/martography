@@ -66,7 +66,7 @@ Routes should use selectors such as `getPhotoBySlug`, `getPhotosByCollection`, `
 
 ## Validation
 
-`npm run validate:content` uses Node's built-in TypeScript stripping and adds no dependency. It checks duplicate IDs/slugs, required working titles, wildlife category and species assignments, bidirectional species/collection relationships, broken references, alt text on public records, responsive image keys, real production files, and gallery reachability for published wildlife. Draft records may intentionally have no image. The production build script runs validation first, so broken public content fails the build.
+`npm run validate:content` uses Node's built-in TypeScript stripping and adds no dependency. It checks duplicate IDs/slugs, required working titles, wildlife category and species assignments, bidirectional species/collection relationships, broken references, alt text on public records, responsive image keys, real production files, unregistered base production images, public image-backed gallery reachability, and explicit gallery exclusion for drafts. Draft records may intentionally have no image. The production build script runs validation first, so broken public content fails the build.
 
 ## Founding collection status
 
@@ -87,6 +87,8 @@ Their artist-approved titles, locations, dates, stories, collection assignments,
 Batch-02 adds 19 image-backed records for editorial review. The Martography Preview Release publishes the seven masterpiece candidates; the remaining 12 stay hidden from public selectors and the sitemap. See `docs/BATCH_02_EDITORIAL_REPORT.md` for the complete source review, duplicate decisions, editorial recommendations, and preview release decision.
 
 The v1.1 content sprint recovered six source-only mammal photographs—two coyotes, one beaver, two additional bobcats, and one deer fawn—and added public, title-pending records with responsive production assets. Exact deer species identification remains pending; the record therefore uses the factual generic taxon `Deer` without a scientific name.
+
+The complete follow-up repository audit registered nine additional source-only works as intentional drafts, including the second spider and five Batch-03 birds. See `docs/PHOTO_INVENTORY_AUDIT.md` for the full record-by-record visibility report and source-file reconciliation.
 
 ## Deliberately separate route copy
 
