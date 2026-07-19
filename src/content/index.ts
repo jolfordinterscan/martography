@@ -75,8 +75,7 @@ export function getSpeciesDisplayName(photoId: string) {
     : undefined;
 }
 export function getPhotoDisplayTitle(photo: Photo) {
-  if (photo.title !== "Title Pending Artist Approval") return photo.title;
-  return getSpeciesForPhoto(photo.id)?.commonName ?? "Wildlife Photograph";
+  return photo.artistTitle?.trim() || photo.workingTitle;
 }
 export function getPhotosForSpecies(speciesIdOrSlug: string) {
   const item = species.find(
@@ -103,9 +102,9 @@ export function getPrintBySlug(slug: string) {
   return prints.find((print) => print.slug === slug && print.status !== "unavailable");
 }
 export function getPrintDisplayTitle(print: (typeof prints)[number]) {
-  return print.title === "Untitled — Pending Artist Title"
-    ? "Title Pending Artist Approval"
-    : print.title;
+  if (print.title !== "Untitled — Pending Artist Title") return print.title;
+  const photo = getPhotoById(print.photoId);
+  return photo ? getPhotoDisplayTitle(photo) : "Photograph";
 }
 export function getPublishedPrints() {
   return prints.filter((print) => print.status !== "unavailable");

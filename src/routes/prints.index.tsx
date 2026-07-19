@@ -175,7 +175,7 @@ function Prints() {
                       </div>
 
                       <h3 className="mt-3 font-serif text-2xl leading-tight text-ivory md:text-3xl">
-                        {print.title}
+                        {getPrintDisplayTitle(print)}
                       </h3>
 
                       <p className="mt-2 text-sm text-ivory/70">

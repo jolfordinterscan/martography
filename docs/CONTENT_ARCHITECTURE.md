@@ -33,6 +33,8 @@ scripts/
 
 `Photo`, `Species`, `Collection`, `Story`, and `Print` are defined in `types.ts`. Unknown facts are optional. Do not fill in dates, locations, conservation claims, prices, edition counts, or story copy until Paul has confirmed them.
 
+Every photo has a factual `workingTitle` based only on visible content. Paul-approved names belong in the optional `artistTitle` field. Public photo-title surfaces use `getPhotoDisplayTitle`, which displays `artistTitle` when it is non-empty and otherwise falls back to `workingTitle`; adding an approved title therefore updates the site automatically without deleting editorial metadata.
+
 Photo and story statuses are `published`, `draft`, `awaiting-title`, or `awaiting-story`. Public selectors exclude only `draft`; this allows established public “Photograph Coming Soon” records to retain their current treatment while ensuring new incomplete launch records remain private. A `published` photo must have a real production image. `awaiting-title` and `awaiting-story` honestly describe incomplete editorial fields.
 
 Print statuses are `preview`, `available`, or `unavailable`. Current prints are previews. Their pricing status is `pending`, and the UI continues to say pricing is confirmed by inquiry.
@@ -42,7 +44,7 @@ Print statuses are `preview`, `available`, or `unavailable`. Current prints are 
 1. Optimize the source outside this repository. Full-resolution photographic masters belong in archival storage, not the production repository.
 2. Add the production JPEG and responsive WebP derivatives to `public/images/`.
 3. Add one responsive image entry in `src/content/photos.ts` with the real dimensions and srcset widths.
-4. Add a photo record with unique `id` and `slug`, honest status, descriptive `alt`, the responsive image key, and relationship IDs.
+4. Add a photo record with unique `id` and `slug`, a visible-content `workingTitle`, honest status, descriptive `alt`, the responsive image key, and relationship IDs. Add `artistTitle` only after Paul approves it.
 5. Set `galleryVisible` only when the photograph belongs in the gallery. Drafts remain hidden regardless.
 6. Run `npm run validate:content`.
 
@@ -62,7 +64,7 @@ Routes should use selectors such as `getPhotoBySlug`, `getPhotosByCollection`, `
 
 ## Validation
 
-`npm run validate:content` uses Node's built-in TypeScript stripping and adds no dependency. It checks duplicate IDs/slugs, broken species/collection/story/print/photo references, alt text on public records, responsive image keys, and real files for published photo paths. Draft records may intentionally have no image. The production build script runs validation first, so broken public content fails the build.
+`npm run validate:content` uses Node's built-in TypeScript stripping and adds no dependency. It checks duplicate IDs/slugs, required working titles, removal of the legacy photo-title field, broken species/collection/story/print/photo references, alt text on public records, responsive image keys, and real files for published photo paths. Draft records may intentionally have no image. The production build script runs validation first, so broken public content fails the build.
 
 ## Founding collection status
 

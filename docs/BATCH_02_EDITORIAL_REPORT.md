@@ -110,7 +110,7 @@ These are recommendations only. No print records were created.
 
 ## Preview release decision
 
-The Martography Preview Release publishes the seven masterpiece candidates listed in section A. All other Batch-02 records remain drafts, including the strong gallery additions in section B, pending further editorial review. Artist titles remain internally pending and public presentation uses species labels instead.
+The Martography Preview Release publishes the seven masterpiece candidates listed in section A. All other Batch-02 records remain drafts, including the strong gallery additions in section B, pending further editorial review. Artist titles remain internally pending, and public photo-title surfaces use factual working titles until Paul supplies approved artist titles.
 
 ## Draft production filenames
 

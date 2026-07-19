@@ -42,6 +42,12 @@ for (const image of Object.values(responsiveImages)) {
 }
 
 for (const photo of photos) {
+  if (!photo.workingTitle?.trim()) errors.push(`${photo.id} has no working title`);
+  if (photo.workingTitle === "Title Pending Artist Approval")
+    errors.push(`${photo.id} uses the pending-title placeholder as its working title`);
+  if (photo.artistTitle?.trim() === "Title Pending Artist Approval")
+    errors.push(`${photo.id} uses the pending-title placeholder as its artist title`);
+  if ("title" in photo) errors.push(`${photo.id} uses the legacy photo title field`);
   if (photo.speciesId && !speciesIds.has(photo.speciesId))
     errors.push(`${photo.id} references missing species ${photo.speciesId}`);
   for (const id of photo.collectionIds)

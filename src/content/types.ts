@@ -14,8 +14,8 @@ export interface ResponsiveImage {
 export interface Photo {
   id: string;
   slug: string;
-  title: string;
-  workingTitle?: string;
+  artistTitle?: string;
+  workingTitle: string;
   status: ContentStatus;
   image?: string;
   responsiveImageKey?: string;

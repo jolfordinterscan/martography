@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Placeholder } from "@/components/site/Placeholder";
 import { Reveal } from "@/components/site/Reveal";
 import {
+  getPhotoDisplayTitle,
   getPhotoById,
   getPublishedStories,
   getSpeciesDisplayName,
@@ -146,7 +147,7 @@ function StoryDetail() {
                     />
                     <div>
                       <h3 className="font-serif text-3xl md:text-4xl text-ivory group-hover:text-bronze transition-colors">
-                        {linkedPhoto.title}
+                        {getPhotoDisplayTitle(linkedPhoto)}
                       </h3>
                       <p className="mt-3 text-ivory-muted italic">
                         {getSpeciesDisplayName(linkedPhoto.id)}

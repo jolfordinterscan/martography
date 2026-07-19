@@ -77,8 +77,7 @@ function Gallery() {
           <div className="grid gap-8 md:gap-12 md:grid-cols-2 lg:grid-cols-3">
             {shown.map((img, i) => {
               const itemSpecies = getSpeciesForPhoto(img.id);
-              const titlePending = img.title === "Title Pending Artist Approval";
-              const secondaryLabel = titlePending
+              const secondaryLabel = !img.artistTitle?.trim()
                 ? itemSpecies?.scientificName
                 : getSpeciesDisplayName(img.id);
 
