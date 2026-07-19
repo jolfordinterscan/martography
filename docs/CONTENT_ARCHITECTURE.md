@@ -80,6 +80,8 @@ The nine founding-collection launch records have optimized JPEG fallbacks and re
 
 Their artist-approved titles, locations, dates, stories, collection assignments, and print decisions remain pending. The established Painted Bunting formal-portrait placeholder remains intentionally image-less and expects `birds-painted-bunting-portrait.jpg`; it is a separate photograph.
 
+Batch-02 adds 19 image-backed draft records for editorial review. They remain hidden from public selectors and the sitemap. See `docs/BATCH_02_EDITORIAL_REPORT.md` for the complete source review, duplicate decisions, and editorial recommendations.
+
 ## Deliberately separate route copy
 
 Page headers, navigation labels, manifesto text, education/program content, print-service language, inquiry-form labels, and layout-specific calls to action remain in routes. They are interface or page-level editorial copy rather than photograph/species/collection/story/print records. `src/data/catalog.ts` remains a separate internal catalog dataset used by `/catalog`; migrating that broader operational schema was not part of the public route migration.
